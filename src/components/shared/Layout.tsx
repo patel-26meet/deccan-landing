@@ -1,8 +1,10 @@
-import "@/styles/globals.css"
 
-const Layout = () => {
+
+const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div>Layout</div>
+        <div className="layout-wrapper">
+            {children}
+        </div>
     )
 }
 

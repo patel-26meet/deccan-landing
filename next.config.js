@@ -12,6 +12,7 @@ const nextConfig = {
       "@context": "./src/context",
       "@constants": "./src/constants",
       "@interfaces": "./src/interfaces",
+      "@hooks": "./src/hooks",
     };
     return config;
   },
