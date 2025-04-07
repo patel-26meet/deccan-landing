@@ -3,7 +3,7 @@
 import {
   IDebouncedFunction,
   TDebounceable,
-} from "@/interfaces/hooks/Debounce.type";
+} from "@/interfaces/hooks/debounce.type";
 import { debounce } from "lodash";
 import { useEffect, useRef, useState } from "react";
 
