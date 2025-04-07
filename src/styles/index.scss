@@ -1,0 +1,13 @@
+// Base styles and variables
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./reset.scss";
+
+// Layout styles
+@import "./layout/index.scss";
+
+// Component styles
+@import "./components/index.scss";
+
+// Page-specific styles
+@import "./pages/index.scss";
