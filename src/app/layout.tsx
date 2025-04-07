@@ -1,5 +1,5 @@
 import Layout from "@/components/shared/Layout";
-import "@/styles/index.scss";
+
 // import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 // import "./globals.css";
