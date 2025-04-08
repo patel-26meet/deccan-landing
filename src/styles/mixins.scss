@@ -72,8 +72,8 @@
     font-size: 1.25rem; // 20px
   }
   
-  letter-spacing: -0.125rem; // -2px
-  font-weight: 700;
+  letter-spacing: -0.063rem; // -1px
+  font-weight: 500;
 }
 
 // Body Text Mixins
@@ -172,6 +172,11 @@
 @mixin flex-column {
   display: flex;
   flex-direction: column;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: flex-start;
 }
 
 @mixin flex-col($align: center, $justify: center) {

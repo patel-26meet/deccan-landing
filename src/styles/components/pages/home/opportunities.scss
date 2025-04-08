@@ -24,3 +24,63 @@
         @include b-l;
     }
 }
+
+.opportunities-card {
+    @include flex-center;
+    width: 416px;
+    height: 250px;
+    flex-shrink: 0;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.50);
+    backdrop-filter: blur(30px);
+
+    .opportunities-card-zone{
+        @include flex-col;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .opportunities-card-details {
+        @include flex-column;
+        align-items: flex-start;
+        width: 332px;
+        gap: 0.75rem;
+    }
+
+    .opportunities-card-header {
+        @include h5;
+    }
+
+    .opportunities-card-description{
+        @include b-s;
+        line-height: 130%;
+    }
+
+    .opportunities-card-rate{
+        @include b-l;
+        background: linear-gradient(92deg, #3D4FF3 0%, #C23BD4 120.86%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+
+    .opportunities-card-button{
+        @include flex-center;
+        border-radius: 135px;
+        border: 1px solid rgba(0, 0, 0, 0.20);
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+
+        .opportunities-card-button-text{
+            color: $dark-text;
+            font-family: "DM Sans";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: -0.48px;
+        }
+    }
+}

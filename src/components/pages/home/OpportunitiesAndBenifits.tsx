@@ -1,6 +1,7 @@
 "use client"
 
 import FilterIcon from "./Opportunities/filterIcon";
+import OpportunitiesCard from "./Opportunities/opportunitiesCard";
 
 const OpportunitiesAndBenifits = () => {
     return (
@@ -13,6 +14,9 @@ const OpportunitiesAndBenifits = () => {
                 <FilterIcon useGradient={false} icon={""} text="AI/ML" isWhiteText={true} />
                 <FilterIcon useGradient={false} icon={""} text="Specialist" isWhiteText={true} />
                 <FilterIcon useGradient={false} icon={""} text="Linguistics" isWhiteText={true} />
+            </div>
+            <div>
+                <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
             </div>
         </div>
     );
