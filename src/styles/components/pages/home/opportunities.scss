@@ -1,0 +1,26 @@
+.filter-icon-button {
+    @include flex-center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    border-radius: 1rem;
+
+    &.gradient-bg {
+        background: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
+    }
+
+    &.white-bg {
+        background-color: $white;
+    }
+
+    &.white-text{
+        color: $white-text;
+    }
+
+    &.dark-text{
+        color: $dark-text;
+    }
+
+    .filter-icon-text {
+        @include b-l;
+    }
+}

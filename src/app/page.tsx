@@ -1,11 +1,9 @@
-import Hero from "@/components/pages/home/Hero";
+import OpportunitiesAndBenifits from "@/components/pages/home/OpportunitiesAndBenifits";
 
 export default function Home() {
   return (
     <div>
-      <h1>Hello World</h1>
-      <Hero />
-
+      <OpportunitiesAndBenifits />
     </div>
   );
 }
