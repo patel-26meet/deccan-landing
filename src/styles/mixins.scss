@@ -1,21 +1,156 @@
-// Media query mixins
-@mixin respond-to($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: $breakpoint-sm) {
-      @content;
-    }
-  } @else if $breakpoint == md {
-    @media (min-width: $breakpoint-md) {
-      @content;
-    }
-  } @else if $breakpoint == lg {
-    @media (min-width: $breakpoint-lg) {
-      @content;
-    }
-  } @else if $breakpoint == xl {
-    @media (min-width: $breakpoint-xl) {
-      @content;
-    }
+// Heading Mixins
+@mixin h1 {
+  font-size: 4rem; // 64px
+  
+  @media (max-width: 1024px) {
+    font-size: 3.5rem; // 56px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem; // 40px
+  }
+  
+  letter-spacing: -0.156rem; // -2.5px
+  font-weight: 700;
+}
+
+@mixin h2 {
+  font-size: 3rem; // 48px
+  
+  @media (max-width: 1024px) {
+    font-size: 2.75rem; // 44px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.25rem; // 36px
+  }
+  
+  letter-spacing: -0.125rem; // -2px
+  font-weight: 700;
+}
+
+@mixin h3 {
+  font-size: 2.5rem; // 40px
+  
+  @media (max-width: 1024px) {
+    font-size: 2.25rem; // 36px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2rem; // 32px
+  }
+  
+  letter-spacing: -0.125rem; // -2px
+  font-weight: 700;
+}
+
+@mixin h4 {
+  font-size: 2rem; // 32px
+  
+  @media (max-width: 1024px) {
+    font-size: 1.75rem; // 28px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem; // 24px
+  }
+  
+  letter-spacing: -0.125rem; // -2px
+  font-weight: 700;
+}
+
+@mixin h5 {
+  font-size: 1.5rem; // 24px
+  
+  @media (max-width: 1024px) {
+    font-size: 1.5rem; // 24px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.25rem; // 20px
+  }
+  
+  letter-spacing: -0.125rem; // -2px
+  font-weight: 700;
+}
+
+// Body Text Mixins
+@mixin b-l {
+  font-size: 1.25rem; // 20px
+  
+  @media (max-width: 1024px) {
+    font-size: 1.25rem; // 20px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1rem; // 16px
+  }
+  
+  letter-spacing: -0.0625rem; // -1px
+  font-weight: 400;
+}
+
+@mixin b-m {
+  font-size: 1.125rem; // 18px
+  
+  @media (max-width: 1024px) {
+    font-size: 1rem; // 16px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.875rem; // 14px
+  }
+  
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin b-s {
+  font-size: 0.875rem; // 14px
+  
+  @media (max-width: 1024px) {
+    font-size: 0.875rem; // 14px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem; // 12px
+  }
+  
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin b-xs {
+  font-size: 0.75rem; // 12px
+  
+  @media (max-width: 1024px) {
+    font-size: 0.75rem; // 12px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.625rem; // 10px
+  }
+  
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+// Breakpoint Mixins
+@mixin desktop {
+  @media (min-width: 64.0625rem) { // 1025px
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 48.0625rem) and (max-width: 64rem) { // 769px to 1024px
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 48rem) { // 768px
+    @content;
   }
 }
 
@@ -35,63 +170,6 @@
 @mixin flex-column {
   display: flex;
   flex-direction: column;
-}
-
-// Typography mixins
-@mixin heading-1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-@mixin heading-2 {
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-@mixin heading-3 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-@mixin body-text {
-  font-size: $font-size-base;
-  line-height: $line-height-base;
-}
-
-// Button mixins
-@mixin button-base {
-  padding: $spacing-sm $spacing-md;
-  border-radius: $border-radius-md;
-  font-weight: 500;
-  transition: $transition-base;
-  cursor: pointer;
-  border: none;
-  outline: none;
-}
-
-@mixin button-primary {
-  @include button-base;
-  background-color: $primary-color;
-  color: white;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
-}
-
-// Container mixin
-@mixin container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 $spacing-md;
-
-  @include respond-to(lg) {
-    padding: 0 $spacing-lg;
-  }
 }
 
 @mixin flex-col($align: center, $justify: center) {
