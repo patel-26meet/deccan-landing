@@ -185,3 +185,35 @@
   align-items: $align;
   justify-content: $justify;
 }
+
+@mixin card-base {
+  border-radius: $card-border-radius;
+  background: $card-background;
+  border: $card-border;
+}
+
+@mixin gradient-text {
+  background: $gradient-text;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+@mixin section-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  align-self: stretch;
+}
+
+@mixin section-header {
+  @include h2;
+  color: $dark-text;
+}
+
+@mixin section-text {
+  @include b-l;
+  line-height: 140%;
+}

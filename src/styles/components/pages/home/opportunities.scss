@@ -7,7 +7,7 @@
     cursor: pointer;
 
     &.selected {
-        background: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
+        background: $gradient-primary;
 
         .filter-icon-text {
             color: $white-text;
@@ -25,27 +25,23 @@
     width: 416px;
     height: 250px;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: $card-border-radius;
 }
 
 .opportunities-card {
     @include flex-center;
+    @include card-base;
     width: 416px;
     height: 250px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.50);
     backdrop-filter: blur(30px);
 
-    .opportunities-card-zone{
-        @include flex-col;
-        align-items: flex-start;
+    .opportunities-card-zone {
+        @include flex-col(flex-start);
         gap: 2rem;
     }
 
     .opportunities-card-details {
-        @include flex-column;
-        align-items: flex-start;
+        @include flex-col(flex-start, flex-start);
         width: 332px;
         gap: 0.5rem;
     }
@@ -54,48 +50,42 @@
         @include h5;
     }
 
-    .opportunities-card-description{
+    .opportunities-card-description {
         @include b-s;
         line-height: 130%;
     }
 
-    .opportunities-card-rate{
+    .opportunities-card-rate {
         @include b-l;
-        background: linear-gradient(92deg, #3D4FF3 0%, #C23BD4 120.86%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        display: inline-block;
+        @include gradient-text;
     }
 
-    .opportunities-card-button{
+    .opportunities-card-button {
         @include flex-center;
         border-radius: 135px;
         border: 1px solid rgba(0, 0, 0, 0.20);
         padding: 0.938rem 1.5rem;
         gap: 1rem;
 
-        .opportunities-card-button-text{
+        &-text {
             color: $dark-text;
-            font-family: "DM Sans";
-            font-size: 16px;
-            font-style: normal;
+            font-family: $font-family-base;
+            font-size: $font-size-base;
             font-weight: 500;
-            line-height: normal;
             letter-spacing: -0.48px;
         }
     }
 }
 
-.opportunities-card-image{
+.opportunities-card-image {
     @include flex-col();
     width: 227px;
     height: 237px;
     flex-shrink: 0;
     transform: translate(14.05rem, -12.45rem);
- }
+}
 
- .opportunities-cards-wrapper{
+.opportunities-cards-wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, auto);
@@ -105,15 +95,14 @@
     margin-top: 40px;
 }
 
-
 .get-started-button {
     @include flex-center;
     @include b-m;
     height: 54px;
     padding: 16px 20px 16px 24px;
     gap: 0.75rem;
-    background-color: $button-bg-color; 
-    color: $button-text-color; 
+    background-color: $button-bg-color;
+    color: $button-text-color;
     border: 1px solid rgba(133, 133, 133, 0.30);
     border-radius: 1.25rem;
     cursor: pointer;

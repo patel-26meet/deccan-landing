@@ -1,46 +1,80 @@
-.opportunities-and-benefits-wrapper  {
+.opportunities-and-benefits-wrapper {
     background-image: url("/assets/opportunities-benefits.svg");
     background-repeat: no-repeat;
 }
 
 .opportunities-wrapper {
-    display: flex;
+    @include section-wrapper;
     padding: 100px 80px 80px 80px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    align-self: stretch;
 
-    .opportunities-header{
-        @include h2;
-        color: $dark-text;
+    .opportunities-header {
+        @include section-header;
     }
 
-    .opportunities-text{
-        @include b-l;
-        line-height: 140%;
+    .opportunities-text {
+        @include section-text;
     }
 
-    .opportunities-bar{
-        gap: 0.75rem;
+    .opportunities-bar {
         @include flex-center;
+        gap: 0.75rem;
         align-self: stretch;
     }
 }
 
-.benifits-wrapper{
-    @include flex-col;
+.benefits-wrapper {
+    @include section-wrapper;
+    padding: 5rem;
     gap: 1.5rem;
-    align-self: stretch;
 
-    .benifits-header{
-        @include h2;
-        color: $dark-text;
+    .benefits-header {
+        @include section-header;
     }
 
-   .benifits-text{
-        @include b-l;
-        gap: 0.75rem;
+    .benefits-text {
+        @include section-text;
+    }
+
+    .benefits-cards-wrapper {
+        display: flex;
+        height: auto;
+        min-height: 635px;
+        align-items: flex-start;
+        gap: $standard-gap;
+        align-self: stretch;
+        width: 100%;
+
+        .benefits-lnd-events {
+            @include flex-col(flex-start, center);
+            width: 30%;
+            gap: $standard-gap;
+            align-self: stretch;
+        }
+
+        .benefits-others {
+            @include flex-col(center);
+            width: 70%;
+            gap: $standard-gap;
+            align-self: stretch;
+
+            .benefits-payments-flexible {
+                display: flex;
+                height: 265px;
+                justify-content: center;
+                align-items: flex-start;
+                gap: $standard-gap;
+                align-self: stretch;
+                width: 100%;
+            }
+
+            .benefits-opportunities-community {
+                display: flex;
+                align-items: flex-start;
+                gap: $standard-gap;
+                flex: 1 0 0;
+                align-self: stretch;
+                width: 100%;
+            }
+        }
     }
 }

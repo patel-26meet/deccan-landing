@@ -1,5 +1,11 @@
 "use client"
 
+import Community from "./Benefits/Community";
+import EventsAndMeetups from "./Benefits/EventsAndMeetups";
+import LearningAndDev from "./Benefits/LearningAndDev";
+import Opportunities from "./Benefits/Opportunities";
+import Payments from "./Benefits/Payments";
+import WorkAndImpact from "./Benefits/WorkAndImpact";
 import FilterIcon from "./Opportunities/filterIcon";
 import OpportunitiesCard from "./Opportunities/opportunitiesCard";
 import { useState } from "react";
@@ -45,9 +51,25 @@ const OpportunitiesAndBenifits = () => {
                     <button className="get-started-button">Get Started</button>
                 </div>
             </div>
-            <div className="benifits-wrapper">
-                <div className="benifits-header">Benefits of Working with Us</div>
-                <div className="benifits-text">Unlock your potential beyond geographic limitations</div>
+            <div className="benefits-wrapper">
+                <div className="benefits-header">Benefits of Working with Us</div>
+                <div className="benefits-text">Unlock your potential beyond geographic limitations</div>
+                <div className="benefits-cards-wrapper">
+                    <div className="benefits-lnd-events">
+                        <LearningAndDev/>
+                        <EventsAndMeetups/>
+                    </div>
+                    <div className="benefits-others">
+                        <div className="benefits-payments-flexible">
+                            <WorkAndImpact/>
+                            <Payments/>
+                        </div>
+                        <div className="benefits-opportunities-community">
+                            <Opportunities/>
+                            <Community/>
+                        </div>
+                    </div>
+                </div>
             </div>
                
         </div>
