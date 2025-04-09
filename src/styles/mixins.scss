@@ -43,7 +43,7 @@
   }
   
   letter-spacing: -0.125rem; // -2px
-  font-weight: 700;
+  font-weight: 500;
 }
 
 @mixin h4 {
@@ -58,7 +58,7 @@
   }
   
   letter-spacing: -0.125rem; // -2px
-  font-weight: 700;
+  font-weight: 500;
 }
 
 @mixin h5 {
@@ -92,8 +92,28 @@
   font-weight: 400;
 }
 
+@mixin b-l-r {
+  @include b-l;
+  font-weight: 500;
+}
+
 @mixin b-m {
-  font-size: 1rem; // 18px
+  font-size: 1rem; // 16px
+  
+  @media (max-width: 1024px) {
+    font-size: 1rem; // 16px
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.875rem; // 14px
+  }
+  
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@mixin b-r {
+  font-size: 1rem; // 16px
   
   @media (max-width: 1024px) {
     font-size: 1rem; // 16px
