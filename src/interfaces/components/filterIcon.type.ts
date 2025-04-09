@@ -1,6 +1,5 @@
 export interface IFilterIconType {
-  useGradient: boolean;
-  icon: string;
+  isSelected: boolean;
+  icon?: string;
   text: string;
-  isWhiteText: boolean; // renamed for clarity
 }

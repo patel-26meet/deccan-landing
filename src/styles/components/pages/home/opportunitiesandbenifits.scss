@@ -1,12 +1,16 @@
-.opportunities-and-benefits-wrapper {
+.opportunities-and-benefits-wrapper  {
+    background-image: url("/assets/opportunities-benefits.svg");
+    background-repeat: no-repeat;
+}
+
+.opportunities-wrapper {
     display: flex;
     padding: 100px 80px 80px 80px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 48px;
+    gap: 3rem;
     align-self: stretch;
-    background-image: url("/assets/opportunities-benefits.svg");
 
     .opportunities-header{
         @include h2;
@@ -22,5 +26,21 @@
         gap: 0.75rem;
         @include flex-center;
         align-self: stretch;
+    }
+}
+
+.benifits-wrapper{
+    @include flex-col;
+    gap: 1.5rem;
+    align-self: stretch;
+
+    .benifits-header{
+        @include h2;
+        color: $dark-text;
+    }
+
+   .benifits-text{
+        @include b-l;
+        gap: 0.75rem;
     }
 }

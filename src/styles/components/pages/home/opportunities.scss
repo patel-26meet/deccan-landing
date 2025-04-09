@@ -3,33 +3,35 @@
     padding: 1rem 1.5rem;
     gap: 1rem;
     border-radius: 1rem;
+    background-color: $white;
+    cursor: pointer;
 
-    &.gradient-bg {
+    &.selected {
         background: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
-    }
 
-    &.white-bg {
-        background-color: $white;
-    }
-
-    &.white-text{
-        color: $white-text;
-    }
-
-    &.dark-text{
-        color: $dark-text;
+        .filter-icon-text {
+            color: $white-text;
+        }
     }
 
     .filter-icon-text {
         @include b-l;
+        color: $dark-text;
     }
+}
+
+.opportunities-card-container {
+    position: relative;
+    width: 416px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 20px;
 }
 
 .opportunities-card {
     @include flex-center;
     width: 416px;
     height: 250px;
-    flex-shrink: 0;
     flex-shrink: 0;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.50);
@@ -45,7 +47,7 @@
         @include flex-column;
         align-items: flex-start;
         width: 332px;
-        gap: 0.75rem;
+        gap: 0.5rem;
     }
 
     .opportunities-card-header {
@@ -70,7 +72,7 @@
         @include flex-center;
         border-radius: 135px;
         border: 1px solid rgba(0, 0, 0, 0.20);
-        padding: 1rem 1.5rem;
+        padding: 0.938rem 1.5rem;
         gap: 1rem;
 
         .opportunities-card-button-text{
@@ -83,4 +85,36 @@
             letter-spacing: -0.48px;
         }
     }
+}
+
+.opportunities-card-image{
+    @include flex-col();
+    width: 227px;
+    height: 237px;
+    flex-shrink: 0;
+    transform: translate(14.05rem, -12.45rem);
+ }
+
+ .opportunities-cards-wrapper{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+
+.get-started-button {
+    @include flex-center;
+    @include b-m;
+    height: 54px;
+    padding: 16px 20px 16px 24px;
+    gap: 0.75rem;
+    background-color: $button-bg-color; 
+    color: $button-text-color; 
+    border: 1px solid rgba(133, 133, 133, 0.30);
+    border-radius: 1.25rem;
+    cursor: pointer;
 }
