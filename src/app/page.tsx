@@ -1,4 +1,4 @@
-import OpportunitiesAndBenifits from "@/components/pages/home/OpportunitiesAndBenifits";
+import OpportunitiesAndBenifits from "@/components/pages/home/opportunitiesandbenifits";
 
 export default function Home() {
   return (

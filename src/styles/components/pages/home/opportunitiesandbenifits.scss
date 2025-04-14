@@ -1,6 +1,6 @@
 .opportunities-and-benefits-wrapper {
-    background-image: url("/assets/opportunities-benefits.svg");
-    background-repeat: no-repeat;
+    background: #EBEBEB url("/assets/opportunities-benefits-transparent-bg.svg");
+    background-size: cover
 }
 
 .opportunities-wrapper {
@@ -8,7 +8,7 @@
     padding: 100px 80px 80px 80px;
 
     .opportunities-header {
-        @include section-header;
+        @include h2;
     }
 
     .opportunities-text {
@@ -77,4 +77,96 @@
             }
         }
     }
+}
+
+@media screen and (max-width: $breakpoint-sm) {    
+    .opportunities-wrapper {
+        background: #EBEBEB url("/assets/opportunities-benefits-transparent-bg.svg");
+
+        @include section-wrapper;
+        padding: 3.5rem 1.5rem;
+    
+        .opportunities-header {
+            @include h2;
+        }
+    
+        .opportunities-text {
+            @include b-l;
+            text-align: center;
+        }
+    
+        .opportunities-bar {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            gap: 0.75rem;
+            margin: 0 -1.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            justify-content: flex-start;
+            -webkit-overflow-scrolling: touch;
+            
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            
+            -ms-overflow-style: none;  
+            scrollbar-width: none;
+            
+            > div:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    
+    .benefits-wrapper {
+        background: #EBEBEB;;
+        padding: 3.5rem 1.5rem;
+        gap: 0.75rem;
+    
+        .benefits-header {
+            @include section-header;
+            text-align: center;
+        }
+    
+        .benefits-text {
+            @include section-text;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+    
+        .benefits-cards-wrapper {
+            display: grid;
+            width: 100%;
+            grid-template-rows: 220px 371px;
+    
+            .benefits-lnd-events {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+    
+            .benefits-others {
+                display: grid;
+                grid-template-rows: 183px 188px;
+                gap: 0.75rem;
+    
+                .benefits-payments-flexible {
+                    display: grid;
+                    grid-template-columns: 139px 200px;
+                    gap: 0.5rem;
+                }
+    
+                .benefits-opportunities-community {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+    
 }

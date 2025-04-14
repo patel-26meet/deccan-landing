@@ -1,4 +1,4 @@
-import { IFilterIconType } from "@/interfaces/components/filterIcon.type";
+import { IFilterIconType } from "@/interfaces/components/filtericon.type";
 import { FC } from "react";
 
 const FilterIcon: FC<IFilterIconType> = ({
