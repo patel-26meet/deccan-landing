@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import FaqCard from './Faqs/FaqCard'
+import Button from '@/components/shared/Button';
 
 // Sample FAQ data
 const faqData = [
@@ -43,6 +44,15 @@ export default function AboutUsFAQs() {
             <div className='about-us-text'>We&apos;re a young and lightning-fast team based out of San Francisco and Hyderabad.
             We&apos;re on a mission to build AI for Good.</div>
         </div>
+        <div className='about-us-btn-wrapper'>
+          <Button
+              text="Read More"
+              mode="dark"
+              state="default"
+              className="read-more-btn"
+          />
+        </div>
+        
         <div className='faqs-wrapper'>
             <div className='faqs-header'>Frequently Asked Questions</div>
             <div className='faqs-cards-container'>
@@ -57,7 +67,16 @@ export default function AboutUsFAQs() {
                 />
               ))}
             </div>
+            <div className='faqs-btn-wrapper'>
+              <Button
+                  text="See All FAQs"
+                  mode="dark"
+                  state="default"
+                  className="faqs-btn"
+              />
+            </div>
         </div>
+        
     </div>
   )
 }

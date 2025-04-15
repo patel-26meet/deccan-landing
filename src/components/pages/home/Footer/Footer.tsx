@@ -23,8 +23,12 @@ export default function Footer() {
                 <div className='footer-follow'>
                   <span>Follow Us on:</span>
                   <div className='footer-social-icons'>
-                    <div className='footer-social-icon instagram'></div>
-                    <div className='footer-social-icon linkedin'></div>
+                    <div className='footer-social-icon'>
+                        <img src={"/assets/logos/huggingface.svg"} alt="Huggingface Logo" />
+                    </div>
+                    <div className='footer-social-icon'>
+                        <img src={"/assets/logos/linkedin.svg"} alt="LinkedIn Logo" />
+                    </div>
                   </div>
                 </div>
                 <div className='footer-made-with'>
@@ -60,8 +64,8 @@ export default function Footer() {
           </div>
           
           <div className='footer-body-footer'>
-            <div>Deccan AI Inc | Deccan AI Automation Private Limited</div>
-            <div>Privacy Policy | Terms of Service</div>
+            <div>Deccan AI Inc  |  Deccan AI Automation Private Limited</div>
+            <div>Privacy Policy  |  Terms of Service</div>
             <div>Copyright © 2025. All rights reserved.</div>
           </div>
         </div>

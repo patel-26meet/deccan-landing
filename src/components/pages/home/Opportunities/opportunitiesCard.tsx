@@ -15,8 +15,8 @@ const OpportunitiesCard: FC<IOpportunitiesCard>= ({
                         <div className="opportunities-card-description">{description}</div>
                         <div className="opportunities-card-rate">{rate}</div>
                     </div>
-                    <div className="opportunities-card-button">
-                        <div className="opportunities-card-button-text">Apply Now</div>
+                    <div className="opportunities-card-btn">
+                        <div className="opportunities-card-btn-text">Apply Now</div>
                     </div>
                 </div>
             </div>

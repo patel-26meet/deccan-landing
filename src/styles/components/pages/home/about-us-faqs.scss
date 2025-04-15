@@ -8,6 +8,11 @@
     gap: 2.5rem;
 }
 
+.about-us-btn-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
 .about-us-header{
     @include h2;
     text-align: center;
@@ -22,6 +27,12 @@
 .faqs-wrapper{
     padding: 5rem;
     gap: 2.5rem;
+}
+
+.faqs-btn-wrapper{
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
 }
 
 .faqs-header{

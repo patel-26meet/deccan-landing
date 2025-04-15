@@ -1,5 +1,6 @@
 "use client"
 
+import Button from "@/components/shared/Button";
 import Community from "./Benefits/Community";
 import EventsAndMeetups from "./Benefits/EventsAndMeetups";
 import LearningAndDev from "./Benefits/LearningAndDev";
@@ -48,9 +49,12 @@ const OpportunitiesAndBenifits = () => {
                             <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
                             <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
                         </div>
-                        <div className="opportunities-get-started">
-                            <button className="get-started-button">Get Started</button>
-                        </div>
+                        <Button
+                            text="Get Started"
+                            mode="dark"
+                            state="default"
+                            className="read-more-btn"
+                        />
                     </div>
                     <div className="benefits-wrapper">
                         <div className="benefits-header">Benefits of Working with Us</div>

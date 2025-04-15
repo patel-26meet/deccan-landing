@@ -1,4 +1,4 @@
-.filter-icon-button {
+.filter-icon-btn {
     @include flex-center;
     padding: 1rem 1.5rem;
     gap: 1rem;
@@ -75,7 +75,7 @@
         @include gradient-text;
     }
 
-    .opportunities-card-button {
+    .opportunities-card-btn {
         @include flex-center;
         border-radius: 135px;
         border: 1px solid rgba(0, 0, 0, 0.20);
@@ -154,7 +154,7 @@
             @include gradient-text;
         }
 
-        .opportunities-card-button {
+        .opportunities-card-btn {
             @include flex-center;
             border-radius: 135px;
             border: 1px solid rgba(0, 0, 0, 0.20);
@@ -180,7 +180,7 @@
 }
 
 @media screen and (max-width: breakpoint-md) {
-  .filter-icon-button {
+  .filter-icon-btn {
     padding: 0.75rem 1rem;
     
     .filter-icon-text {
@@ -208,13 +208,13 @@
     transform: translate(10rem, -10rem);
   }
   
-  .get-started-button {
+  .get-started-btn {
     height: 48px;
     padding: 12px 16px;
   }
 }
 
-.get-started-button {
+.get-started-btn {
     @include flex-center;
     @include b-m;
     height: 54px;
