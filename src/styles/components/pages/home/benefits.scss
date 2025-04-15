@@ -89,6 +89,11 @@
    .opportunities-card-text {
         @include b-r;
     }
+
+    .opportunities-card-lottie{
+        width: 55%;
+        height: 80%;
+    }
 }
 
 .payments-wrapper {

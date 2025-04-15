@@ -9,7 +9,6 @@ import WorkAndImpact from "./Benefits/WorkAndImpact";
 import FilterIcon from "./Opportunities/filterIcon";
 import OpportunitiesCard from "./Opportunities/opportunitiesCard";
 import { useState } from "react";
-import Statistics from "./Statistics/statistics";
 
 const OpportunitiesAndBenifits = () => {
     const [selectedFilter, setSelectedFilter] = useState("All");
@@ -77,10 +76,6 @@ const OpportunitiesAndBenifits = () => {
                             </div>
                         </div>
                     </div>
-                
-                <div className="stats">
-                    <Statistics/>
-                </div>
             </div>
         </>
     );
