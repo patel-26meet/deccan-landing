@@ -1,0 +1,327 @@
+.stories-wrapper{
+    @include flex-col();
+    padding: 3.5rem 4rem;
+    gap: 1.44rem;
+    background: #EBEBEB;
+}
+
+.stories-header-wrapper{
+    @include flex-col();
+    gap: 0.75rem;
+    align-self: stretch;
+}
+
+.stories-header{
+    @include h2;
+}
+
+.stories-content{
+    @include b-m;
+    padding-bottom: 5rem;
+
+    .stories-content-number{
+    @include b-m;
+    background: linear-gradient(275deg, #3C18B9 51.97%, #AE1DEC 65.74%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+   }
+}
+
+.stories-body{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 900px;
+    width: 100%;
+    position: relative;
+    
+
+
+    .stories-body-left{
+        height: 100%;
+        width: 51.97%;
+
+        &-top{
+            width: 100%;
+            height: 30%;
+            
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            gap: 1rem;
+            align-self: stretch;
+            padding-bottom: 1rem;
+        }
+
+        &-bottom{
+            width: 100%;
+            height: 70%;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            align-self: stretch;
+
+            &-1{
+                width: 37.23%; 
+                @include flex-column;
+                align-items: flex-end;
+                gap: 1rem;
+            }
+
+            &-2{
+                width: 61.77%;
+                display: grid;
+                grid-template-rows: 1.55fr 1fr;
+                gap: 1rem;
+            }
+        }
+    }
+
+    .stories-body-right{
+        height: 100%;
+        width: 46.76%;
+        
+
+        &-space{
+            height: 10%;
+            width: 100%;
+        }
+
+        &-top{
+            height: 31.8%;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            align-self: stretch;
+            padding-bottom: 1rem;
+        }
+
+        &-middle{
+            height: 34%;
+            display: flex;
+            gap: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        &-bottom{
+            height: 28.2%;
+            width: 100%;
+            
+        }
+    }
+}
+
+.stories-card-wrapper {
+  width: auto;
+  height: auto;
+  padding: 16px;
+  background: var(--White, white);
+  border-radius: 12px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .stories-card-content {
+    align-self: stretch;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .stories-card-testimonial {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      
+      .testimonial-text {
+        color: rgba(0, 0, 0, 0.60);
+        font-size: 16px;
+        font-family: 'DM Sans';
+        font-weight: 500;
+        line-height: 20.80px;
+        word-wrap: break-word;
+      }
+      
+      .testimonial-highlight {
+        color: #4434EF;
+        font-size: 16px;
+        font-family: 'DM Sans';
+        font-weight: 500;
+        line-height: 20.80px;
+        word-wrap: break-word;
+        margin: 16px 0;
+      }
+      
+      .testimonial-additional {
+        color: rgba(0, 0, 0, 0.60);
+        font-size: 16px;
+        font-family: 'DM Sans';
+        font-weight: 500;
+        line-height: 20.80px;
+        word-wrap: break-word;
+      }
+    }
+    
+    .stories-card-author {
+      align-self: stretch;
+      display: inline-flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 16px;
+      
+      .author-info {
+        flex: 1 1 0;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 3px;
+        
+        .author-name {
+          align-self: stretch;
+          color: var(--Black, black);
+          font-size: 20px;
+          font-family: 'DM Sans';
+          font-weight: 500;
+          line-height: 26px;
+          word-wrap: break-word;
+        }
+        
+        .author-role {
+          align-self: stretch;
+          color: var(--Black, black);
+          font-size: 14px;
+          font-family: 'DM Sans';
+          font-weight: 400;
+          line-height: 18.90px;
+          word-wrap: break-word;
+        }
+        
+        .author-organization {
+          align-self: stretch;
+          color: var(--Black, black);
+          font-size: 14px;
+          font-family: 'DM Sans';
+          font-weight: 500;
+          line-height: 18.90px;
+          word-wrap: break-word;
+        }
+      }
+      
+      .author-image {
+        width: 53px;
+        height: 53px;
+        border-radius: 49px;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.flip-card {
+  background-color: transparent;
+  perspective: 1000px;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+.flip-card-front {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-card-front img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.flip-card-back {
+  background-color: #f8f8f8;
+  color: #333;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stories-body-left-top .flip-card {
+  width: 25%;
+}
+
+.stories-body-left-top .flip-card-back {
+  width: 100%;
+  max-width: 100%;
+}
+
+.image-backside-wrapper {
+  @include flex-col(flex-start, flex-end);
+  gap: 0.5rem;
+  padding: 1.06rem 0.94rem;
+}
+
+.image-backside-content {
+  @include b-s;
+  align-self: stretch;
+}
+
+.hover-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.linkedin-link {
+  display: inline-block;
+  text-decoration: none;
+}

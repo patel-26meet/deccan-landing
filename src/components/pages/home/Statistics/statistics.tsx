@@ -47,7 +47,7 @@ const Statistics: FC = () => {
                       className="count-up-text"
                       formattingFn={(value) => {
                         if (value < 1000) {
-                          return `${value.toFixed(1)}K+`;
+                          return `${value}K+`;
                         } else {
                           if (value === Number(item.val)) {
                             return `${Math.floor(value/1000)}M+`;
