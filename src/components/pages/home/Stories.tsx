@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import StoriesCard from './Stories/StoriesCard';
 import ImageBackside from './Stories/ImageBackside';
-import { storiesData } from './Stories/storiesData';
+import { storiesData } from '@/constants/pages/home/stories';
 
 const Stories = () => {
   const [isImage1Flipped, setIsImage1Flipped] = useState(false);

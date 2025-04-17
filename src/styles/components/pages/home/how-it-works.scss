@@ -1,0 +1,48 @@
+.campus-partners-how-it-works-wrapper{
+    background: #EBEBEB;
+
+}
+
+.campus-partners-wrapper{
+    @include flex-col(center, center);
+    padding: 3.75rem 5rem;
+    gap: 1.25rem;
+    height: 20rem;
+
+
+    .campus-partners-header{
+        @include h4;
+    
+    }
+}
+
+
+.how-it-works-wrapper{
+    background: #EBEBEB;
+    padding: 4.375rem 0 4.375rem 5rem;
+    display: flex;
+    height: 954px;
+    align-items: flex-start;
+    gap: 3rem;
+}
+
+.how-it-works-content{
+    @include flex-col(flex-start, space-between);
+
+    .how-it-works-header{
+        @include h2;
+    }
+    
+    .how-it-works-description{
+        @include b-l-r;
+        padding-bottom: 2rem;
+    }
+}
+
+.how-it-works-lottie{
+    width: 1000px;
+    height: 659px;
+    flex-shrink: 0;
+}
+
+

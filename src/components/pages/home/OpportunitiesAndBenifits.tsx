@@ -9,7 +9,8 @@ import Payments from "./Benefits/Payments";
 import WorkAndImpact from "./Benefits/WorkAndImpact";
 import FilterIcon from "./Opportunities/filterIcon";
 import OpportunitiesCard from "./Opportunities/opportunitiesCard";
-import { useState } from "react";
+import { opportunitiesData } from "./Opportunities/opportunitiesData";
+import { useState, useMemo } from "react";
 
 const OpportunitiesAndBenifits = () => {
     const [selectedFilter, setSelectedFilter] = useState("All");
@@ -17,6 +18,27 @@ const OpportunitiesAndBenifits = () => {
     const handleFilterClick = (filterText: string) => {
         setSelectedFilter(filterText);
     };
+
+    const filteredOpportunities = useMemo(() => {
+        if (selectedFilter === "All") {
+            const specificOpportunities = [
+                "Python Developer",
+                "NLP Engineers",
+                "Fitness Coach",
+                "Gujarati expert",
+                "Medical Experts",
+                "React Developer"
+            ];
+            
+            return opportunitiesData.filter(item => 
+                specificOpportunities.includes(item.header)
+            );
+        } else {
+            return opportunitiesData
+                .filter(item => item.category === selectedFilter)
+                .slice(0, 6); 
+        }
+    }, [selectedFilter]);
 
     return (
         <>
@@ -42,12 +64,14 @@ const OpportunitiesAndBenifits = () => {
                             </div>
                         </div>
                         <div className="opportunities-cards-wrapper">
-                            <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
-                            <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
-                            <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
-                            <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
-                            <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
-                            <OpportunitiesCard header="Python Developer" description="Remote" rate="Starts $20/hr"/>
+                            {filteredOpportunities.map((opportunity, index) => (
+                                <OpportunitiesCard 
+                                    key={index}
+                                    header={opportunity.header}
+                                    description={opportunity.description}
+                                    rate={opportunity.rate}
+                                />
+                            ))}
                         </div>
                         <Button
                             text="Get Started"
