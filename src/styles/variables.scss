@@ -3,17 +3,23 @@
 // Background colors
 $white: #FFF;
 
-// Text colors
-$dark-text: #000;
-$dark-grey-text: #3E3E3E;
-$white-text: #FFF;
+// Colors
+$black: #000;
+$dark-grey: #3E3E3E;
+$grey: #EBEBEB;
+$grey-light: #F5F5F5;
+$white: #FFFFFF;
+$purple-dark: #6F18CC;
+$purple-light: #B247FF;
+$blue: #293DF6;
+$blue-light: #33C9E4;
 $gray-text: rgba(0, 0, 0, 0.8);
 $light-gray-text: rgba(0, 0, 0, 0.6);
 $very-light-gray-text: #808080;
 
 // Get started button
 $button-bg-color: rgba(255, 255, 255, 0.15);
-$button-text-color: $dark-text;
+$button-text-color: $black;
 
 // Typography
 $font-family-base: "DM Sans";

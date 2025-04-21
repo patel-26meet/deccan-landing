@@ -219,6 +219,8 @@
   align-items: $align;
 }
 
+
+
 @mixin card-base {
   border-radius: $card-border-radius;
   background: $card-background;
@@ -243,7 +245,7 @@
 
 @mixin section-header {
   @include h2;
-  color: $dark-text;
+  color: $black;
 }
 
 @mixin section-text {

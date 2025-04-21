@@ -18,6 +18,7 @@ const Stories = () => {
   };
 
   return (
+    <>
     <div className='stories-wrapper'>
         <div className='stories-header-wrapper'>
             <div className='stories-header'>
@@ -125,6 +126,8 @@ const Stories = () => {
             </div>
         </div>
     </div>
+    <div className='stories-blur'></div>
+    </>
   )
 }
 

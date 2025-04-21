@@ -2,7 +2,16 @@
     @include flex-col();
     padding: 3.5rem 4rem;
     gap: 1.44rem;
-    background: #EBEBEB;
+    background: $grey;
+}
+
+.stories-blur{
+  height: 278px;
+  background: linear-gradient(180deg,rgba(235, 235, 235, 0) 0%, rgba(235, 235, 235, 1) 100%);
+  filter: blur(30.700000762939453px);
+  backdrop-filter: blur(64.9000015258789px);
+  z-index: 2;
+  transform: translateY(-250px);
 }
 
 .stories-header-wrapper{

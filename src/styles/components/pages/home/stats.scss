@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #EBEBEB;
+    background: $grey;
   
     .statistics {
       @include flex-col(center, center);

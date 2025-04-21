@@ -10,13 +10,13 @@
         background: $gradient-primary;
 
         .filter-icon-text {
-            color: $white-text;
+            color: $white;
         }
     }
 
     .filter-icon-text {
         @include b-l;
-        color: $dark-text;
+        color: $black;
     }
 }
 
@@ -83,7 +83,7 @@
         gap: 1rem;
 
         &-text {
-            color: $dark-text;
+            color: $black;
             font-family: $font-family-base;
             font-size: $font-size-base;
             font-weight: 500;
@@ -162,7 +162,7 @@
             gap: 1rem;
 
             &-text {
-                color: $dark-text;
+                color: $black;
                 font-family: $font-family-base;
                 font-size: $font-size-base;
                 font-weight: 500;
