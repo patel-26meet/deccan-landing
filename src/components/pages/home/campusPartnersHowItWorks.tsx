@@ -3,15 +3,15 @@
 import { useState, useEffect, useRef } from "react";
 import Button from "@/components/shared/Button";
 import HowItWorksCard from "./HowItWorks/HowItWorksCard";
-import Lottie from "lottie-react";
-import lottie1 from "../../../../public/assets/how-it-works/04_Selection process (1)/1_Selection process.json";
-import lottie2 from "../../../../public/assets/how-it-works/04_Selection process (1)/2_Selection process.json";
-import lottie3 from "../../../../public/assets/how-it-works/04_Selection process (1)/3_Selection process.json";
-import lottie4 from "../../../../public/assets/how-it-works/04_Selection process (1)/4_Selection process.json";
+import Lottie from "react-lottie-player";
+import lottie1 from "../../../../public/assets/how-it-works/selection-process-1.json";
+import lottie2 from "../../../../public/assets/how-it-works/selection-process-2.json";
+import lottie3 from "../../../../public/assets/how-it-works/selection-process-3.json";
+import lottie4 from "../../../../public/assets/how-it-works/selection-process-4.json";
 
 const HowItWorks = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const lottieRef = useRef(null);
+  const [animationKey, setAnimationKey] = useState(0); // Add a key for forcing animation reset
   
   const lottieAnimations = [lottie1, lottie2, lottie3, lottie4];
   
@@ -30,19 +30,22 @@ const HowItWorks = () => {
     },
     {
       header: "Become Our Top Expert",
-      subheader: "If you qualify, start contributing to projects and get paid"
+      subheader: "Based on project <> skill match start your dream role."
     }
   ];
 
   const handleCardClick = (index: number) => {
     setActiveCardIndex(index);
+    setAnimationKey(prev => prev + 1); // Force re-render of Lottie component
   };
 
-  // Auto-advance to next card when animation completes
-  useEffect(() => {
-    // Instead of using addEventListener, we'll use the onComplete prop on Lottie
-    // This will be handled in the JSX
-  }, []);
+  // Function to advance to the next card/animation
+  const handleAnimationComplete = () => {
+    // Calculate next index with loop back to first
+    const nextIndex = (activeCardIndex + 1) % howItWorksData.length;
+    setActiveCardIndex(nextIndex);
+    setAnimationKey(prev => prev + 1); // Force re-render of Lottie component
+  };
 
   return (
     <div className="campus-partners-how-it-works-wrapper">
@@ -82,12 +85,10 @@ const HowItWorks = () => {
             <div className="how-it-works-lottie">
                 <Lottie
                     animationData={lottieAnimations[activeCardIndex]}
-                    loop={false}
-                    ref={lottieRef}
-                    onComplete={() => {
-                      // Move to next card when animation completes
-                      setActiveCardIndex((prevIndex) => (prevIndex + 1) % howItWorksData.length);
-                    }}
+                    loop={false} // Important: Set to false to enable onComplete
+                    play
+                    key={`lottie-${activeCardIndex}-${animationKey}`}
+                    onComplete={handleAnimationComplete}
                 />
             </div>
         </div>   

@@ -14,6 +14,13 @@
     .simulator-page-header {
         @include h2;
         color: #E6E6E6;
+
+        .simulator-page-header-gradient{
+            background: linear-gradient(270deg, #8591FF 90.2%, #D574E2 102.66%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     }
 
     .simulator-frame-wrapper{

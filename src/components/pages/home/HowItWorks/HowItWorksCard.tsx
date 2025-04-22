@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface HowItWorksCardProps {
   header: string;
@@ -15,20 +15,36 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
   isActive,
   onClick
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  useEffect(() => {
+    if (isActive) {
+      let topPosition;
+      if (index === 0) {
+        topPosition = 17;
+      } else {
+        topPosition = 17 + (index * 5.625); 
+      }
+      
+      const contentElement = document.querySelector('.how-it-works-content');
+      if (contentElement) {
+        const afterElement = contentElement as HTMLElement;
+        afterElement.style.setProperty('--indicator-top', `${topPosition}rem`);
+        afterElement.classList.add('has-active-item');
+      }
+    }
+  }, [isActive, index]);
+
   return (
     <div 
-      className={`how-it-works-card ${isActive ? 'active' : ''}`}
+      className={`how-it-works-card ${isActive ? 'active' : ''} ${isHovered ? 'hovered' : ''}`}
       onClick={() => onClick(index)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="card-number">{index + 1}</div>
       <div className="card-content">
         <h3 className="card-header">{header}</h3>
-        <p className="card-subheader">{subheader}</p>
-      </div>
-      <div className="card-arrow">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 18L15 12L9 6" stroke={isActive ? "#4434EF" : "#888"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        {isActive && <p className="card-subheader">{subheader}</p>}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ const SimulatorPage = () => {
         <div className="simulator-page-wrapper">
             <div className="simulator-wrapper">
                 <div className="simulator-page-header">
-                    {simulatorText.headerText}
+                    <span className="simulator-page-header-gradient">Train AI </span> in Your Area of Expertise!
                 </div>
                 <div className="simulator-content-wrapper">
                     <Simulator 

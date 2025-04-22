@@ -1,4 +1,4 @@
-import Lottie from "lottie-react";
+import Lottie from "react-lottie-player";
 import moneyAnimation from "../../../../../public/assets/benefits/lottie/opportunities.json";
 
 const Opportunities = () => {
@@ -7,8 +7,9 @@ const Opportunities = () => {
             <div className="opportunities-card-lottie">
                 <Lottie 
                     animationData={moneyAnimation} 
-                    loop={true}
-                    style={{ backgroundColor: '#fffff', opacity: '1',  }}
+                    loop
+                    play
+                    style={{ width: '100%', height: '100%', backgroundColor: 'transparent', opacity: '1' }}
                 />  
             </div>
             <div className="opportunities-card-title">Bigger Opportunities</div>

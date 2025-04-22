@@ -3,7 +3,7 @@
 import { ISimulatorProps } from "@/interfaces/components/simulator.type";
 import { FC, useState } from "react";
 import SimulatorText from "./SimulatorText";
-import Lottie from "lottie-react";
+import Lottie from "react-lottie-player";
 import lottie1 from "../../../../../public/assets/simulator/rlhf-lottie-1.json"
 import lottie2 from "../../../../../public/assets/simulator/rlhf-lottie-2.json"
 import lottie3 from "../../../../../public/assets/simulator/rlhf-lottie-3.json"
@@ -118,7 +118,13 @@ const Simulator: FC<ISimulatorProps> = ({
                     ))}
                 </div>
                 <div className="simulator-frame-lottie">
-                    <Lottie animationData={getLottieAnimation()} loop={true} />
+                    <Lottie
+                        animationData={getLottieAnimation()} 
+                        loop 
+                        play
+                        style={{ width: '100%', height: '100%' }}
+                        key={`${activeWindow}-${activeHeader}-${resetAnimation}`}
+                    />
                 </div>
             </div>
             <div className="simulator-frame-content">

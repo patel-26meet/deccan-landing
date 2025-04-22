@@ -1,6 +1,6 @@
 "use client";
 
-import Lottie from "lottie-react";
+import Lottie from "react-lottie-player";
 import moneyAnimation from "../../../../../public/assets/benefits/lottie/Money-2.json";
 
 const Payments = () => {
@@ -9,8 +9,9 @@ const Payments = () => {
             <div className="payments-lottie">
                 <Lottie 
                     animationData={moneyAnimation} 
-                    loop={true}
-                    style={{ backgroundColor: '#fffff', opacity: '1',  }}
+                    loop
+                    play
+                    style={{ width: '100%', height: '100%', backgroundColor: 'transparent', opacity: '1' }}
                 />  
             </div>
             <div className="payments-header">Get Payments</div>
