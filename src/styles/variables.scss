@@ -21,6 +21,13 @@ $very-light-gray-text: #808080;
 $button-bg-color: rgba(255, 255, 255, 0.15);
 $button-text-color: $black;
 
+// Navbar variables
+$navbar-height: 4.5rem;
+$navbar-transition: 0.5s ease;
+$navbar-dark-bg: $black;
+$navbar-light-bg: $white;
+$navbar-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
 // Typography
 $font-family-base: "DM Sans";
 $font-size-base: 16px;
@@ -67,3 +74,10 @@ $gradient-primary: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
 $gradient-text: linear-gradient(92deg, #3D4FF3 0%, #C23BD4 120.86%);
 $standard-gap: 12px;
 $large-gap: 24px;
+
+// Root CSS variables 
+:root {
+  --navbar-dark-bg: #{$navbar-dark-bg};
+  --navbar-light-bg: #{$navbar-light-bg};
+  --opposite-color: #{$white}; // Default state
+}

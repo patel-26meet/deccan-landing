@@ -1,0 +1,186 @@
+.nav-bar-wrapper {
+    height: $navbar-height;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $z-index-fixed;
+    transition: opacity 1.8s ease-in, background-color $navbar-transition;
+    @include flex-row(space-between);
+    padding: 0 2rem;
+    animation-fill-mode: forwards;
+    will-change: opacity, transform; // Performance optimization
+    
+    // Initially hidden state
+    &.initially-hidden {
+        opacity: 0 !important; // Force initial invisible state
+        pointer-events: none;
+    }
+    
+    // Content visibility states
+    &.content-hidden {
+        .nav-bar-left img,
+        .nav-bar-middle div,
+        .nav-bar-right div {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+    
+    &.content-visible {
+        .nav-bar-left img,
+        .nav-bar-middle div,
+        .nav-bar-right div {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    // Visibility states
+    &.visible {
+        opacity: 1;
+        pointer-events: auto;
+        
+        // Apply a fade-in animation similar to hero text
+        &.content-visible:not(.initially-hidden) {
+            animation: navFadeIn 1.8s ease-in forwards;
+        }
+    }
+
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    // Background states
+    &.transparent {
+        background-color: transparent;
+        box-shadow: none;
+        
+        .nav-bar-middle div, 
+        .nav-bar-right div {
+            color: $white;
+        }
+    }
+
+    &.dark-bg {
+        background-color: $navbar-dark-bg;
+        
+        .nav-bar-middle div, 
+        .nav-bar-right div {
+            color: $white;
+        }
+    }
+
+    &.light-bg {
+        background-color: $navbar-light-bg;
+        box-shadow: $navbar-shadow;
+        
+        .nav-bar-middle div, 
+        .nav-bar-right div {
+            color: $black;
+        }
+        
+        :root {
+            --opposite-color: #{$black};
+        }
+    }
+
+    .nav-bar-left {
+        img {
+            height: 2.5rem;
+            transition: opacity $transition-base, transform $transition-base;
+        }
+    }
+
+    .nav-bar-middle {
+        @include flex-row;
+        @include b-l;
+        gap: 2.5rem;
+
+        div {
+            cursor: pointer;
+            transition: color $navbar-transition, opacity $transition-base, transform $transition-base;
+            position: relative;
+            
+            // Add transition delays to create a cascading effect
+            @for $i from 1 through 5 {
+                &:nth-child(#{$i}) {
+                    transition-delay: #{$i * 0.05 + 0.4}s; // Start after initial fade-in
+                }
+            }
+            
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background-color: currentColor;
+                transition: width $transition-fast;
+            }
+            
+            &:hover:after {
+                width: 100%;
+            }
+        }
+    }
+
+    .nav-bar-right {
+        @include flex-row;
+        gap: 1rem;
+
+        div {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: $border-radius-sm;
+            transition: all $transition-fast, opacity $transition-base, transform $transition-base;
+            
+            // Add transition delays to continue the cascading effect
+            &:first-child {
+                transition-delay: 0.7s; // Adjust to match hero text timing
+                
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+            }
+            
+            &:last-child {
+                transition-delay: 0.8s; // Adjust to match hero text timing
+                border: 1px solid currentColor;
+                
+                &:hover {
+                    background-color: currentColor;
+                    color: var(--opposite-color, inherit);
+                }
+            }
+        }
+    }
+}
+
+// Enhanced fade-in animation to match hero text
+@keyframes navFadeIn {
+    0% { opacity: 0; }
+    10% { opacity: 0.05; } // Slow start for smoother initial appearance
+    100% { opacity: 1; }
+}
+
+@include mobile {
+    .nav-bar-wrapper {
+        padding: 0 1rem;
+        
+        .nav-bar-middle {
+            display: none;
+        }
+        
+        .nav-bar-right {
+            gap: 0.5rem;
+            
+            div {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.875rem;
+            }
+        }
+    }
+}

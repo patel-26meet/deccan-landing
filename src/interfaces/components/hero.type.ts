@@ -4,3 +4,7 @@ export interface IHeroSectionProps {
   secondaryCTA?: string;
   label?: string;
 }
+
+export interface IHeroIconsProps {
+    text: string;
+}

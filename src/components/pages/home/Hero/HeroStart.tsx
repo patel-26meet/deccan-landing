@@ -1,0 +1,357 @@
+"use client"
+
+import Lottie from "react-lottie-player";
+import { useState, useEffect, useRef } from "react";
+import lottie1 from "../../../../../public/assets/hero-json/hero-1.json";
+import lottie2 from "../../../../../public/assets/hero-json/hero-3.json";
+import lottie3 from "../../../../../public/assets/hero-json/hero-2.json";
+import Button from "@/components/shared/Button";
+import HeroIconsLayout from "./HeroIconsLayout";
+
+interface IAnimationState {
+  showFirstAnim: boolean;
+  showSecondAnim: boolean;
+  showThirdAnim: boolean;
+  firstAnimCompleted: boolean;
+  secondAnimSpeed: number;
+  thirdAnimProgress: number;
+  lottieThirdProgress: number; // Separate progress for Lottie animation
+  showText: boolean;
+  textHighlightIndex: number;
+  animationCompleted: boolean;
+  iconsLayoutProgress: number;
+  textFullyHighlighted: boolean;
+}
+
+const HeroStart = () => {
+  const [animState, setAnimState] = useState<IAnimationState>({
+    showFirstAnim: true,
+    showSecondAnim: false,
+    showThirdAnim: false,
+    firstAnimCompleted: false,
+    secondAnimSpeed: 1,
+    thirdAnimProgress: 0,
+    lottieThirdProgress: 0, // Initialize separate Lottie progress
+    showText: false,
+    textHighlightIndex: -1,
+    animationCompleted: false,
+    iconsLayoutProgress: 0,
+    textFullyHighlighted: false
+  });
+  
+  // Split text into words for the word-by-word highlight effect
+  const overlayTextWords = "Shape the Future of AI with Flexible, High Impact Remote opportunities across 50+ domains tailored for your expertise!".split(" ");
+  
+  const wheelEventRef = useRef<WheelEvent | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const totalScrollRef = useRef<number>(0);
+  const isScrollingRef = useRef<boolean>(false);
+  const hasLeftSectionRef = useRef<boolean>(false);
+
+  // Handle first animation completion
+  const handleFirstAnimComplete = () => {
+    console.log("First animation completed");
+    setAnimState((prev) => ({
+      ...prev,
+      showFirstAnim: false,
+      firstAnimCompleted: true,
+      showSecondAnim: true,
+      showText: true,
+    }));
+  };
+
+  // Log state changes for debugging
+  useEffect(() => {
+    console.log("Animation state updated:", animState);
+    
+    // Check if text is fully highlighted (all words are white)
+    if (!animState.textFullyHighlighted && 
+        animState.textHighlightIndex >= overlayTextWords.length - 1) {
+      setAnimState(prev => ({
+        ...prev,
+        textFullyHighlighted: true
+      }));
+    }
+  }, [animState, overlayTextWords.length]);
+
+  // Check if user has scrolled past the hero section
+  useEffect(() => {
+    const checkScrollPosition = () => {
+      const heroHeight = window.innerHeight;
+      if (window.scrollY > heroHeight) {
+        hasLeftSectionRef.current = true;
+      }
+    };
+
+    window.addEventListener('scroll', checkScrollPosition, { passive: true });
+    return () => window.removeEventListener('scroll', checkScrollPosition);
+  }, []);
+
+  // Calculate icon layout position and opacity
+  const getIconsLayoutStyle = () => {
+    if (!animState.textFullyHighlighted) {
+      return {
+        transform: 'translateY(100%)',
+        opacity: 0
+      };
+    }
+
+    // After text is fully highlighted, start showing icons layout
+    const progress = animState.iconsLayoutProgress;
+    
+    // Calculate starting position (100% = bottom of screen)
+    // Move from 100% (bottom) to -30% (30% above the top)
+    const translateY = 100 - (progress * 130);
+    
+    // Calculate opacity - fully visible in the middle of the journey
+    let opacity = 0;
+    if (progress < 0.2) {
+      // Fade in from 0 to 1 during first 20% of progress
+      opacity = progress / 0.2;
+    } else if (progress > 0.8) {
+      // Fade out from 1 to 0 during last 20% of progress
+      opacity = 1 - ((progress - 0.8) / 0.2);
+    } else {
+      // Fully visible in the middle
+      opacity = 1;
+    }
+    
+    return {
+      transform: `translateY(${translateY}%)`,
+      opacity
+    };
+  };
+
+  // Handle scroll events for animation control and disable default scroll
+  useEffect(() => {
+    let isSecondAnimSpeeding = false;
+
+    const handleWheel = (e: WheelEvent) => {
+      // If animation is completed or user has scrolled past the section and back, allow normal scrolling
+      if (animState.animationCompleted || hasLeftSectionRef.current) {
+        return; // Allow normal scroll behavior
+      }
+      
+      // Store the original wheel event for later use
+      wheelEventRef.current = e;
+      
+      if (animState.showSecondAnim && !animState.showThirdAnim) {
+        // Prevent default scrolling during second animation
+        e.preventDefault();
+        
+        // Check if scroll delta is significant enough
+        if (Math.abs(e.deltaY) > 5 && !isSecondAnimSpeeding) {
+          isSecondAnimSpeeding = true;
+          console.log("Speeding up second animation");
+          
+          // Add scroll-disabled class to body
+          document.body.classList.add('scroll-disabled');
+          
+          // Speed up the second animation
+          setAnimState((prev) => ({
+            ...prev,
+            secondAnimSpeed: 3,
+          }));
+
+          // After a short delay, transition to the third animation
+          setTimeout(() => {
+            console.log("Transitioning to third animation");
+            document.body.classList.remove('scroll-disabled');
+            setAnimState((prev) => ({
+              ...prev,
+              showSecondAnim: false,
+              showThirdAnim: true,
+              showText: false,
+            }));
+            isSecondAnimSpeeding = false;
+          }, 1000);
+        }
+      } 
+      else if (animState.showThirdAnim) {
+        // Custom scroll behavior for third animation
+        e.preventDefault();
+        
+        // If we're already processing a scroll, accumulate the scroll amount
+        if (isScrollingRef.current) {
+          totalScrollRef.current += e.deltaY;
+          return;
+        }
+        
+        isScrollingRef.current = true;
+        totalScrollRef.current = e.deltaY;
+        
+        // Process accumulated scroll after a short delay
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+        
+        scrollTimeoutRef.current = setTimeout(() => {
+          // Calculate new progress and text highlight based on accumulated scroll
+          const scrollAmount = totalScrollRef.current;
+          const scrollDirection = scrollAmount > 0 ? 1 : -1;
+          
+          // Update the animation progress
+          setAnimState((prev) => {
+            // Calculate new progress values - don't cap at 1.0 until icons are complete
+            const progressStep = 0.05 * Math.sign(scrollAmount);
+            const newThirdProgress = prev.thirdAnimProgress + progressStep;
+            
+            // Continuously update Lottie animation progress regardless of text highlighting
+            // Further reduced multiplier to 0.5 for an even slower animation
+            const newLottieProgress = Math.max(prev.lottieThirdProgress + (progressStep * 0.95), 0);
+            
+            // Calculate which word should be highlighted
+            const maxHighlightIndex = overlayTextWords.length - 1;
+            const highlightIndex = Math.min(
+              Math.floor(Math.min(newThirdProgress, 1) * overlayTextWords.length),
+              maxHighlightIndex
+            );
+            
+            // After text is fully highlighted, start icons layout animation
+            let iconsProgress = prev.iconsLayoutProgress;
+            const textIsFullyHighlighted = highlightIndex >= maxHighlightIndex;
+            
+            if (textIsFullyHighlighted) {
+              // Calculate new progress for icons layout (0 to 1)
+              // Slow down the icons animation
+              if (scrollDirection > 0) {
+                // Moving forward
+                iconsProgress = Math.min(iconsProgress + (progressStep * 0.7), 1);
+              } else if (scrollDirection < 0) {
+                // Moving backward
+                iconsProgress = Math.max(iconsProgress + (progressStep * 0.7), 0);
+              }
+            }
+            
+            // Only cap the third animation progress after checking text highlighting
+            // This allows the animation to continue beyond the text highlighting
+            const finalThirdProgress = Math.min(Math.max(newThirdProgress, 0), 1);
+            
+            // Check if animation is complete (icons animation must be complete)
+            const isCompleted = iconsProgress >= 1;
+            
+            // If we've reached the end of the animation, allow normal scrolling
+            if (isCompleted && scrollDirection > 0) {
+              // Remove scroll lock permanently
+              document.body.classList.remove('scroll-disabled');
+              
+              // After a short delay, let the actual page scroll happen
+              setTimeout(() => {
+                window.scrollBy({ 
+                  top: 100, 
+                  behavior: 'smooth' 
+                });
+              }, 300);
+            } else if (finalThirdProgress <= 0 && scrollDirection < 0) {
+              // At the beginning, prevent scrolling back
+              document.body.classList.add('scroll-disabled');
+            } else if (!isCompleted) {
+              // During animation, disable normal scrolling
+              document.body.classList.add('scroll-disabled');
+            }
+            
+            return {
+              ...prev,
+              thirdAnimProgress: finalThirdProgress,
+              lottieThirdProgress: newLottieProgress,
+              textHighlightIndex: highlightIndex,
+              animationCompleted: isCompleted,
+              iconsLayoutProgress: iconsProgress
+            };
+          });
+          
+          isScrollingRef.current = false;
+        }, 50);
+      }
+    };
+
+    // Passive wheel event listener (cannot prevent default) for tracking
+    window.addEventListener('wheel', () => {}, { passive: true });
+    
+    // Non-passive wheel event listener for controlling scrolling
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('wheel', () => {});
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      // Always make sure to remove any scroll lock when component unmounts
+      document.body.classList.remove('scroll-disabled');
+    };
+  }, [animState.showSecondAnim, animState.showThirdAnim, animState.animationCompleted, overlayTextWords.length]);
+
+  return (
+    <div className="hero-start-wrapper">
+      {animState.showFirstAnim && (
+        <Lottie
+          loop={false}
+          animationData={lottie1}
+          play
+          onComplete={handleFirstAnimComplete}
+        />
+      )}
+
+      {animState.showSecondAnim && (
+        <div className="second-animation-container">
+          <Lottie
+            loop={true}
+            animationData={lottie2}
+            play
+            speed={animState.secondAnimSpeed}
+          />
+        </div>
+      )}
+
+      {animState.showThirdAnim && (
+        <div className="third-animation-container">
+          <Lottie
+            loop={false}
+            animationData={lottie3}
+            play
+            speed={0}
+            goTo={animState.lottieThirdProgress * 100} // Use the separate Lottie progress
+          />
+          
+          <div className={`hero-content-overlay ${animState.thirdAnimProgress > 0 ? 'visible' : ''}`}>
+            <div className="overlay-text">
+              <div className="text-sentence">
+                {overlayTextWords.map((word, index) => (
+                  <span
+                    key={index}
+                    className={`text-word ${index <= animState.textHighlightIndex ? 'active' : ''}`}
+                  >
+                    {word}{' '}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div 
+            className="hero-icons-layout-container"
+            style={getIconsLayoutStyle()}
+          >
+            <HeroIconsLayout />
+          </div>
+        </div>
+      )}
+
+      {animState.showText && !animState.showThirdAnim && (
+        <div className={`login-text ${animState.showText ? 'fade-in' : ''}`}>
+          <h1 className="hero-start-title">Be Part of the AI Revolution</h1>
+          <p className="hero-start-description">
+           Join a global network of experts training LLMs. Work remotely, earn in dollars, and 
+           Shape the future of AI
+          </p>
+          <div className="hero-start-button">
+            <Button text="Apply Now" mode="dark" onClick={() => {}} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HeroStart;

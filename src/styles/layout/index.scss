@@ -1,1 +1,13 @@
 // Layout styles
+
+// Main content container
+.main-content {
+    width: 100%;
+    
+    // Remove padding-top to allow Hero to be positioned at the very top
+    // padding-top: 4.5rem;
+    
+    // Ensure smooth scrolling for the navbar effect
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}

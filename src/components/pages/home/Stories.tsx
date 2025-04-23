@@ -1,22 +1,13 @@
 'use client';
 
-import React, { useState } from 'react'
+import React from 'react'
 import StoriesCard from './Stories/StoriesCard';
 import ImageBackside from './Stories/ImageBackside';
 import { storiesData } from '@/constants/pages/home/stories';
 
 const Stories = () => {
-  const [isImage1Flipped, setIsImage1Flipped] = useState(false);
-  const [isImage2Flipped, setIsImage2Flipped] = useState(false);
-
-  const handleImage1Flip = () => {
-    setIsImage1Flipped(!isImage1Flipped);
-  };
-
-  const handleImage2Flip = () => {
-    setIsImage2Flipped(!isImage2Flipped);
-  };
-
+  // We no longer need to manage state since hover will be handled by CSS
+  
   return (
     <>
     <div className='stories-wrapper'>
@@ -41,7 +32,7 @@ const Stories = () => {
                     >
                       <img className='stories-body-left-top-img hover-effect' src={storiesData.images.linkedinPost}/>
                     </a>
-                    <div className={`flip-card ${isImage1Flipped ? 'flipped' : ''}`} onClick={handleImage1Flip}>
+                    <div className="flip-card">
                       <div className="flip-card-inner">
                         <div className="flip-card-front">
                           <img className='stories-body-left-top-img-2' src={storiesData.images.image1}/>
@@ -93,7 +84,7 @@ const Stories = () => {
                     <img className='stories-body-right-top-img hover-effect' src={storiesData.images.linkedinMsg}/>
                 </div>
                 <div className='stories-body-right-middle'>
-                    <div className={`flip-card ${isImage2Flipped ? 'flipped' : ''}`} onClick={handleImage2Flip}>
+                    <div className="flip-card">
                       <div className="flip-card-inner">
                         <div className="flip-card-front">
                           <img className='stories-body-right-bottom-img-1' src={storiesData.images.image2}/>

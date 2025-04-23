@@ -1,0 +1,210 @@
+.hero-start-wrapper {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: $black;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.8s ease-in forwards;
+    animation-delay: 0.2s;
+    will-change: opacity;
+}
+
+@keyframes fadeIn {
+    0% { 
+        opacity: 0;
+    }
+    10% { 
+        opacity: 0.05;
+    }
+    100% { 
+        opacity: 1;
+    }
+}
+
+.second-animation-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        border-radius: 25px;
+        animation: scrollIndicator 2s infinite;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+        animation-delay: 3s;
+    }
+    
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 6px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        animation: scrollDot 2s infinite;
+        opacity: 0;
+        z-index: 1;
+        animation-delay: 3s;
+    }
+}
+
+.login-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 1rem;
+    text-align: center;
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.90);
+    width: 90%;
+    max-width: 800px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+
+    &.fade-in {
+        pointer-events: auto;
+    }
+
+    .hero-start-title {
+        @include h1;
+        color: $white;
+    }
+
+    .hero-start-description {
+        @include b-l-r;
+        align-self: stretch;
+        padding: 0 1rem;
+    }
+
+    .hero-start-button {
+        margin-top: 1.5rem;
+    }
+}
+
+.third-animation-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-content-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    &.visible {
+        opacity: 1;
+    }
+}
+
+.overlay-text {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    .text-sentence {
+        @include h2;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        
+        .text-word {
+            color: rgba(255, 255, 255, 0.40);
+            transition: color 0.3s ease-out;
+            margin: 0 0.2rem;
+            
+            &.active {
+                color: #FFFFFF;
+            }
+        }
+    }
+}
+
+.scroll-disabled {
+    overflow: hidden;
+}
+
+.hero-icons{
+    display: inline-flex;
+    height: 3.25px;
+    padding: 1rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    border-radius: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    .hero-icons-text{
+        @include b-r;
+        color: $white;
+        white-space: nowrap;
+    }
+}
+
+// Icons layout styling
+.hero-icons-layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    
+}
+
+.hero-icon-container {
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+    // For icons using right/bottom positioning
+    &[style*="right"] {
+        transform: translate(50%, -50%);
+    }
+    
+    &[style*="bottom"] {
+        transform: translate(-50%, 50%);
+    }
+    
+    &[style*="right"][style*="bottom"] {
+        transform: translate(50%, 50%);
+    }
+}
+
+// Add this new class for the container
+.hero-icons-layout-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+    will-change: transform, opacity;
+}
