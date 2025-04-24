@@ -1,5 +1,6 @@
 "use client"
 
+import { useRef, useState, useEffect } from "react";
 import Button from "@/components/shared/Button";
 import Community from "./Benefits/Community";
 import EventsAndMeetups from "./Benefits/EventsAndMeetups";
@@ -10,10 +11,60 @@ import WorkAndImpact from "./Benefits/WorkAndImpact";
 import FilterIcon from "./Opportunities/filterIcon";
 import OpportunitiesCard from "./Opportunities/opportunitiesCard";
 import { opportunitiesData } from "./Opportunities/opportunitiesData";
-import { useState, useMemo } from "react";
+import { useState as useStateInternal, useMemo } from "react";
 
 const OpportunitiesAndBenifits = () => {
-    const [selectedFilter, setSelectedFilter] = useState("All");
+    const [selectedFilter, setSelectedFilter] = useStateInternal("All");
+    
+    // Reference to the section wrapper
+    const sectionRef = useRef<HTMLDivElement>(null);
+    // State to track visibility
+    const [isVisible, setIsVisible] = useState(false);
+    // State to track if we're coming from simulator (above) or statistics (below)
+    const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
+    const lastScrollY = useRef(0);
+    
+    // Track scroll direction
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY.current) {
+                setScrollDirection('down');
+            } else {
+                setScrollDirection('up');
+            }
+            lastScrollY.current = currentScrollY;
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    
+    // Custom intersection observer implementation
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                // Update state when intersection status changes
+                setIsVisible(entry.isIntersecting);
+            },
+            { 
+                threshold: 0.2, // Trigger when 20% visible - earlier than child components
+                rootMargin: "0px"
+            }
+        );
+        
+        // Start observing when component mounts
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+        
+        // Clean up observer on unmount
+        return () => {
+            if (sectionRef.current) {
+                observer.disconnect();
+            }
+        };
+    }, []);
     
     const handleFilterClick = (filterText: string) => {
         setSelectedFilter(filterText);
@@ -42,7 +93,10 @@ const OpportunitiesAndBenifits = () => {
 
     return (
         <>
-            <div className="opportunities-and-benefits-wrapper">
+            <div 
+                ref={sectionRef}
+                className={`opportunities-and-benefits-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'} ${scrollDirection === 'down' ? 'from-simulator' : 'from-statistics'}`}
+            >
                 <div className="opportunities-wrapper">
                     <div className="opportunities-header">Opportunities </div>
                         <div className="opportunities-text"> Explore flexible, remote opportunities and shape the future of AI, all at your own pace</div>

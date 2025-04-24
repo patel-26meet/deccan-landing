@@ -1,9 +1,45 @@
-import React from 'react';
+"use client";
+
+import { useRef, useState, useEffect } from "react";
 // import deccanLogo from '/assets/deccan-logo.svg';
 
-export default function Footer() {
+const Footer = () => {
+  // Reference to the footer section
+  const footerRef = useRef<HTMLDivElement>(null);
+  // State to track visibility
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // Custom intersection observer implementation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update state when intersection status changes
+        setIsVisible(entry.isIntersecting);
+      },
+      { 
+        threshold: 0.3, // Trigger when 30% visible
+        rootMargin: "0px"
+      }
+    );
+    
+    // Start observing when component mounts
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+    
+    // Clean up observer on unmount
+    return () => {
+      if (footerRef.current) {
+        observer.disconnect();
+      }
+    };
+  }, []);
+  
   return (
-    <>
+    <div 
+      ref={footerRef}
+      className={`footer-container ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
+    >
       <div className='footer-get-started'>Get Started with Soul AI now!</div>
       
       <div className='footer-wrapper'>
@@ -70,7 +106,9 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
+
+export default Footer;
 

@@ -1,9 +1,46 @@
+"use client";
+
+import { useRef, useState, useEffect } from "react";
 import Lottie from "react-lottie-player";
 import moneyAnimation from "../../../../../public/assets/benefits/lottie/opportunities.json";
 
 const Opportunities = () => {
+    // Reference to the opportunities card
+    const opportunitiesRef = useRef<HTMLDivElement>(null);
+    // State to track visibility
+    const [isVisible, setIsVisible] = useState(false);
+    
+    // Custom intersection observer implementation
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                // Update state when intersection status changes
+                setIsVisible(entry.isIntersecting);
+            },
+            { 
+                threshold: 0.5, // Trigger when 50% visible
+                rootMargin: "0px"
+            }
+        );
+        
+        // Start observing when component mounts
+        if (opportunitiesRef.current) {
+            observer.observe(opportunitiesRef.current);
+        }
+        
+        // Clean up observer on unmount
+        return () => {
+            if (opportunitiesRef.current) {
+                observer.disconnect();
+            }
+        };
+    }, []);
+    
     return (
-        <div className="opportunities-card-wrapper">
+        <div 
+            ref={opportunitiesRef} 
+            className={`opportunities-card-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
+        >
             <div className="opportunities-card-lottie">
                 <Lottie 
                     animationData={moneyAnimation} 

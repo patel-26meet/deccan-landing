@@ -1,6 +1,42 @@
 .about-us-faqs-wrapper{
     background: $grey url("/assets/about-us-FAQ-bg.svg");
     background-size: cover;
+    position: relative;
+    transition: opacity 0.8s ease-in-out;
+    will-change: opacity;
+    
+    // Hidden state - initial state when entering viewport
+    &.fade-in-hidden {
+        opacity: 0.3; // Start slightly visible for a more subtle effect
+        
+        .about-us-wrapper,
+        .about-us-btn-wrapper,
+        .faqs-wrapper {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    }
+    
+    // Visible state - after section is visible in viewport
+    &.fade-in-visible {
+        opacity: 1;
+        
+        .about-us-wrapper,
+        .about-us-btn-wrapper,
+        .faqs-wrapper {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-out;
+        }
+        
+        .about-us-btn-wrapper {
+            transition-delay: 0.1s;
+        }
+        
+        .faqs-wrapper {
+            transition-delay: 0.2s;
+        }
+    }
 }
 
 .about-us-wrapper{

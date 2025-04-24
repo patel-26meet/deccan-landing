@@ -1,11 +1,68 @@
 .opportunities-and-benefits-wrapper {
+    position: relative;
     background: $grey url("/assets/opportunities-benefits-transparent-bg.svg");
-    background-size: cover
+    background-size: cover;
+    padding-top: 20rem;
+    
+    // Create a pseudo-element for the black overlay - ONLY used when coming FROM simulator (black) TO opportunities/benefits (gray)
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $black;
+        z-index: 1;
+        transition: opacity 1.2s ease-in-out;
+        pointer-events: none;
+        opacity: 0; // By default, the black overlay is invisible
+    }
+    
+    // When coming from the simulator (scrolling down)
+    &.from-simulator {
+        &::before {
+            opacity: 1; // Show black overlay initially when coming from simulator
+        }
+        
+        &.fade-in-visible::before {
+            opacity: 0; // Fade out the black overlay to reveal gray background
+        }
+    }
+    
+    // When coming from statistics or other sections below (scrolling up)
+    &.from-statistics {
+        &::before {
+            opacity: 0; // Never show black overlay when coming from statistics
+        }
+    }
+    
+    // Hidden state - initial state when entering viewport
+    &.fade-in-hidden {
+        // Hide content initially regardless of which section we're coming from
+        .opportunities-wrapper, 
+        .benefits-wrapper {
+            opacity: 0;
+        }
+    }
+    
+    // Visible state - after section is visible in viewport
+    &.fade-in-visible {
+        // Show content
+        .opportunities-wrapper, 
+        .benefits-wrapper {
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+            transition-delay: 0.3s; // Start after background begins to fade (if any)
+        }
+    }
 }
 
 .opportunities-wrapper {
     @include section-wrapper;
     padding: 100px 80px 80px 80px;
+    position: relative;
+    z-index: 2; // Above the overlay
 
     .opportunities-header {
         @include h2;
@@ -26,6 +83,8 @@
     @include section-wrapper;
     padding: 5rem;
     gap: 1.5rem;
+    position: relative;
+    z-index: 2; // Above the black overlay
 
     .benefits-header {
         @include section-header;

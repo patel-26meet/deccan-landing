@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import FaqCard from './Faqs/FaqCard'
 import Button from '@/components/shared/Button';
 
@@ -26,6 +26,37 @@ const faqData = [
 
 export default function AboutUsFAQs() {
   const [openFaqs, setOpenFaqs] = useState<number[]>([]);
+  
+  // Reference to the section
+  const sectionRef = useRef<HTMLDivElement>(null);
+  // State to track visibility
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // Custom intersection observer implementation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update state when intersection status changes
+        setIsVisible(entry.isIntersecting);
+      },
+      { 
+        threshold: 0.3, // Trigger when 30% visible
+        rootMargin: "0px"
+      }
+    );
+    
+    // Start observing when component mounts
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    // Clean up observer on unmount
+    return () => {
+      if (sectionRef.current) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaqs(prevOpenFaqs => {
@@ -38,7 +69,10 @@ export default function AboutUsFAQs() {
   };
 
   return (
-    <div className='about-us-faqs-wrapper'>
+    <div 
+      ref={sectionRef}
+      className={`about-us-faqs-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
+    >
         <div className='about-us-wrapper'>
             <div className='about-us-header'>About Us</div>
             <div className='about-us-text'>We&apos;re a young and lightning-fast team based out of San Francisco and Hyderabad.

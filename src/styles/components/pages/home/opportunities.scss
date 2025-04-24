@@ -226,3 +226,41 @@
     border-radius: 1.25rem;
     cursor: pointer;
 }
+
+.opportunities-card-wrapper {
+    @include flex-center;
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(64.9px);
+    transition: opacity 0.8s ease-in-out;
+    
+    // Hidden state - initial state when entering viewport
+    &.fade-in-hidden {
+        opacity: 0;
+    }
+    
+    // Visible state - after 50% visible in viewport
+    &.fade-in-visible {
+        opacity: 1;
+    }
+    
+    .opportunities-card-lottie {
+        width: 227px;
+        height: 237px;
+        transform: translateY(-4rem);
+    }
+    
+    .opportunities-card-title {
+        @include h5;
+        align-self: flex-start;
+    }
+    
+    .opportunities-card-text {
+        @include b-r;
+        align-self: stretch;
+    }
+}
