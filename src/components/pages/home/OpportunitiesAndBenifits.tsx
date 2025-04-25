@@ -12,6 +12,7 @@ import FilterIcon from "./Opportunities/filterIcon";
 import OpportunitiesCard from "./Opportunities/opportunitiesCard";
 import { opportunitiesData } from "./Opportunities/opportunitiesData";
 import { useState as useStateInternal, useMemo } from "react";
+import FilterBar from "@/components/shared/FilterBar";
 
 const OpportunitiesAndBenifits = () => {
     const [selectedFilter, setSelectedFilter] = useStateInternal("All");
@@ -91,6 +92,14 @@ const OpportunitiesAndBenifits = () => {
         }
     }, [selectedFilter]);
 
+    const filterOptions = [
+        { id: "All", text: "All" },
+        { id: "Coding and Software", text: "Coding and Software" },
+        { id: "AI/ML", text: "AI/ML" },
+        { id: "Specialist", text: "Specialist" },
+        { id: "Linguistics", text: "Linguistics" }
+    ];
+
     return (
         <>
             <div 
@@ -100,23 +109,13 @@ const OpportunitiesAndBenifits = () => {
                 <div className="opportunities-wrapper">
                     <div className="opportunities-header">Opportunities </div>
                         <div className="opportunities-text"> Explore flexible, remote opportunities and shape the future of AI, all at your own pace</div>
-                        <div className="opportunities-bar">
-                            <div onClick={() => handleFilterClick("All")}>
-                                <FilterIcon isSelected={selectedFilter === "All"} text="All" />
-                            </div>
-                            <div onClick={() => handleFilterClick("Coding and Software")}>
-                                <FilterIcon isSelected={selectedFilter === "Coding and Software"} text="Coding and Software" />
-                            </div>
-                            <div onClick={() => handleFilterClick("AI/ML")}>
-                                <FilterIcon isSelected={selectedFilter === "AI/ML"} text="AI/ML" />
-                            </div>
-                            <div onClick={() => handleFilterClick("Specialist")}>
-                                <FilterIcon isSelected={selectedFilter === "Specialist"} text="Specialist" />
-                            </div>
-                            <div onClick={() => handleFilterClick("Linguistics")}>
-                                <FilterIcon isSelected={selectedFilter === "Linguistics"} text="Linguistics" />
-                            </div>
-                        </div>
+                        <FilterBar 
+                            options={filterOptions}
+                            selectedFilter={selectedFilter}
+                            onFilterChange={handleFilterClick}
+                            className="opportunities-bar"
+                            FilterIcon={FilterIcon}
+                        />
                         <div className="opportunities-cards-wrapper">
                             {filteredOpportunities.map((opportunity, index) => (
                                 <OpportunitiesCard 
@@ -139,12 +138,8 @@ const OpportunitiesAndBenifits = () => {
                         <div className="benefits-text">Unlock your potential beyond geographic limitations</div>
                         <div className="benefits-cards-wrapper">
                             <div className="benefits-lnd-events">
-                                <div>
                                     <LearningAndDev/>
-                                </div>
-                                <div>
                                     <EventsAndMeetups/>
-                                </div>
                             </div>
                             <div className="benefits-others">
                                 <div className="benefits-payments-flexible">

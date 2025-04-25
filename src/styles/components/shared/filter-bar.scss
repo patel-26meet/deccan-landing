@@ -1,0 +1,37 @@
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  
+  > div {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.filter-icon-btn {
+  @include flex-center;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: $white;
+  cursor: pointer;
+
+  &.selected {
+      background: $gradient-primary;
+
+      .filter-icon-text {
+          color: $white;
+      }
+  }
+
+  .filter-icon-text {
+      @include b-l;
+      color: $black;
+  }
+}
