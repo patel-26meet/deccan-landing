@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/shared/Button";
 import { useRef, useState, useEffect } from "react";
 // import deccanLogo from '/assets/deccan-logo.svg';
 
@@ -40,8 +41,13 @@ const Footer = () => {
       ref={footerRef}
       className={`footer-container ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
     >
-      <div className='footer-get-started'>Get Started with Soul AI now!</div>
-      
+      <div className='footer-get-started'>
+        <span>Get Started with Soul AI now!</span>
+
+      <div className='footer-button-wrapper'>
+        <Button text="Apply Now" mode="hybrid" />
+      </div>
+      </div>
       <div className='footer-wrapper'>
         <div className='footer-body'>
           <div className='footer-content'>

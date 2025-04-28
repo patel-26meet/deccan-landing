@@ -25,14 +25,113 @@
     color: var(--White, #FFF);
   }
   
+  &.hybrid {
+    position: relative;
+    border-radius: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    background: rgba(255, 255, 255, 0.01);
+    box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.22) inset;
+    color: var(--White, #FFF);
+    overflow: hidden;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transform: skewX(-25deg);
+      transition: all 0.75s ease;
+      pointer-events: none;
+    }
+    
+    &:hover {
+      border: 1px solid rgba(255, 255, 255, 0.30);
+      box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.3) inset;
+      background: rgba(255, 255, 255, 0.05);
+      
+      &::before {
+        left: 150%;
+        transition: all 0.75s ease;
+      }
+    }
+    
+    &:active {
+      border: 1px solid rgba(255, 255, 255, 0.40);
+      box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.4) inset;
+      transform: translateY(2px);
+      
+      &::before {
+        left: 150%;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .button-icon-container {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .button-icon {
     width: 20px;
     height: 20px;
     aspect-ratio: 1/1;
+    position: absolute;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    &.icon-default {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    &.icon-hover {
+      opacity: 0;
+      transform: translateX(-5px);
+    }
+    
+    &.hidden {
+      opacity: 0;
+    }
+  }
+  
+  &:hover, &.hovered {
+    .button-icon {
+      &.icon-default {
+        opacity: 0;
+        transform: translateX(5px);
+      }
+      
+      &.icon-hover {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   }
   
   &:hover {
     background: rgba(255, 255, 255, 0.40);
+    
+    &.hybrid {
+      background: rgba(255, 255, 255, 0.05);
+    }
   }
   
   &.focused {

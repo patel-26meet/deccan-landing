@@ -1,9 +1,8 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 
 interface ButtonProps {
   text: string;
-  mode?: 'light' | 'dark';
+  mode?: 'light' | 'dark' | 'hybrid';
   state?: 'default' | 'hover' | 'focused' | 'selected';
   onClick?: () => void;
   className?: string;
@@ -16,16 +15,14 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   className = '',
 }) => {
-  // Determine which icon to use based on state
-  const iconSrc = state === 'default' || state === 'focused'
-    ? '/assets/button/arrow-right-1.svg'
-    : '/assets/button/arrow-right-2.svg';
+  const [isHovered, setIsHovered] = useState(false);
   
   // Combine all classes
   const buttonClasses = [
     'button',
     mode,
     state !== 'default' ? state : '',
+    isHovered ? 'hovered' : '',
     className
   ].filter(Boolean).join(' ');
   
@@ -33,9 +30,22 @@ const Button: React.FC<ButtonProps> = ({
     <button 
       className={buttonClasses}
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <span>{text}</span>
-      <img src={iconSrc} alt="arrow" className="button-icon" />
+      <div className="button-icon-container">
+        <img 
+          src="/assets/button/arrow-right-1.svg" 
+          alt="arrow" 
+          className={`button-icon icon-default ${isHovered || state === 'hover' || state === 'selected' ? 'hidden' : ''}`} 
+        />
+        <img 
+          src="/assets/button/arrow-right-2.svg" 
+          alt="arrow" 
+          className={`button-icon icon-hover ${isHovered || state === 'hover' || state === 'selected' ? '' : 'hidden'}`} 
+        />
+      </div>
     </button>
   );
 };
