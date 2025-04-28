@@ -213,4 +213,15 @@
         gap: 2rem;
     }
 }
+
+@media screen and (max-width: $breakpoint-sm) {
+    
+    .footer-body-footer{
+        @include b-s;
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
   

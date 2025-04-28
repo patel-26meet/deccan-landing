@@ -26,7 +26,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
         topPosition = 17 + (index * 5.625); 
       }
       
-      const contentElement = document.querySelector('.how-it-works-content');
+      const contentElement = document.querySelector('.how-it-works__content');
       if (contentElement) {
         const afterElement = contentElement as HTMLElement;
         afterElement.style.setProperty('--indicator-top', `${topPosition}rem`);
@@ -37,14 +37,14 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
 
   return (
     <div 
-      className={`how-it-works-card ${isActive ? 'active' : ''} ${isHovered ? 'hovered' : ''}`}
+      className={`how-it-works__card ${isActive ? 'active' : ''} ${isHovered ? 'hovered' : ''}`}
       onClick={() => onClick(index)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="card-content">
-        <h3 className="card-header">{header}</h3>
-        {isActive && <p className="card-subheader">{subheader}</p>}
+      <div className="how-it-works__card-content">
+        <h3 className="how-it-works__card-header">{header}</h3>
+        {isActive && <p className="how-it-works__card-subheader">{subheader}</p>}
       </div>
     </div>
   );

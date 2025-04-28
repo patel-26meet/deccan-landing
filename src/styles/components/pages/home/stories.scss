@@ -1,11 +1,11 @@
-.stories-wrapper{
+.stories {
     @include flex-col();
     padding: 3.5rem 4rem;
     gap: 1.44rem;
     background: $grey;
 }
 
-.stories-blur{
+.stories__blur{
   height: 278px;
   background: linear-gradient(180deg,rgba(235, 235, 235, 0) 0%, rgba(235, 235, 235, 1) 100%);
   filter: blur(30.700000762939453px);
@@ -14,21 +14,21 @@
   transform: translateY(-250px);
 }
 
-.stories-header-wrapper{
+.stories__header-wrapper{
     @include flex-col();
     gap: 0.75rem;
     align-self: stretch;
 }
 
-.stories-header{
+.stories__header{
     @include h2;
 }
 
-.stories-content{
+.stories__content{
     @include b-m;
     padding-bottom: 5rem;
 
-    .stories-content-number{
+    .stories__content-number{
     @include b-m;
     background: linear-gradient(275deg, #3C18B9 51.97%, #AE1DEC 65.74%);
     background-clip: text;
@@ -37,7 +37,7 @@
    }
 }
 
-.stories-body{
+.stories__body{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -47,7 +47,7 @@
     
 
 
-    .stories-body-left{
+    .stories__body-left{
         height: 100%;
         width: 51.97%;
 
@@ -87,7 +87,7 @@
         }
     }
 
-    .stories-body-right{
+    .stories__body-right{
         height: 100%;
         width: 46.76%;
         
@@ -301,11 +301,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.stories-body-left-top .flip-card {
+.stories__body-left-top .flip-card {
   width: 25%;
 }
 
-.stories-body-left-top .flip-card-back {
+.stories__body-left-top .flip-card-back {
   width: 100%;
   max-width: 100%;
 }
@@ -333,4 +333,102 @@
 .linkedin-link {
   display: inline-block;
   text-decoration: none;
+}
+
+
+@media screen and (max-width: $breakpoint-sm) {
+  .stories {
+    display: flex;
+    height: 1036px;
+    padding: 56px 24px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    align-self: stretch;
+
+    .stories__header-wrapper {
+      @include flex-column;
+      gap: 0.5rem;
+      align-self: stretch;
+      align-items: center;
+    }
+
+    .stories__header {
+      @include h2;
+    }
+
+    .stories__content {
+      @include b-m;
+    }
+    
+    .stories__body-mobile {
+      @include flex-col(space-between, flex-start);
+      width: 342px;
+      height: 1000px;
+      gap: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .stories {
+    padding: 3rem 1.5rem;
+  }
+  
+  .stories__header-wrapper {
+    margin-bottom: 2rem;
+    
+    .stories__header {
+      font-size: 1.75rem;
+      text-align: center;
+    }
+    
+    .stories__content {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+  
+  .stories__body-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+    // Style the cards to match mobile design
+    .stories-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+      
+      .testimonial {
+        margin-bottom: 0.75rem;
+      }
+      
+      .profile-section {
+        margin-top: 1rem;
+      }
+    }
+    
+    // Style the image container
+    .stories__body-mobile-image {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+      
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 16px;
+      }
+    }
+  }
+  
+  // Hide the stories__blur on mobile
+  .stories__blur {
+    display: none;
+  }
 }

@@ -61,13 +61,13 @@ const SimulatorPage = () => {
     return (
         <div 
             ref={simulatorRef} 
-            className={`simulator-page-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'} ${scrollDirection === 'down' ? 'from-hero' : 'from-opportunities'}`}
+            className={`simulator__page ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'} ${scrollDirection === 'down' ? 'simulator__page--from-hero' : 'simulator__page--from-opportunities'}`}
         >
-            <div className="simulator-wrapper">
-                <div className="simulator-page-header">
-                    <span className="simulator-page-header-gradient">Train AI </span> in Your Area of Expertise!
+            <div className="simulator__container">
+                <div className="simulator__header">
+                    <span className="simulator__header__gradient">Train AI </span> in Your Area of Expertise!
                 </div>
-                <div className="simulator-content-wrapper">
+                <div className="simulator__content-wrapper">
                     <Simulator 
                         windowNames={windowNames}
                         activeWindow="SFT"

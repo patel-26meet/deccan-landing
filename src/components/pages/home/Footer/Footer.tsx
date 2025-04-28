@@ -68,7 +68,7 @@ const Footer = () => {
                   </div>
                 </div>
                 <div className='footer-made-with'>
-                  Made with ❤️ by SOUL AI
+                  Made with 🫶 by SOUL AI
                 </div>
               </div>
             </div>

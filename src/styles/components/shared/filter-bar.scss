@@ -35,3 +35,40 @@
       color: $black;
   }
 }
+
+@media screen and (max-width: $breakpoint-md) {
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+    
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    > div {
+      flex: 0 0 auto; /* Prevent items from shrinking */
+    }
+  }
+  
+  .filter-icon-btn {
+    padding: 0.75rem 1.25rem;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+  .filter-bar {
+    gap: 8px;
+  }
+  
+  .filter-icon-btn {
+    padding: 0.5rem 1rem;
+    
+    .filter-icon-text {
+      @include b-s;
+    }
+  }
+}

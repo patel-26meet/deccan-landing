@@ -104,20 +104,20 @@ const Simulator: FC<ISimulatorProps> = ({
     };
     
     return (
-        <div className="simulator-frame-wrapper">
-            <div className="simulator-frame">
-                <div className="simulator-window-bar-wrapper">
+        <div className="simulator__frame-wrapper">
+            <div className="simulator__frame">
+                <div className="simulator__window-bar-wrapper">
                     {windowNames.map(windowName => (
                         <div 
                             key={windowName}
-                            className={`simulator-window-bar ${activeWindow === windowName ? 'active' : ''}`}
+                            className={`simulator__window-bar ${activeWindow === windowName ? 'simulator__window-bar--active' : ''}`}
                             onClick={() => handleWindowChange(windowName)}
                         >
-                            <div>{windowName}</div>
+                            <div className="simulator__window-bar-text">{windowName}</div>
                         </div>
                     ))}
                 </div>
-                <div className="simulator-frame-lottie">
+                <div className="simulator__frame-lottie">
                     <Lottie
                         animationData={getLottieAnimation()} 
                         loop 
@@ -127,7 +127,7 @@ const Simulator: FC<ISimulatorProps> = ({
                     />
                 </div>
             </div>
-            <div className="simulator-frame-content">
+            <div className="simulator__frame-content">
                 <SimulatorText 
                     isOpen={true} 
                     activeHeader={activeHeader}

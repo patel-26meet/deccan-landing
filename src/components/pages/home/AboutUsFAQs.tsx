@@ -74,18 +74,24 @@ export default function AboutUsFAQs() {
       className={`about-us-faqs-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
     >
         <div className='about-us-wrapper'>
-            <div className='about-us-header'>About Us</div>
-            <div className='about-us-text'>We&apos;re a young and lightning-fast team based out of San Francisco and Hyderabad.
-            We&apos;re on a mission to build AI for Good.</div>
+            <div className='about-us-header-wrapper'>
+              <div className='about-us-header'>About Us</div>
+              <div className='about-us-text'>We&apos;re a young and lightning-fast team based out of San Francisco and Hyderabad.
+              We&apos;re on a mission to build AI for Good.</div>
+            </div>
+            <div className='about-us-image-wrapper'>
+              <img src={"/assets/deccan-people.svg"} alt="About Us" />
+            </div>
+            <div className='about-us-btn-wrapper'>
+              <Button
+                  text="Read More"
+                  mode="dark"
+                  state="default"
+                  className="read-more-btn"
+              />
+            </div>
         </div>
-        <div className='about-us-btn-wrapper'>
-          <Button
-              text="Read More"
-              mode="dark"
-              state="default"
-              className="read-more-btn"
-          />
-        </div>
+        
         
         <div className='faqs-wrapper'>
             <div className='faqs-header'>Frequently Asked Questions</div>

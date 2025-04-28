@@ -39,9 +39,9 @@ const Opportunities = () => {
     return (
         <div 
             ref={opportunitiesRef} 
-            className={`opportunities-card-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
+            className={`benefits__opportunities ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
         >
-            <div className="opportunities-card-lottie">
+            <div className="benefits__opportunities__lottie">
                 <Lottie 
                     animationData={moneyAnimation} 
                     loop
@@ -49,8 +49,8 @@ const Opportunities = () => {
                     style={{ width: '100%', height: '100%', backgroundColor: 'transparent', opacity: '1' }}
                 />  
             </div>
-            <div className="opportunities-card-title">Bigger Opportunities</div>
-            <div className="opportunities-card-text">Build connections, find mentors, and unlock doors to top organizations.</div>
+            <div className="benefits__opportunities__title">Bigger Opportunities</div>
+            <div className="benefits__opportunities__text">Build connections, find mentors, and unlock doors to top organizations.</div>
         </div> 
     )
 }

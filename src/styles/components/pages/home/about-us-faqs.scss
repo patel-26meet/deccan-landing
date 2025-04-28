@@ -39,9 +39,18 @@
     }
 }
 
+.about-us-image-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .about-us-wrapper{
     padding: 5rem;
     gap: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .about-us-btn-wrapper{

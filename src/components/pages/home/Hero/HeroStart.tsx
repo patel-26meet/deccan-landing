@@ -2,9 +2,9 @@
 
 import Lottie from "react-lottie-player";
 import { useState, useEffect, useRef } from "react";
-import lottie1 from "../../../../../public/assets/hero-json/hero-1.json";
+import lottie1 from "../../../../../public/assets/hero-json/hero-1-v2.json";
 import lottie2 from "../../../../../public/assets/hero-json/hero-3.json";
-import lottie3 from "../../../../../public/assets/hero-json/hero-2.json";
+import lottie3 from "../../../../../public/assets/hero-json/hero-3-v2.json";
 import Button from "@/components/shared/Button";
 import HeroIconsLayout from "./HeroIconsLayout";
 
@@ -319,7 +319,7 @@ const HeroStart = () => {
         
         // Continuously update Lottie animation progress regardless of text highlighting
         // Further reduced multiplier to 0.5 for an even slower animation
-        const newLottieProgress = Math.max(prev.lottieThirdProgress + (progressStep * 1.2), 0);
+        const newLottieProgress = Math.max(prev.lottieThirdProgress + (progressStep), 0);
         
         // Calculate max highlight index
         const maxHighlightIndex = overlayTextWords.length - 1;

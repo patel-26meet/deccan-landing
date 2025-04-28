@@ -68,10 +68,10 @@ const SimulatorText: FC<ISimulatorText> = ({
     };
 
     return (
-        <div className="simulator-text-wrapper">
+        <div className="simulator__text-wrapper">
             {isOpen && (
                 <>
-                    <div className="simulator-headers">
+                    <div className="simulator__headers">
                         {headers.map((header) => {
                             const isActive = activeHeader === header;
                             const description = simulatorText.contentText.find(
@@ -79,16 +79,16 @@ const SimulatorText: FC<ISimulatorText> = ({
                             )?.description || '';
                             
                             return (
-                                <div key={header} className="simulator-header-item">
+                                <div key={header} className="simulator__header-item">
                                     <h4 
-                                        className={`simulator-header ${isActive ? 'active' : ''}`}
+                                        className={`simulator__item-header ${isActive ? 'simulator__item-header--active' : ''}`}
                                         onClick={() => handleHeaderClick(header)}
                                     >
                                         {header}
                                     </h4>
                                     
                                     {isActive && (
-                                        <div className="simulator-text-content">
+                                        <div className="simulator__text-content">
                                             {description}
                                         </div>
                                     )}
@@ -96,7 +96,7 @@ const SimulatorText: FC<ISimulatorText> = ({
                                     {/* Add key to force re-render when active */}
                                     <div 
                                         key={isActive ? `active-${animationKey}` : `inactive-${header}`}
-                                        className={`simulator-progress-bar ${isActive ? 'active' : ''}`} 
+                                        className={`simulator__progress-bar ${isActive ? 'simulator__progress-bar--active' : ''}`} 
                                     />
                                 </div>
                             );

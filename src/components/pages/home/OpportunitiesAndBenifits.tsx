@@ -10,7 +10,7 @@ import Payments from "./Benefits/Payments";
 import WorkAndImpact from "./Benefits/WorkAndImpact";
 import FilterIcon from "./Opportunities/filterIcon";
 import OpportunitiesCard from "./Opportunities/opportunitiesCard";
-import { opportunitiesData } from "./Opportunities/opportunitiesData";
+import { opportunitiesData } from "../../../constants/pages/home/opportunitiesData";
 import { useState as useStateInternal, useMemo } from "react";
 import FilterBar from "@/components/shared/FilterBar";
 

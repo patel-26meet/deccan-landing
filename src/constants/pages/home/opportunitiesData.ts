@@ -150,5 +150,11 @@ export const opportunitiesData: OpportunityItem[] = [
     description: "Remote | Part time | Finance specialist",
     rate: "Starts at $12/hr",
     category: "Specialist"
+  },
+  {
+    header: "Physics Specialist",
+    description: "Remote | Part time | Physics specialist",
+    rate: "Starts at $12/hr",
+    category: "Specialist"
   }
 ];

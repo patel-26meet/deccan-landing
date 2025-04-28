@@ -1,73 +1,75 @@
-.simulator-page-wrapper {
-    background: $black;
-    @include flex-center;
-    padding: 5.5rem 5rem;
-    padding-top: 20rem;
-    position: relative;
-    
-    // Create a pseudo-element for the gray overlay - ONLY used when coming FROM opportunities (gray) TO simulator (black)
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: $grey;
-        z-index: 1;
-        transition: opacity 1.2s ease-in-out;
-        pointer-events: none;
-        opacity: 0; // By default, the gray overlay is invisible
-    }
-    
-    // When coming from opportunities (scrolling up)
-    &.from-opportunities {
+.simulator {
+    &__page {
+        background: $black;
+        @include flex-center;
+        padding: 5.5rem 5rem;
+        padding-top: 20rem;
+        position: relative;
+        
+        // Create a pseudo-element for the gray overlay - ONLY used when coming FROM opportunities (gray) TO simulator (black)
         &::before {
-            opacity: 1; // Show gray overlay initially when coming from opportunities
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $grey;
+            z-index: 1;
+            transition: opacity 1.2s ease-in-out;
+            pointer-events: none;
+            opacity: 0; // By default, the gray overlay is invisible
         }
         
-        &.fade-in-visible::before {
-            opacity: 0; // Fade out the gray overlay to reveal black background
+        // When coming from opportunities (scrolling up)
+        &--from-opportunities {
+            &::before {
+                opacity: 1; // Show gray overlay initially when coming from opportunities
+            }
+            
+            &.fade-in-visible::before {
+                opacity: 0; // Fade out the gray overlay to reveal black background
+            }
+            
+            // Add delay for content fade-in only when coming from opportunities
+            &.fade-in-visible .simulator__container {
+                transition-delay: 0.3s; // Delay content fade-in after background transition
+            }
         }
         
-        // Add delay for content fade-in only when coming from opportunities
-        &.fade-in-visible .simulator-wrapper {
-            transition-delay: 0.3s; // Delay content fade-in after background transition
-        }
-    }
-    
-    // When coming from hero or other sections above (scrolling down)
-    &.from-hero {
-        // Never show gray overlay, not even during loading
-        &::before, 
-        &.fade-in-hidden::before,
-        &.fade-in-visible::before {
-            opacity: 0 !important; // Force the gray overlay to always be invisible
+        // When coming from hero or other sections above (scrolling down)
+        &--from-hero {
+            // Never show gray overlay, not even during loading
+            &::before, 
+            &.fade-in-hidden::before,
+            &.fade-in-visible::before {
+                opacity: 0 !important; // Force the gray overlay to always be invisible
+            }
+            
+            // Ensure immediate black background even before DOM content loads
+            background: $black !important; 
         }
         
-        // Ensure immediate black background even before DOM content loads
-        background: $black !important; 
-    }
-    
-    // Hidden state - initial state when entering viewport
-    &.fade-in-hidden {
-        .simulator-wrapper {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            will-change: opacity;
+        // Hidden state - initial state when entering viewport
+        &.fade-in-hidden {
+            .simulator__container {
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+                will-change: opacity;
+            }
         }
-    }
-    
-    // Visible state - after 50% visible in viewport
-    &.fade-in-visible {
-        .simulator-wrapper {
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
-            will-change: opacity;
+        
+        // Visible state - after 50% visible in viewport
+        &.fade-in-visible {
+            .simulator__container {
+                opacity: 1;
+                transition: opacity 1s ease-in-out;
+                will-change: opacity;
+            }
         }
     }
 
-    .simulator-wrapper{
+    &__container {
         @include flex-column;
         align-items: flex-start;
         flex-shrink: 0;
@@ -77,11 +79,11 @@
         z-index: 2; // Above the overlay
     }
 
-    .simulator-page-header {
+    &__header {
         @include h2;
         color: #E6E6E6;
 
-        .simulator-page-header-gradient{
+        &__gradient {
             background: linear-gradient(270deg, #8591FF 90.2%, #D574E2 102.66%);
             background-clip: text;
             -webkit-background-clip: text;
@@ -89,134 +91,308 @@
         }
     }
 
-    .simulator-frame-wrapper{
+    &__frame-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         align-self: stretch;
         width: 100%;
+    }
 
-        .simulator-frame{
-            @include flex-column;
-            align-items: flex-start;
-            height: 515px;
+    &__frame {
+        @include flex-column;
+        align-items: flex-start;
+        height: 515px;
+    }
 
-            .simulator-window-bar-wrapper{
-                display: flex;
-                align-items: center;
-            }
+    &__window-bar-wrapper {
+        display: flex;
+        align-items: center;
+    }
 
-            .simulator-window-bar{
-                border-radius: 14px 14px 0px 0px;
-                background: #303030;
-                width: 186px;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                padding: 0.625rem 1rem;
-                height: 2.75rem;
-                color: $white;
-                @include b-m;
-                cursor: pointer;
-                transition: background 0.3s ease;
-                
-                &.active {
-                    background: #3F3F3F;
-                }
-            }
-
-            .simulator-frame-lottie{
-                height: 471px;
-                width: 800px;
-                padding: 0.625rem;
-                gap: 0.5rem;
-                border-radius: 0px 14px 14px 14px;
-                background: #3F3F3F;
-            }
+    &__window-bar {
+        border-radius: 14px 14px 0px 0px;
+        background: #303030;
+        width: 186px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        height: 2.75rem;
+        color: $white;
+        @include b-m;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        
+        &--active {
+            background: #3F3F3F;
         }
+    }
 
-        .simulator-frame-content{
-            @include flex-column;
-            align-items: flex-start;
-            gap: 0.5rem;
-            width: 440px;
-            padding-top: 3.5rem;
-            position: absolute;
-            right: 0;
-            margin-right: 10rem;
+    &__frame-lottie {
+        height: 471px;
+        width: 800px;
+        padding: 0.625rem;
+        gap: 0.5rem;
+        border-radius: 0px 14px 14px 14px;
+        background: #3F3F3F;
+    }
+
+    &__frame-content {
+        @include flex-column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        width: 440px;
+        padding-top: 3.5rem;
+        position: absolute;
+        right: 0;
+        margin-right: 10rem;
+    }
+    
+    &__text-wrapper {
+        width: 100%;
+    }
+    
+    &__headers {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        width: 100%;
+    }
+    
+    &__header-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    &__item-header {
+        @include h4;
+        color: #707070;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        
+        &--active {
+            color: $white;
         }
     }
     
-    .simulator-text-wrapper {
+    &__text-content {
+        @include b-r;
+        color: #ADADAD;
+        margin-bottom: 0.5rem;
+    }
+    
+    &__progress-bar {
+        border-radius: 35px;
+        background: rgba(217, 217, 217, 0.10);
+        height: 4px;
         width: 100%;
+        position: relative;
+        overflow: hidden;
         
-        .simulator-headers {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        &--active {
+            border-radius: 35px;
+            height: 5px;
             width: 100%;
-        }
-        
-        .simulator-header-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-        }
-        
-        .simulator-header {
-            @include h4;
-            color: #707070;
-            cursor: pointer;
-            transition: color 0.3s ease;
+            background: rgba(217, 217, 217, 0.10);
+            position: relative;
+            overflow: hidden;
             
-            &.active {
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0;
+                background: linear-gradient(270deg, #8591FF 0%, #D574E2 102.69%);
+                animation: progress 4s ease-out infinite;
+            }
+        }
+    }
+    
+    @keyframes progress {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+    .simulator {
+        
+        &__container {
+            gap: 0.5rem;
+            padding: 40px, 24px;
+        }
+        
+        &__header {
+            @include h3;
+        }
+        
+        &__frame-wrapper {
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        &__frame {
+            width: 100%;
+            height: auto;
+        }
+        
+        &__window-bar {
+            width: 120px;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        &__frame-lottie {
+            width: 100%;
+            height: 350px;
+        }
+        
+        &__frame-content {
+            position: relative;
+            width: 100%;
+            margin-right: 0;
+            padding-top: 1rem;
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+    .simulator {
+        &__page {
+            padding: 0;
+            position: relative;
+            background: #000;
+        }
+        
+        &__container {
+            position: relative;
+            z-index: 1;
+            margin: 24px;
+            gap: 1.5rem;
+            background: #000;
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            overflow: hidden;
+        }
+        
+        &__header {
+            @include h3;
+            
+            &__gradient {
+                background: linear-gradient(to right, #8591FF, #D574E2);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: bold;
+            }
+        }
+
+        &__frame-wrapper {
+            gap: 1.5rem;
+        }
+        
+        &__frame {
+            height: auto;
+            width: 100%;
+        }
+        
+        &__window-bar-wrapper {
+            width: 100%;
+            display: flex;
+            margin-bottom: 0;
+        }
+        
+        &__window-bar {
+            width: 105.078px;
+            height: 24.857px;
+            padding: 5.649px 9.039px 5.649px 8px;
+            align-items: center;
+            gap: 4.519px;
+            border-radius: 7.909px 7.909px 0px 0px;
+            background: #303030;
+            
+            &--active {
+                background: #3F3F3F;
+            }
+
+            &__window-bar-text {
+                @include b-s;
                 color: $white;
             }
         }
         
-        .simulator-text-content {
-            @include b-r;
-            color: #ADADAD;
-            margin-bottom: 0.5rem;
+        &__frame-lottie {
+            display: flex;
+            height: 202px;
+            padding: 4.286px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 3.429px;
+            flex-shrink: 0;
+            align-self: stretch;
+            border-radius: 0px 6px 6px 6px;
+            background: #3F3F3F;
         }
         
-        .simulator-progress-bar {
-            border-radius: 35px;
-            background: rgba(217, 217, 217, 0.10);
-            height: 4px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
+        &__frame-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            align-self: stretch;
+        }
+        
+        &__text-wrapper {
+            padding: 0;
+        }
+        
+        &__headers {
+            gap: 0;
+            margin-bottom: 0;
+        }
+        
+        &__header-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 0.25rem;
             
-            &.active {
-                border-radius: 35px;
-                height: 5px;
-                width: 100%;
-                background: rgba(217, 217, 217, 0.10);
-                position: relative;
-                overflow: hidden;
-                
-                &::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    height: 100%;
-                    width: 0;
-                    background: linear-gradient(270deg, #8591FF 0%, #D574E2 102.69%);
-                    animation: progress 4s ease-out infinite;
-                }
+            &:last-child {
+                border-bottom: none;
             }
         }
         
-        @keyframes progress {
-            0% {
-                width: 0;
+        &__item-header {
+            @include h5;
+            color: #555;
+            
+            &--active {
+                color: $white;
             }
-            100% {
-                width: 100%;
+        }
+        
+        &__text-content {
+            font-size: 0.875rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        &__progress-bar {
+            display: none;
+            
+            &--active {
+                display: block;
+                height: 3px;
             }
         }
     }
