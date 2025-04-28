@@ -4,36 +4,54 @@ import { useEffect, useState, useRef } from 'react';
 
 interface INavBarProps {
   initiallyTransparent?: boolean;
-  initiallyVisible?: boolean;
 }
 
-const NavBar = ({ initiallyTransparent = false, initiallyVisible = true }: INavBarProps) => {
-    const [visible, setVisible] = useState(false); // Start with invisible navbar
+const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
+    const [visible, setVisible] = useState(false); // Start hidden
     const [isTransparent, setIsTransparent] = useState(initiallyTransparent);
-    const [isDarkSection, setIsDarkSection] = useState(false);
     const [contentVisible, setContentVisible] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [initialFadeIn, setInitialFadeIn] = useState(true);
     const lastScrollY = useRef(0);
-    const navRef = useRef<HTMLDivElement>(null);
     const lastScrollDirection = useRef<'up' | 'down' | null>(null);
+    const navRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Initial delay before showing navbar to sync with hero animations
-        const navbarTimer = setTimeout(() => {
-            setVisible(initiallyVisible);
-            console.log("Setting navbar visible:", initiallyVisible);
-        }, 7000); // Delay showing navbar by 1 second
+        // Check if viewport width is mobile
+        const checkIfMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
         
-        // Set content to visible after a short delay for fade-in effect
+        // Initial check
+        checkIfMobile();
+        
+        // Listen for resize events
+        window.addEventListener('resize', checkIfMobile);
+        
+        // Initial delay before showing navbar (sync with lottie/hero)
+        const navbarTimer = setTimeout(() => {
+            setVisible(true);
+            setTimeout(() => setInitialFadeIn(false), 2000); // Remove initial fade-in class after transition
+        }, 5000); // Adjust this delay as needed
+
+        // Initial delay before showing navbar content
         const contentTimer = setTimeout(() => {
             setContentVisible(true);
-            console.log("Setting navbar content visible");
-        }, 5000); // Show content slightly after navbar appears
+        }, 1000);
         
         const handleScroll = () => {
-            // Don't process scroll events if initially set to invisible
-            if (!initiallyVisible && !visible) return;
-            
             const currentScrollY = window.scrollY;
+            const heroSectionHeight = window.innerHeight; // Assuming hero section is full viewport height
+            const simulatorSectionHeight = 800; // Approximate height of simulator section
+            
+            // Check if we're in hero or simulator section
+            const isInTransparentSection = currentScrollY < (heroSectionHeight + simulatorSectionHeight) ||
+                currentScrollY > document.body.scrollHeight - window.innerHeight - 300; // Footer area
+            
+            setIsTransparent(isInTransparentSection);
+            
+            // Handle show/hide based on scroll direction
             const isScrollingDown = currentScrollY > lastScrollY.current;
             const isScrollingUp = currentScrollY < lastScrollY.current;
             
@@ -44,8 +62,8 @@ const NavBar = ({ initiallyTransparent = false, initiallyVisible = true }: INavB
                 (isScrollingUp && lastScrollDirection.current !== 'up');
             
             if (directionChanged || Math.abs(currentScrollY - lastScrollY.current) > scrollThreshold) {
-                // Show/hide based on scroll direction with a smoother response
-                if (isScrollingDown) {
+                // Show/hide based on scroll direction
+                if (isScrollingDown && currentScrollY > 100) {
                     lastScrollDirection.current = 'down';
                     setVisible(false);
                 } else if (isScrollingUp) {
@@ -54,35 +72,7 @@ const NavBar = ({ initiallyTransparent = false, initiallyVisible = true }: INavB
                 }
             }
             
-            // Handle transparency
-            if (currentScrollY > 50) {
-                setIsTransparent(false);
-            } else if (initiallyTransparent) {
-                setIsTransparent(true);
-            }
-            
             lastScrollY.current = currentScrollY;
-            
-            // Check background color of current section
-            if (navRef.current) {
-                const navElement = navRef.current;
-                const navRect = navElement.getBoundingClientRect();
-                const elementAtPoint = document.elementFromPoint(
-                    navRect.left + navRect.width / 2,
-                    navRect.bottom + 10
-                );
-                
-                if (elementAtPoint) {
-                    const bgColor = window.getComputedStyle(elementAtPoint).backgroundColor;
-                    const colorValues = bgColor.match(/\d+/g);
-                    if (colorValues && colorValues.length >= 3) {
-                        const [r, g, b] = colorValues.map(Number);
-                        // Check if background is dark (roughly)
-                        const isDark = r < 50 && g < 50 && b < 50;
-                        setIsDarkSection(isDark);
-                    }
-                }
-            }
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -90,29 +80,23 @@ const NavBar = ({ initiallyTransparent = false, initiallyVisible = true }: INavB
         
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', checkIfMobile);
             clearTimeout(navbarTimer);
             clearTimeout(contentTimer);
         };
-    }, [initiallyTransparent, initiallyVisible]);
+    }, []);
 
-    // Update visibility when initiallyVisible prop changes
-    useEffect(() => {
-        // Use a timeout to sync with animation
-        const timer = setTimeout(() => {
-            setVisible(initiallyVisible);
-        }, 500);
-        
-        return () => clearTimeout(timer);
-    }, [initiallyVisible]);
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     // CSS classes for navbar state
-    const navbarClass = `nav-bar-wrapper ${visible ? 'visible' : 'hidden'} ${
-        isTransparent ? 'transparent' : isDarkSection ? 'light-bg' : 'dark-bg'
-    } ${contentVisible ? 'content-visible' : 'content-hidden'} ${initiallyVisible ? '' : 'initially-hidden'}`;
+    const navbarClass = `nav-bar-wrapper${initialFadeIn ? ' initial-fade-in' : ''} ${visible ? 'visible' : 'hidden'} ${
+        isTransparent ? 'transparent' : 'solid'
+    } ${contentVisible ? 'content-visible' : 'content-hidden'}`;
 
-    // Always render the navbar, but control its visibility with CSS
     return (
-        <div className={navbarClass} ref={navRef} aria-hidden={!visible}>
+        <div className={navbarClass} ref={navRef}>
             <div className="nav-bar-left">
                 <img src="/assets/deccan-logo.svg" alt="logo" />
             </div>
@@ -124,9 +108,34 @@ const NavBar = ({ initiallyTransparent = false, initiallyVisible = true }: INavB
                 <div>FAQs</div>
             </div>
             <div className="nav-bar-right">
-                <div>Login</div>
-                <div>Sign Up</div>
+                {isMobile ? (
+                    <div className="menu-icon" onClick={toggleMenu}>
+                        <img 
+                            src={isTransparent ? "/assets/menu-white.svg" : "/assets/menu-black.svg"} 
+                            alt="Menu" 
+                        />
+                    </div>
+                ) : (
+                    <>
+                        <div>Login</div>
+                        <div>Sign Up</div>
+                    </>
+                )}
             </div>
+            
+            {isMobile && menuOpen && (
+                <div className="mobile-menu">
+                    <div className="mobile-menu-items">
+                        <div>Opportunities</div>
+                        <div>Testimonials</div>
+                        <div>Blogs</div>
+                        <div>About Us</div>
+                        <div>FAQs</div>
+                        <div>Login</div>
+                        <div>Sign Up</div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

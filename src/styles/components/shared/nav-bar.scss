@@ -5,17 +5,9 @@
     top: 0;
     left: 0;
     z-index: $z-index-fixed;
-    transition: opacity 1.8s ease-in, background-color $navbar-transition;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1);
     @include flex-row(space-between);
     padding: 0 2rem;
-    animation-fill-mode: forwards;
-    will-change: opacity, transform; // Performance optimization
-    
-    // Initially hidden state
-    &.initially-hidden {
-        opacity: 0 !important; // Force initial invisible state
-        pointer-events: none;
-    }
     
     // Content visibility states
     &.content-hidden {
@@ -33,22 +25,19 @@
         .nav-bar-right div {
             opacity: 1;
             transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
     }
 
     // Visibility states
     &.visible {
+        transform: translateY(0);
         opacity: 1;
-        pointer-events: auto;
-        
-        // Apply a fade-in animation similar to hero text
-        &.content-visible:not(.initially-hidden) {
-            animation: navFadeIn 1.8s ease-in forwards;
-        }
     }
 
     &.hidden {
-        opacity: 0;
+        transform: translateY(-100%);
+        opacity: 0.5;
         pointer-events: none;
     }
 
@@ -63,33 +52,20 @@
         }
     }
 
-    &.dark-bg {
-        background-color: $navbar-dark-bg;
-        
-        .nav-bar-middle div, 
-        .nav-bar-right div {
-            color: $white;
-        }
-    }
-
-    &.light-bg {
-        background-color: $navbar-light-bg;
+    &.solid {
+        background-color: $white;
         box-shadow: $navbar-shadow;
         
         .nav-bar-middle div, 
         .nav-bar-right div {
             color: $black;
         }
-        
-        :root {
-            --opposite-color: #{$black};
-        }
     }
 
     .nav-bar-left {
         img {
             height: 2.5rem;
-            transition: opacity $transition-base, transform $transition-base;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
     }
 
@@ -100,15 +76,8 @@
 
         div {
             cursor: pointer;
-            transition: color $navbar-transition, opacity $transition-base, transform $transition-base;
+            transition: color 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
             position: relative;
-            
-            // Add transition delays to create a cascading effect
-            @for $i from 1 through 5 {
-                &:nth-child(#{$i}) {
-                    transition-delay: #{$i * 0.05 + 0.4}s; // Start after initial fade-in
-                }
-            }
             
             &:after {
                 content: '';
@@ -118,7 +87,7 @@
                 width: 0;
                 height: 2px;
                 background-color: currentColor;
-                transition: width $transition-fast;
+                transition: width 0.3s ease;
             }
             
             &:hover:after {
@@ -135,35 +104,36 @@
             cursor: pointer;
             padding: 0.5rem 1rem;
             border-radius: $border-radius-sm;
-            transition: all $transition-fast, opacity $transition-base, transform $transition-base;
+            transition: all 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
             
-            // Add transition delays to continue the cascading effect
-            &:first-child {
-                transition-delay: 0.7s; // Adjust to match hero text timing
-                
+            &:first-child:not(.menu-icon) {
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.1);
                 }
             }
             
-            &:last-child {
-                transition-delay: 0.8s; // Adjust to match hero text timing
+            &:last-child:not(.menu-icon) {
                 border: 1px solid currentColor;
                 
                 &:hover {
                     background-color: currentColor;
-                    color: var(--opposite-color, inherit);
+                    color: var(--opposite-color, $black);
+                    
+                    .transparent & {
+                        color: $black;
+                    }
+                    
+                    .solid & {
+                        color: $white;
+                    }
                 }
             }
         }
     }
-}
 
-// Enhanced fade-in animation to match hero text
-@keyframes navFadeIn {
-    0% { opacity: 0; }
-    10% { opacity: 0.05; } // Slow start for smoother initial appearance
-    100% { opacity: 1; }
+    &.initial-fade-in {
+        transition: background-color 1.8s cubic-bezier(0.4,0,0.2,1), color 1.8s cubic-bezier(0.4,0,0.2,1), transform 1.8s cubic-bezier(0.4,0,0.2,1), opacity 1.8s cubic-bezier(0.4,0,0.2,1);
+    }
 }
 
 @include mobile {
@@ -175,12 +145,88 @@
         }
         
         .nav-bar-right {
-            gap: 0.5rem;
+            .menu-icon {
+                cursor: pointer;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                
+                img {
+                    width: 24px;
+                    height: 24px;
+                    transition: transform 0.3s ease;
+                }
+                
+                &:hover img {
+                    transform: scale(1.1);
+                }
+            }
             
-            div {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.875rem;
+            div:not(.menu-icon) {
+                display: none;
             }
         }
+        
+        .mobile-menu {
+            position: fixed;
+            top: $navbar-height;
+            left: 0;
+            width: 100%;
+            background-color: $white;
+            z-index: $z-index-modal;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: mobileMenuSlideDown 0.3s ease forwards;
+            overflow: hidden;
+            
+            .mobile-menu-items {
+                @include flex-col(flex-start, flex-start);
+                padding: 1rem;
+                
+                div {
+                    width: 100%;
+                    padding: 1rem;
+                    color: $black;
+                    @include b-m;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    cursor: pointer;
+                    transition: background-color 0.2s ease;
+                    
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    
+                    &:hover {
+                        background-color: rgba(0, 0, 0, 0.05);
+                    }
+                }
+            }
+        }
+        
+        &.transparent .mobile-menu {
+            background-color: rgba(0, 0, 0, 0.9);
+            
+            .mobile-menu-items div {
+                color: $white;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
+    }
+}
+
+@keyframes mobileMenuSlideDown {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 100vh;
+        opacity: 1;
     }
 }

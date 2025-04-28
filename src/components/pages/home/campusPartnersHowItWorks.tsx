@@ -3,12 +3,15 @@
 import { useState, useEffect, useRef } from "react";
 import Button from "@/components/shared/Button";
 import HowItWorksCard from "./HowItWorks/HowItWorksCard";
-import Lottie from "react-lottie-player";
+import dynamic from "next/dynamic";
 import lottie1 from "../../../../public/assets/how-it-works/selection-process-1.json";
 import lottie2 from "../../../../public/assets/how-it-works/selection-process-2.json";
 import lottie3 from "../../../../public/assets/how-it-works/selection-process-3.json";
 import lottie4 from "../../../../public/assets/how-it-works/selection-process-4.json";
 import { howItWorksData } from "@/constants/pages/home/how-it-works";
+
+// Dynamically import Lottie to prevent SSR issues
+const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 const HowItWorks = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
