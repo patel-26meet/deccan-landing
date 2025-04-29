@@ -5,6 +5,7 @@
         padding: 5.5rem 5rem;
         padding-top: 20rem;
         position: relative;
+        z-index: 0; // Base z-index
         
         // Create a pseudo-element for the gray overlay - ONLY used when coming FROM opportunities (gray) TO simulator (black)
         &::before {
@@ -39,19 +40,22 @@
         
         // When coming from hero or other sections above (scrolling down)
         &--from-hero {
+            // Set background to black immediately with higher priority
+            background-color: $black !important;
+            
             // Never show gray overlay, not even during loading
             &::before, 
             &.fade-in-hidden::before,
             &.fade-in-visible::before {
                 opacity: 0 !important; // Force the gray overlay to always be invisible
+                display: none; // Completely remove the overlay when coming from hero
             }
-            
-            // Ensure immediate black background even before DOM content loads
-            background: $black !important; 
         }
         
-        // Hidden state - initial state when entering viewport
+        // Always ensure black background is applied immediately when scrolling from hero section
         &.fade-in-hidden {
+            background-color: $black !important;
+            
             .simulator__container {
                 opacity: 0;
                 transition: opacity 1s ease-in-out;
@@ -61,6 +65,8 @@
         
         // Visible state - after 50% visible in viewport
         &.fade-in-visible {
+            background-color: $black !important;
+            
             .simulator__container {
                 opacity: 1;
                 transition: opacity 1s ease-in-out;
@@ -224,44 +230,142 @@
     }
 }
 
-@media screen and (max-width: $breakpoint-md) {
+@media screen and (max-width: $breakpoint-lg) {
     .simulator {
+        &__page {
+            padding: 0;
+            position: relative;
+            background: #000;
+        }
         
         &__container {
-            gap: 0.5rem;
-            padding: 40px, 24px;
+            position: relative;
+            z-index: 1;
+            margin: 24px;
+            gap: 2.5rem;
+            background: #000;
+            border-radius: 8px;
+            padding: 3.75rem 3.75rem 5rem 3.75rem;
+            overflow: hidden;
         }
         
         &__header {
-            @include h3;
+            @include h2;
+            
+            &__gradient {
+                background: linear-gradient(to right, #8591FF, #D574E2);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: bold;
+            }
         }
-        
+
         &__frame-wrapper {
             flex-direction: column;
             align-items: center;
-            gap: 3rem;
+            gap: 2.5rem;
         }
         
         &__frame {
-            width: 100%;
             height: auto;
-        }
-        
-        &__window-bar {
-            width: 120px;
-            padding: 0.5rem 0.75rem;
-        }
-        
-        &__frame-lottie {
             width: 100%;
-            height: 350px;
         }
         
         &__frame-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            align-self: stretch;
             position: relative;
             width: 100%;
             margin-right: 0;
-            padding-top: 1rem;
+            padding-top: 0;
+            right: auto;
+        }
+        
+        &__window-bar-wrapper {
+            width: 100%;
+            display: flex;
+            margin-bottom: 0;
+        }
+        
+        &__window-bar {
+            width: 150;
+            height: 35px;
+            padding: 6.44px 18.5px;
+            align-items: center;
+            gap: 4.519px;
+            border-radius: 11.27px 11.27px 0px 0px;
+            background: #303030;
+            
+            &--active {
+                background: #3F3F3F;
+            }
+
+            &__window-bar-text {
+                @include b-s;
+                color: $white;
+            }
+        }
+        
+        &__frame-lottie {
+            display: flex;
+            height: 363px;
+            width: 100%;
+            padding: 4.286px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6.44px;
+            flex-shrink: 0;
+            align-self: stretch;
+            border-radius: 0px 11.27px 11.27px 11.27px;
+            background: #3F3F3F;
+        }
+        
+        &__text-wrapper {
+            padding: 0;
+        }
+        
+        &__headers {
+            gap: 0;
+            margin-bottom: 0;
+        }
+        
+        &__header-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 0.25rem;
+            
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+        
+        &__item-header {
+            @include h5;
+            color: #555;
+            
+            &--active {
+                color: $white;
+            }
+        }
+        
+        &__text-content {
+            font-size: 0.875rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        &__progress-bar {
+            display: none;
+            
+            &--active {
+                display: block;
+                height: 3px;
+            }
         }
     }
 }

@@ -2,11 +2,11 @@
 @mixin h1 {
   font-size: 4rem; // 64px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 3.5rem; // 56px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 2.5rem; // 40px
   }
   
@@ -19,11 +19,11 @@
 @mixin h2 {
   font-size: 3rem; // 48px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 2.75rem; // 44px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 2.25rem; // 36px
   }
   
@@ -36,11 +36,11 @@
 @mixin h3 {
   font-size: 2.5rem; // 40px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 2.25rem; // 36px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 2rem; // 32px
   }
   
@@ -51,11 +51,11 @@
 @mixin h4 {
   font-size: 2rem; // 32px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 1.75rem; // 28px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 1.5rem; // 24px
   }
   
@@ -66,11 +66,11 @@
 @mixin h5 {
   font-size: 1.5rem; // 24px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 1.5rem; // 24px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 1.25rem; // 20px
   }
   
@@ -84,11 +84,11 @@
 @mixin b-l {
   font-size: 1.25rem; // 20px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 1.25rem; // 20px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 1rem; // 16px
   }
   
@@ -104,11 +104,11 @@
 @mixin b-m {
   font-size: 1rem; // 16px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 1rem; // 16px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 0.875rem; // 14px
   }
   
@@ -124,11 +124,11 @@
 @mixin b-r {
   font-size: 1rem; // 16px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 1rem; // 16px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 0.875rem; // 14px
   }
   
@@ -141,11 +141,11 @@
 @mixin b-s {
   font-size: 0.875rem; // 14px
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 0.875rem; // 14px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 0.75rem; // 12px
   }
   
@@ -157,11 +157,11 @@
 @mixin b-xs {
   font-size: 0.75rem; // 12px
   
-  @media (max-width: breakpoint-md) {
+  @media (max-width: $breakpoint-lg) {
     font-size: 0.75rem; // 12px
   }
   
-  @media (max-width: breakpoint-sm) {
+  @media (max-width: $breakpoint-sm) {
     font-size: 0.625rem; // 10px
   }
   
@@ -177,7 +177,7 @@
 }
 
 @mixin tablet {
-  @media (min-width: 48.0625rem) and (max-width: 64rem) { // 769px to 1024px
+  @media (min-width: 48.0625rem) and (max-width: 64rem) { // 769px to $breakpoint-lg
     @content;
   }
 }

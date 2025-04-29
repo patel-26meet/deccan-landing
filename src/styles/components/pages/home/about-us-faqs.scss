@@ -8,6 +8,7 @@
     // Hidden state - initial state when entering viewport
     &.fade-in-hidden {
         opacity: 0.3; // Start slightly visible for a more subtle effect
+        color: #EBEBEB;
         
         .about-us-wrapper,
         .about-us-btn-wrapper,

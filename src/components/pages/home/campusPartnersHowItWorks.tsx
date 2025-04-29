@@ -4,38 +4,51 @@ import { useState, useEffect, useRef } from "react";
 import Button from "@/components/shared/Button";
 import HowItWorksCard from "./HowItWorks/HowItWorksCard";
 import dynamic from "next/dynamic";
-import lottie1 from "../../../../public/assets/how-it-works/selection-process-1.json";
-import lottie2 from "../../../../public/assets/how-it-works/selection-process-2.json";
-import lottie3 from "../../../../public/assets/how-it-works/selection-process-3.json";
-import lottie4 from "../../../../public/assets/how-it-works/selection-process-4.json";
+import lottie1 from "../../../../public/assets/how-it-works/selection-process-1-v2.json";
+import lottie2 from "../../../../public/assets/how-it-works/selection-process-2-v2.json";
+import lottie3 from "../../../../public/assets/how-it-works/selection-process-3-v2.json";
+import lottie4 from "../../../../public/assets/how-it-works/selection-process-4-v2.json";
 import { howItWorksData } from "@/constants/pages/home/how-it-works";
 
 // Dynamically import Lottie to prevent SSR issues
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
+// Define breakpoints matching SCSS
+const BREAKPOINT_SM = 768;
+const BREAKPOINT_LG = 1024;
+
+type DeviceType = 'mobile' | 'tablet' | 'desktop';
+
 const HowItWorks = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0); 
-  const [isMobile, setIsMobile] = useState(false);
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   
   const lottieAnimations = [lottie1, lottie2, lottie3, lottie4];
 
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const checkDeviceType = () => {
+      const width = window.innerWidth;
+      if (width <= BREAKPOINT_SM) {
+        setDeviceType('mobile');
+      } else if (width <= BREAKPOINT_LG) {
+        setDeviceType('tablet');
+      } else {
+        setDeviceType('desktop');
+      }
     };
     
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
+    checkDeviceType();
+    window.addEventListener('resize', checkDeviceType);
     
     return () => {
-      window.removeEventListener('resize', checkIfMobile);
+      window.removeEventListener('resize', checkDeviceType);
     };
   }, []);
 
   // Calculates the position of the indicator based on activeCardIndex
-  const getMobileIndicatorPosition = () => {
+  const getIndicatorPosition = () => {
     if (activeCardIndex === 0) return '0rem';
     if (activeCardIndex === 1) return '5.625rem'; // First card height + margin
     if (activeCardIndex === 2) return '11.25rem'; // 2x (card height + margin)
@@ -54,6 +67,11 @@ const HowItWorks = () => {
     setActiveCardIndex(nextIndex);
     setAnimationKey(prev => prev + 1); 
   };
+
+  // Check if we should use mobile/tablet layout
+  const isMobile = deviceType === 'mobile';
+  const isTablet = deviceType === 'tablet';
+  const isResponsiveLayout = isMobile || isTablet;
 
   return (
     <div className="campus-partners-how-it-works">
@@ -75,10 +93,15 @@ const HowItWorks = () => {
                 <div className="how-it-works__description">
                     Open up doors to your dream opportunities with a single application
                 </div>
-                <Button
-                    text="Apply Now"
-                />
-                {!isMobile && (
+                
+                {/* Apply Now button with conditional styling for tablet */}
+                <div className={isTablet ? "how-it-works__button-container-tablet" : ""}>
+                    <Button
+                        text="Apply Now"
+                    />
+                </div>
+                
+                {!isResponsiveLayout && (
                   <div className="how-it-works__cards-container">
                     {howItWorksData.map((card, index) => (
                       <HowItWorksCard
@@ -100,13 +123,20 @@ const HowItWorks = () => {
                     play
                     key={`lottie-${activeCardIndex}-${animationKey}`}
                     onComplete={handleAnimationComplete}
+                    style={{
+                      width: '100%', 
+                      height: '100%', 
+                      borderRadius: isResponsiveLayout ? '8px' : '12px'
+                    }}
                 />
             </div>
-            {isMobile && (
+            {isResponsiveLayout && (
               <div 
                 ref={cardsContainerRef}
                 className="how-it-works__cards-container"
-                style={{'--mobile-indicator-top': getMobileIndicatorPosition()} as React.CSSProperties}
+                style={{
+                  [isMobile ? '--mobile-indicator-top' : '--tablet-indicator-top']: getIndicatorPosition()
+                } as React.CSSProperties}
               >
                 {howItWorksData.map((card, index) => (
                   <HowItWorksCard

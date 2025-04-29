@@ -5,6 +5,12 @@ import { useState, useEffect, useRef } from "react";
 import lottie1 from "../../../../../public/assets/hero-json/H1.json";
 import lottie2 from "../../../../../public/assets/hero-json/H2.json";
 import lottie3 from "../../../../../public/assets/hero-json/H3.json";
+import lottiem1 from "../../../../../public/assets/hero-json/mobile/H1.json";
+import lottiem2 from "../../../../../public/assets/hero-json/mobile/H2.json";
+import lottiem3 from "../../../../../public/assets/hero-json/mobile/H3.json";
+import lottiet1 from "../../../../../public/assets/hero-json/tablet/H1.json"; 
+import lottiet2 from "../../../../../public/assets/hero-json/tablet/H2.json";
+import lottiet3 from "../../../../../public/assets/hero-json/tablet/H3.json";
 import Button from "@/components/shared/Button";
 import HeroIconsLayout from "./HeroIconsLayout";
 
@@ -23,6 +29,8 @@ interface IAnimationState {
   textFullyHighlighted: boolean;
 }
 
+type DeviceType = 'desktop' | 'tablet' | 'mobile';
+
 const HeroStart = () => {
   const [animState, setAnimState] = useState<IAnimationState>({
     showFirstAnim: true,
@@ -38,6 +46,42 @@ const HeroStart = () => {
     iconsLayoutProgress: 0,
     textFullyHighlighted: false
   });
+  
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  
+  // Detect device type based on window width
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 493) {
+        setDeviceType('mobile');
+      } else if (width <= 1024) {
+        setDeviceType('tablet');
+      } else {
+        setDeviceType('desktop');
+      }
+    };
+    
+    // Initial detection
+    handleResize();
+    
+    // Add listener for window resize
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // Get the appropriate Lottie animations based on device type
+  const getLottieAnimation = (index: 1 | 2 | 3) => {
+    if (deviceType === 'mobile') {
+      return index === 1 ? lottiem1 : index === 2 ? lottiem2 : lottiem3;
+    } else if (deviceType === 'tablet') {
+      return index === 1 ? lottiet1 : index === 2 ? lottiet2 : lottiet3;
+    } else {
+      return index === 1 ? lottie1 : index === 2 ? lottie2 : lottie3;
+    }
+  };
   
   // Split text into words for the word-by-word highlight effect
   const overlayTextWords = "Shape the Future of AI with Flexible, High Impact Remote opportunities across 50+ domains tailored for your expertise!".split(" ");
@@ -486,7 +530,7 @@ const HeroStart = () => {
       {animState.showFirstAnim && (
         <Lottie
           loop={false}
-          animationData={lottie1}
+          animationData={getLottieAnimation(1)}
           play
           onComplete={handleFirstAnimComplete}
         />
@@ -496,7 +540,7 @@ const HeroStart = () => {
         <div className="second-animation-container">
           <Lottie
             loop={true}
-            animationData={lottie2}
+            animationData={getLottieAnimation(2)}
             play
             speed={animState.secondAnimSpeed}
           />
@@ -507,7 +551,7 @@ const HeroStart = () => {
         <div className="third-animation-container">
           <Lottie
             loop={false}
-            animationData={lottie3}
+            animationData={getLottieAnimation(3)}
             play
             speed={0}
             goTo={animState.lottieThirdProgress * 100} // Use the separate Lottie progress

@@ -160,7 +160,8 @@
     gap: 0.5rem;
     flex-shrink: 0;
     border-radius: 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.40);
+    background: rgba(255, 255, 255, 0.09);
 
     .hero-icons-text{
         @include b-r;

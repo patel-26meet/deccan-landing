@@ -22,7 +22,8 @@
   }
   
   &.light {
-    color: var(--White, #FFF);
+    color: #000;
+    background: #FFF;
   }
   
   &.hybrid {

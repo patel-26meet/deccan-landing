@@ -98,7 +98,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     return (
         <div className={navbarClass} ref={navRef}>
             <div className="nav-bar-left">
-                <img src="/assets/deccan-logo.svg" alt="logo" />
+                <img src={isTransparent ? "/assets/deccan-logo.svg" : "/assets/deccan-logo-black.svg"} alt="logo" />
             </div>
             <div className="nav-bar-middle">
                 <div>Opportunities</div>
