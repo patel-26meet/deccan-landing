@@ -2,6 +2,10 @@
 
 import { useEffect, useState, useRef } from 'react';
 
+// Define breakpoint constants
+const BREAKPOINT_SM = 768;
+const BREAKPOINT_LG = 1024;
+
 interface INavBarProps {
   initiallyTransparent?: boolean;
 }
@@ -10,7 +14,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     const [visible, setVisible] = useState(false); // Start hidden
     const [isTransparent, setIsTransparent] = useState(initiallyTransparent);
     const [contentVisible, setContentVisible] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
+    const [isResponsive, setIsResponsive] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [initialFadeIn, setInitialFadeIn] = useState(true);
     const lastScrollY = useRef(0);
@@ -18,16 +22,16 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     const navRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Check if viewport width is mobile
-        const checkIfMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
+        // Check if viewport width is mobile or tablet
+        const checkIfResponsive = () => {
+            setIsResponsive(window.innerWidth <= BREAKPOINT_LG);
         };
         
         // Initial check
-        checkIfMobile();
+        checkIfResponsive();
         
         // Listen for resize events
-        window.addEventListener('resize', checkIfMobile);
+        window.addEventListener('resize', checkIfResponsive);
         
         // Initial delay before showing navbar (sync with lottie/hero)
         const navbarTimer = setTimeout(() => {
@@ -80,7 +84,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
         
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', checkIfMobile);
+            window.removeEventListener('resize', checkIfResponsive);
             clearTimeout(navbarTimer);
             clearTimeout(contentTimer);
         };
@@ -88,12 +92,18 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
+        // Prevent body scrolling when menu is open
+        if (!menuOpen) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
     };
 
     // CSS classes for navbar state
     const navbarClass = `nav-bar-wrapper${initialFadeIn ? ' initial-fade-in' : ''} ${visible ? 'visible' : 'hidden'} ${
         isTransparent ? 'transparent' : 'solid'
-    } ${contentVisible ? 'content-visible' : 'content-hidden'}`;
+    } ${contentVisible ? 'content-visible' : 'content-hidden'} ${menuOpen ? 'menu-open' : ''}`;
 
     return (
         <div className={navbarClass} ref={navRef}>
@@ -108,10 +118,12 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
                 <div>FAQs</div>
             </div>
             <div className="nav-bar-right">
-                {isMobile ? (
+                {isResponsive ? (
                     <div className="menu-icon" onClick={toggleMenu}>
                         <img 
-                            src={isTransparent ? "/assets/menu-white.svg" : "/assets/menu-black.svg"} 
+                            src={menuOpen 
+                                ? "/assets/close-menu.svg" 
+                                : (isTransparent ? "/assets/menu.svg" : "/assets/menu-black.svg")} 
                             alt="Menu" 
                         />
                     </div>
@@ -123,7 +135,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
                 )}
             </div>
             
-            {isMobile && menuOpen && (
+            {isResponsive && menuOpen && (
                 <div className="mobile-menu">
                     <div className="mobile-menu-items">
                         <div>Opportunities</div>

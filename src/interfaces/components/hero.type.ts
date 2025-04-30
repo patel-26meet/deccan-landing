@@ -8,3 +8,14 @@ export interface IHeroSectionProps {
 export interface IHeroIconsProps {
     text: string;
 }
+
+
+export interface IIconData {
+  text: string;
+  position: {
+      top?: string;
+      bottom?: string;
+      left?: string;
+      right?: string;
+  };
+}
