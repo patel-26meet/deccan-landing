@@ -15,6 +15,8 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
   handler: TOutsideClickHandler
 ): void => {
   useEffect(() => {
+    if (typeof document === "undefined") return;
+    
     const listener = (event: MouseEvent | TouchEvent) => {
       // Do nothing if clicking ref's element or descendent elements
       if (!ref.current || ref.current.contains(event.target as Node)) {

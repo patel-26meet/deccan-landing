@@ -20,7 +20,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   
   useEffect(() => {
-    if (isActive) {
+    if (isActive && typeof document !== "undefined") {
       let topPosition;
       if (index === 0) {
         topPosition = 17;

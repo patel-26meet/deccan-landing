@@ -21,6 +21,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     const navRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (typeof window === "undefined") return;
+        
         // Check if viewport width is mobile or tablet
         const checkIfResponsive = () => {
             setIsResponsive(window.innerWidth <= BREAKPOINT_LG);
@@ -44,6 +46,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
         }, 1000);
         
         const handleScroll = () => {
+            if (typeof window === "undefined" || typeof document === "undefined") return;
+            
             const currentScrollY = window.scrollY;
             const heroSectionHeight = window.innerHeight; // Assuming hero section is full viewport height
             const simulatorSectionHeight = 800; // Approximate height of simulator section
@@ -90,6 +94,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     }, []);
 
     const toggleMenu = () => {
+        if (typeof document === "undefined") return;
+        
         setMenuOpen(!menuOpen);
         // Prevent body scrolling when menu is open
         if (!menuOpen) {

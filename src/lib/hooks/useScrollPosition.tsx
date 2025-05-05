@@ -17,6 +17,8 @@ const useScrollPosition = (): IScrollData => {
   });
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    
     let lastScrollY = window.scrollY;
 
     // Create throttled handler to improve performance

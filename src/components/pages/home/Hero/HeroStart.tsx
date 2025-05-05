@@ -51,25 +51,27 @@ const HeroStart = () => {
   
   // Detect device type based on window width
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width <= 493) {
-        setDeviceType('mobile');
-      } else if (width <= 1024) {
-        setDeviceType('tablet');
-      } else {
-        setDeviceType('desktop');
-      }
-    };
-    
-    // Initial detection
-    handleResize();
-    
-    // Add listener for window resize
-    window.addEventListener('resize', handleResize);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', handleResize);
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        const width = window.innerWidth;
+        if (width <= 493) {
+          setDeviceType('mobile');
+        } else if (width <= 1024) {
+          setDeviceType('tablet');
+        } else {
+          setDeviceType('desktop');
+        }
+      };
+      
+      // Initial detection
+      handleResize();
+      
+      // Add listener for window resize
+      window.addEventListener('resize', handleResize);
+      
+      // Cleanup
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
   
   // Get the appropriate Lottie animations based on device type
@@ -123,15 +125,17 @@ const HeroStart = () => {
 
   // Check if user has scrolled past the hero section
   useEffect(() => {
-    const checkScrollPosition = () => {
-      const heroHeight = window.innerHeight;
-      if (window.scrollY > heroHeight) {
-        hasLeftSectionRef.current = true;
-      }
-    };
+    if (typeof window !== "undefined") {
+      const checkScrollPosition = () => {
+        const heroHeight = window.innerHeight;
+        if (window.scrollY > heroHeight) {
+          hasLeftSectionRef.current = true;
+        }
+      };
 
-    window.addEventListener('scroll', checkScrollPosition, { passive: true });
-    return () => window.removeEventListener('scroll', checkScrollPosition);
+      window.addEventListener('scroll', checkScrollPosition, { passive: true });
+      return () => window.removeEventListener('scroll', checkScrollPosition);
+    }
   }, []);
 
   // Calculate icon layout position and opacity
@@ -171,7 +175,7 @@ const HeroStart = () => {
 
   // Add a style that ensures the hero section covers the full viewport
   useEffect(() => {
-    if(typeof document !== undefined){
+    if(typeof document !== "undefined"){
       const styleTag = document.createElement('style');
       styleTag.innerHTML = `
         .hero-start-wrapper {
@@ -199,7 +203,7 @@ const HeroStart = () => {
     let secondAnimScrollAccumulator = 0;
 
     // Disable scrolling when first animation is running
-    if (animState.showFirstAnim) {
+    if (animState.showFirstAnim && typeof document !== "undefined") {
       document.body.classList.add('scroll-disabled');
     }
 
@@ -496,36 +500,34 @@ const HeroStart = () => {
       });
     };
 
-    // Add scroll event listener to detect when user scrolls back to hero section
-    const checkScrollPosition = () => {
-      // If we've scrolled down past hero and now scrolling back up
-      if (hasLeftSectionRef.current && window.scrollY < 100) {
-        // Re-enable animation controls when scrolling back up into the section
-        hasLeftSectionRef.current = false;
-      } else if (window.scrollY > window.innerHeight) {
-        hasLeftSectionRef.current = true;
-      }
-    };
-    
-    window.addEventListener('scroll', checkScrollPosition, { passive: true });
-
-    // Passive wheel event listener (cannot prevent default) for tracking
-    window.addEventListener('wheel', () => {}, { passive: true });
-    
-    // Non-passive wheel event listener for controlling scrolling
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('wheel', () => {});
-      window.removeEventListener('scroll', checkScrollPosition);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      // Always make sure to remove any scroll lock when component unmounts
-      document.body.classList.remove('scroll-disabled');
-    };
-  }, [animState.showFirstAnim, animState.showSecondAnim, animState.showThirdAnim, animState.animationCompleted, overlayTextWords.length]);
+    // At the end of useEffect, safely add event listeners with browser checks
+    if (typeof window !== "undefined" && typeof document !== "undefined") {
+      // Add scroll and wheel event listeners
+      const checkScrollPosition = () => {
+        if (animState.animationCompleted) return;
+        
+        // Check if user has scrolled past animation section
+        if (window.scrollY > window.innerHeight) {
+          hasLeftSectionRef.current = true;
+        } else if (window.scrollY < 100) {
+          // Reset when back at top
+          hasLeftSectionRef.current = false;
+        }
+      };
+      
+      window.addEventListener('scroll', checkScrollPosition, { passive: true });
+      // Passive event to ensure browser scrolling works normally in the document
+      window.addEventListener('wheel', () => {}, { passive: true });
+      // Our custom wheel handler to control animations
+      window.addEventListener('wheel', handleWheel, { passive: false });
+      
+      return () => {
+        window.removeEventListener('wheel', handleWheel);
+        window.removeEventListener('wheel', () => {});
+        window.removeEventListener('scroll', checkScrollPosition);
+      };
+    }
+  }, [animState]);
 
   return (
     <div className="hero-start-wrapper">
