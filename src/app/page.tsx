@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 
 // Dynamically import the home page content with ssr disabled
 const HomeContent = dynamic(
-  () => import('@/components/pages/home/HomeContent'),
+  () => import('../components/pages/home/HomeContent'),
   { ssr: false }
 );
 

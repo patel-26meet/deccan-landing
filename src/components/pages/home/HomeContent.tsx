@@ -1,14 +1,14 @@
 "use client"
 
-import AboutUsFAQs from "@/components/pages/home/AboutUsFAQs";
-import HowItWorks from "@/components/pages/home/campusPartnersHowItWorks";
-import Footer from "@/components/pages/home/Footer/Footer";
-import Hero from "@/components/pages/home/Hero/Hero";
-import OpportunitiesAndBenifits from "@/components/pages/home/opportunitiesandbenifits";
-import SimulatorPage from "@/components/pages/home/Simulator/SimulatorPage";
-import Statistics from "@/components/pages/home/Statistics/statistics";
-import Stories from "@/components/pages/home/stories";
-import NavBar from "@/components/shared/NavBar";
+import AboutUsFAQs from "./AboutUsFAQs";
+import HowItWorks from "./campusPartnersHowItWorks";
+import Footer from "./Footer/Footer";
+import Hero from "./Hero/Hero";
+import OpportunitiesAndBenifits from "./opportunitiesandbenifits";
+import SimulatorPage from "./Simulator/SimulatorPage";
+import Statistics from "./Statistics/statistics";
+import Stories from "./stories";
+import NavBar from "../../shared/NavBar";
 import { useEffect, useState } from "react";
 
 const HomeContent = () => {
