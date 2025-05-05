@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+
+import { FC, ComponentType } from 'react';
 
 interface IFilterOption {
   id: string;
@@ -10,13 +12,13 @@ interface IFilterBarProps {
   selectedFilter: string;
   onFilterChange: (filterId: string) => void;
   className?: string;
-  FilterIcon: React.ComponentType<{
+  FilterIcon: ComponentType<{
     isSelected: boolean;
     text: string;
   }>;
 }
 
-const FilterBar: React.FC<IFilterBarProps> = ({
+const FilterBar: FC<IFilterBarProps> = ({
   options,
   selectedFilter,
   onFilterChange,

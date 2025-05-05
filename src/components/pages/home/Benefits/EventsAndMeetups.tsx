@@ -1,3 +1,5 @@
+"use client"
+
 const EventsAndMeetups = () => {
     return (
         <div className="benefits__events-and-meetups">

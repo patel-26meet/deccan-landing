@@ -2,7 +2,6 @@
 
 import Button from "@/components/shared/Button";
 import { useRef, useState, useEffect } from "react";
-// import deccanLogo from '/assets/deccan-logo.svg';
 
 const Footer = () => {
   // Reference to the footer section

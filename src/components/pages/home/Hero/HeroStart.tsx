@@ -171,24 +171,26 @@ const HeroStart = () => {
 
   // Add a style that ensures the hero section covers the full viewport
   useEffect(() => {
-    // Add a style tag to ensure the hero section covers the full viewport
-    const styleTag = document.createElement('style');
-    styleTag.innerHTML = `
-      .hero-start-wrapper {
-        min-height: 100vh;
-        position: relative; 
-        overflow: hidden;
-      }
+    if(typeof document !== undefined){
+      const styleTag = document.createElement('style');
+      styleTag.innerHTML = `
+        .hero-start-wrapper {
+          min-height: 100vh;
+          position: relative; 
+          overflow: hidden;
+        }
+        
+        body.scroll-disabled {
+          overflow: hidden;
+        }
+      `;
+      document.head.appendChild(styleTag);
       
-      body.scroll-disabled {
-        overflow: hidden;
-      }
-    `;
-    document.head.appendChild(styleTag);
-    
-    return () => {
-      document.head.removeChild(styleTag);
-    };
+      return () => {
+        document.head.removeChild(styleTag);
+      };
+    }
+
   }, []);
 
   // Handle scroll events for animation control and disable default scroll

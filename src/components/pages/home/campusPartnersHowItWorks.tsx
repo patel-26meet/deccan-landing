@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Button from "@/components/shared/Button";
 import HowItWorksCard from "./HowItWorks/HowItWorksCard";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import lottie1 from "../../../../public/assets/how-it-works/selection-process-1-v2.json";
 import lottie2 from "../../../../public/assets/how-it-works/selection-process-2-v2.json";
 import lottie3 from "../../../../public/assets/how-it-works/selection-process-3-v2.json";
@@ -19,6 +20,9 @@ const BREAKPOINT_LG = 1024;
 
 type DeviceType = 'mobile' | 'tablet' | 'desktop';
 
+// Generate array of campus partner icons (1-29)
+const CAMPUS_PARTNER_ICONS = Array.from({ length: 29 }, (_, i) => `I${i + 1}.svg`);
+
 const HowItWorks = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0); 
@@ -26,6 +30,22 @@ const HowItWorks = () => {
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   
   const lottieAnimations = [lottie1, lottie2, lottie3, lottie4];
+
+  // Split icons into two different sets for top and bottom rows
+  const topRowIcons = useMemo(() => {
+    // First 15 icons for top row
+    const icons = CAMPUS_PARTNER_ICONS.slice(0, 15);
+    // Double the array for smooth infinite loop
+    return [...icons, ...icons];
+  }, []);
+  
+  // Use useMemo to ensure the shuffled array is stable across renders
+  const bottomRowIcons = useMemo(() => {
+    // Remaining 14 icons for bottom row, in reverse order for variety
+    const icons = CAMPUS_PARTNER_ICONS.slice(15).reverse();
+    // Double the array for smooth infinite loop
+    return [...icons, ...icons];
+  }, []);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -80,7 +100,37 @@ const HowItWorks = () => {
                 Our Campus Partners
             </div>
             <div className="campus-partners__content">
-                Icons
+                <div className="marquee-container">
+                    <div className="marquee">
+                        {topRowIcons.map((icon, index) => (
+                            <div key={`icon-${index}`} className="marquee-item">
+                                <Image 
+                                    src={`/assets/campus-partners/${icon}`}
+                                    alt={`Campus Partner ${index % 15 + 1}`}
+                                    width={100}
+                                    height={60}
+                                    style={{ objectFit: "contain" }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                <div className="marquee-container reverse">
+                    <div className="marquee marquee-reverse">
+                        {bottomRowIcons.map((icon, index) => (
+                            <div key={`icon-reverse-${index}`} className="marquee-item">
+                                <Image 
+                                    src={`/assets/campus-partners/${icon}`}
+                                    alt={`Campus Partner ${(index % 14) + 16}`}
+                                    width={100}
+                                    height={60}
+                                    style={{ objectFit: "contain" }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
         

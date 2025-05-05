@@ -1,3 +1,5 @@
+"use client"
+
 const LearningAndDev = () => {
     return (
         <div className="benefits__learning-and-dev">

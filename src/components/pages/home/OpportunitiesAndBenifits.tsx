@@ -107,22 +107,23 @@ const OpportunitiesAndBenifits = () => {
                 className={`opportunities-and-benefits-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'} ${scrollDirection === 'down' ? 'from-simulator' : 'from-statistics'}`}
             >
                 <div className="opportunities-wrapper">
-                    <div className="opportunities-header">Opportunities </div>
-                        <div className="opportunities-text"> Explore flexible, remote opportunities and shape the future of AI, all at your own pace</div>
+                    <div className="opportunities__header">Opportunities </div>
+                        <div className="opportunities__text"> Explore flexible, remote opportunities and shape the future of AI, all at your own pace</div>
                         <FilterBar 
                             options={filterOptions}
                             selectedFilter={selectedFilter}
                             onFilterChange={handleFilterClick}
-                            className="opportunities-bar"
+                            className="opportunities__filter-bar"
                             FilterIcon={FilterIcon}
                         />
-                        <div className="opportunities-cards-wrapper">
+                        <div className="opportunities__cards">
                             {filteredOpportunities.map((opportunity, index) => (
                                 <OpportunitiesCard 
                                     key={index}
                                     header={opportunity.header}
                                     description={opportunity.description}
                                     rate={opportunity.rate}
+                                    category={opportunity.category}
                                 />
                             ))}
                         </div>
@@ -130,7 +131,7 @@ const OpportunitiesAndBenifits = () => {
                             text="Get Started"
                             mode="dark"
                             state="default"
-                            className="read-more-btn"
+                            className="opportunities__button"
                         />
                     </div>
                     <div className="benefits-wrapper">

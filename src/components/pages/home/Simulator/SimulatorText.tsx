@@ -1,3 +1,5 @@
+"use client"
+
 import { ISimulatorText } from '@/interfaces/components/simulator.type';
 import { FC, useState, useEffect, useRef } from 'react';
 import { simulatorText } from '@/constants/pages/home/simulator';

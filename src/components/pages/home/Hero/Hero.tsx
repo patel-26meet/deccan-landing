@@ -1,3 +1,5 @@
+"use client"
+
 import HeroStart from "./HeroStart";
 
 const Hero = () => {

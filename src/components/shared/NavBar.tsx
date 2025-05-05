@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react';
 
 // Define breakpoint constants
-const BREAKPOINT_SM = 768;
 const BREAKPOINT_LG = 1024;
 
 interface INavBarProps {

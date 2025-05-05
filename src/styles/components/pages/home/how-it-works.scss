@@ -1,15 +1,94 @@
 .campus-partners-how-it-works {
   background: $grey;
+  overflow: hidden;
 }
 
 .campus-partners {
   @include flex-col(center, center);
-  padding: 3.75rem 5rem;
-  gap: 1.25rem;
-  height: 20rem;
+  padding: 3.75rem 0;
+  gap: 2.5rem;
+  height: auto;
+  overflow: hidden;
+  width: 100%;
 
   &__header {
     @include h4;
+  }
+
+  &__content {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 0 -5rem;
+    width: calc(100% + 10rem);
+  }
+
+  // Marquee container and animation
+  .marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0;
+    
+    &.reverse {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+    
+    &-reverse {
+      animation: marquee-reverse 70s linear infinite;
+    }
+  }
+
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    transition: transform 0.3s ease;
+    height: 80px;
+    overflow: visible;
+
+    &:hover {
+      transform: scale(1.1);
+      z-index: 2;
+    }
+
+    img {
+      object-fit: contain;
+      max-height: 75px;
+      opacity: 0.9;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 }
 
@@ -140,12 +219,40 @@
 /* Tablet view (breakpoint-lg) */
 @media screen and (max-width: $breakpoint-lg) {
   .campus-partners-how-it-works {
-    padding: 4rem 2rem;
+    padding: 4rem 0;
   }
 
   .campus-partners {
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 0;
     height: auto;
+
+    &__content {
+      gap: 1.75rem;
+      margin: 0 -2rem;
+      width: calc(100% + 4rem);
+    }
+
+    .marquee {
+      animation: marquee 55s linear infinite;
+      
+      &-reverse {
+        animation: marquee-reverse 65s linear infinite;
+      }
+    }
+
+    .marquee-container {
+      padding: 0.75rem 0;
+    }
+
+    .marquee-item {
+      padding: 0 1.5rem;
+      height: 70px;
+      
+      img {
+        max-height: 50px;
+        width: auto;
+      }
+    }
   }
 
   .how-it-works {
@@ -277,12 +384,40 @@
 /* Mobile view (breakpoint-sm) */
 @media screen and (max-width: $breakpoint-sm) {
   .campus-partners-how-it-works {
-    padding: 3.5rem 1.5rem;
+    padding: 3.5rem 0;
   }
 
   .campus-partners {
-    padding: 2rem 1rem;
+    padding: 2rem 0;
     height: auto;
+
+    &__content {
+      gap: 1.25rem;
+      margin: 0 -1.5rem;
+      width: calc(100% + 3rem);
+    }
+
+    .marquee {
+      animation: marquee 50s linear infinite;
+      
+      &-reverse {
+        animation: marquee-reverse 60s linear infinite;
+      }
+    }
+
+    .marquee-container {
+      padding: 0.5rem 0;
+    }
+
+    .marquee-item {
+      padding: 0 1.25rem;
+      height: 60px;
+      
+      img {
+        max-height: 40px;
+        width: auto;
+      }
+    }
   }
 
   .how-it-works {

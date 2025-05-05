@@ -1,3 +1,5 @@
+"use client"
+
 const Community = () => {
     return (
         <div className="benefits__community">

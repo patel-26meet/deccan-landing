@@ -1,9 +1,11 @@
-import React from 'react';
+"use client"
+
+import { FC } from 'react';
 import { IImageBackside } from '../../../../interfaces/components/imageBackside.type';
 
 type ImageBacksideProps = IImageBackside
 
-const ImageBackside: React.FC<ImageBacksideProps> = ({
+const ImageBackside: FC<ImageBacksideProps> = ({
   content
 }) => {
   return (

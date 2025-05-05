@@ -1,3 +1,5 @@
+"use client"
+
 import { iconsMobile, iconsTablet, iconsWeb } from "@/constants/pages/home/hero";
 import { IHeroIconsProps } from "@/interfaces/components/hero.type";
 import { useState, useEffect } from "react";

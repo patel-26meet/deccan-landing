@@ -1,3 +1,5 @@
+"use client"
+
 import { IFilterIconType } from "@/interfaces/components/filtericon.type";
 import { FC } from "react";
 

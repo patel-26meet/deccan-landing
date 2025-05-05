@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import { IStoriesCardType } from '../../../../interfaces/components/storiescard.type';
 
