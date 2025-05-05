@@ -4,12 +4,12 @@ import AboutUsFAQs from "./AboutUsFAQs";
 import HowItWorks from "./campusPartnersHowItWorks";
 import Footer from "./Footer/Footer";
 import Hero from "./Hero/Hero";
-import OpportunitiesAndBenifits from "./opportunitiesandbenifits";
 import SimulatorPage from "./Simulator/SimulatorPage";
 import Statistics from "./Statistics/statistics";
 import Stories from "./stories";
 import NavBar from "../../shared/NavBar";
 import { useEffect, useState } from "react";
+import OpportunitiesAndBenifits from "./opportunitiesandbenifits";
 
 const HomeContent = () => {
   // Use state to control rendering on the client side
