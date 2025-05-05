@@ -6,7 +6,7 @@ import Footer from "./Footer/Footer";
 import Hero from "./Hero/Hero";
 import SimulatorPage from "./Simulator/SimulatorPage";
 import Statistics from "./Statistics/statistics";
-import Stories from "./_Stories";
+import Stories from "./Stories";
 import NavBar from "../../shared/NavBar";
 import { useEffect, useState } from "react";
 import OpportunitiesAndBenifits from "./Opportunitiesandbenifits";
