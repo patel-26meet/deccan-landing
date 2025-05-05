@@ -1,6 +1,6 @@
 "use client"
 
-import { IFilterIconType } from "@/interfaces/components/filtericon.type";
+import { IFilterIconType } from "@/interfaces/components/_Filtericon.type";
 import { FC } from "react";
 
 const FilterIcon: FC<IFilterIconType> = ({
