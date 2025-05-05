@@ -9,7 +9,7 @@ import Statistics from "./Statistics/statistics";
 import Stories from "./stories";
 import NavBar from "../../shared/NavBar";
 import { useEffect, useState } from "react";
-import OpportunitiesAndBenifits from "./opportunitiesandbenifits";
+import OpportunitiesAndBenifits from "./_Opportunitiesandbenifits";
 
 const HomeContent = () => {
   // Use state to control rendering on the client side
