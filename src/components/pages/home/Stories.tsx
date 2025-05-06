@@ -26,20 +26,20 @@ const Stories = () => {
   }, []);
   
   return (
-    <div className='stories-wrapper'>
+    <div className='stories-section'>
       <div className='stories'>
-          <div className='stories__header-wrapper'>
-              <div className='stories__header'>
+          <div className='stories__header-container'>
+              <div className='stories__title'>
                   {storiesData.header}
               </div>
-              <div className='stories__content'>
+              <div className='stories__description'>
                   {storiesData.subheader}
-                  <span className='stories__content-number'>{storiesData.expertCount}</span> {storiesData.expertText}
+                  <span className='stories__description-highlight'>{storiesData.expertCount}</span> {storiesData.expertText}
               </div>
           </div>
           
           {isMobile ? (
-            <div className='stories__body-mobile'>
+            <div className='stories__mobile'>
               <StoriesCard
                 testimonial={storiesData.testimonials[0].testimonial}
                 highlightedText={storiesData.testimonials[0].highlightedText}
@@ -57,28 +57,28 @@ const Stories = () => {
                 organization={storiesData.testimonials[2].organization}
                 profileImage={storiesData.testimonials[2].profileImage}
               />
-              <div className='stories__body-mobile-image'>
+              <div className='stories__mobile-image'>
                 <img src={storiesData.images.image2} alt="Soul AI community member" />
               </div>
             </div>
           ) : (
-            <div className='stories__body'>
-                <div className='stories__body-left'>
-                    <div className='stories__body-left-top'>
+            <div className='stories__grid'>
+                <div className='stories__grid-left'>
+                    <div className='stories__grid-left-top'>
                         <a 
                           href="https://www.linkedin.com/feed/update/urn:li:activity:7298324135418478592/?actorCompanyId=96882481" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="linkedin-link"
+                          className="stories__linkedin-link"
                         >
-                          <img className='stories__body-left-top-img hover-effect' src={storiesData.images.linkedinPost}/>
+                          <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinPost}/>
                         </a>
-                        <div className="flip-card">
-                          <div className="flip-card-inner">
-                            <div className="flip-card-front">
-                              <img className='stories__body-left-top-img-2' src={storiesData.images.image1}/>
+                        <div className="stories__flip-card">
+                          <div className="stories__flip-card-inner">
+                            <div className="stories__flip-card-front">
+                              <img className='stories__grid-image' src={storiesData.images.image1}/>
                             </div>
-                            <div className="flip-card-back">
+                            <div className="stories__flip-card-back">
                               <ImageBackside 
                                 content={storiesData.flipCards.image1.content}
                               />
@@ -86,12 +86,12 @@ const Stories = () => {
                           </div>
                         </div>
                     </div>
-                    <div className='stories__body-left-bottom'>
-                        <div className='stories__body-left-bottom-1'>
-                            <img className='stories__body-left-bottom-img-1 hover-effect' src={storiesData.images.whatsapp}/>
-                            <img className='stories__body-left-bottom-img-2 hover-effect' src={storiesData.images.woman}/>
+                    <div className='stories__grid-left-bottom'>
+                        <div className='stories__grid-left-bottom-images'>
+                            <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.whatsapp}/>
+                            <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.woman}/>
                         </div>
-                        <div className='stories__body-left-bottom-2'>
+                        <div className='stories__grid-left-bottom-cards'>
                             <StoriesCard
                                 testimonial={storiesData.testimonials[0].testimonial}
                                 highlightedText={storiesData.testimonials[0].highlightedText}
@@ -110,10 +110,10 @@ const Stories = () => {
                         </div>
                     </div>
                 </div>
-                <div className='stories__body-right'>
-                    <div className='stories__body-right-space'>
+                <div className='stories__grid-right'>
+                    <div className='stories__grid-right-space'>
                     </div>
-                    <div className='stories__body-right-top'>
+                    <div className='stories__grid-right-top'>
                         <StoriesCard
                             testimonial={storiesData.testimonials[2].testimonial}
                             highlightedText={storiesData.testimonials[2].highlightedText}
@@ -122,15 +122,15 @@ const Stories = () => {
                             organization={storiesData.testimonials[2].organization}
                             profileImage={storiesData.testimonials[2].profileImage}
                         />
-                        <img className='stories__body-right-top-img hover-effect' src={storiesData.images.linkedinMsg}/>
+                        <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinMsg}/>
                     </div>
-                    <div className='stories__body-right-middle'>
-                        <div className="flip-card">
-                          <div className="flip-card-inner">
-                            <div className="flip-card-front">
-                              <img className='stories__body-right-bottom-img-1' src={storiesData.images.image2}/>
+                    <div className='stories__grid-right-middle'>
+                        <div className="stories__flip-card">
+                          <div className="stories__flip-card-inner">
+                            <div className="stories__flip-card-front">
+                              <img className='stories__grid-image' src={storiesData.images.image2}/>
                             </div>
-                            <div className="flip-card-back">
+                            <div className="stories__flip-card-back">
                               <ImageBackside 
                                 content={storiesData.flipCards.image2.content}
                               />
@@ -145,14 +145,14 @@ const Stories = () => {
                             profileImage={storiesData.testimonials[3].profileImage}
                         />
                     </div>
-                    <div className='stories__body-right-bottom'>
+                    <div className='stories__grid-right-bottom'>
                         <a 
                           href="https://www.linkedin.com/feed/update/urn:li:activity:7286402295943024640/?actorCompanyId=96882481" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="linkedin-link"
+                          className="stories__linkedin-link"
                         >
-                          <img className='stories__body-right-bottom-img-2 hover-effect' src={storiesData.images.linkedinBotRight}/>
+                          <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinBotRight}/>
                         </a>
                     </div>
                 </div>
@@ -160,8 +160,8 @@ const Stories = () => {
           )}
       </div>
       <div className='stories__blur'></div>
-      <div className='stories__blur-2'></div>
-      <div className='stories-wrapper__button'>
+      <div className='stories__blur-gradient'></div>
+      <div className='stories-section__button'>
         <Button
           text="View More Stories"
           mode="light"

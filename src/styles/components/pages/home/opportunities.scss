@@ -153,12 +153,10 @@
     backdrop-filter: blur(64.9px);
     transition: opacity 0.8s ease-in-out;
     
-    // Hidden state - initial state when entering viewport
     &.fade-in-hidden {
         opacity: 0;
     }
     
-    // Visible state - after 50% visible in viewport
     &.fade-in-visible {
         opacity: 1;
     }
@@ -189,6 +187,10 @@
       font-size: 14px;
     }
   }
+
+  .opportunities-wrapper{
+    padding: 100px 60px 80px 60px;
+  }
   
   .opportunities__cards {
     grid-template-columns: repeat(2, 1fr);
@@ -204,6 +206,10 @@
     min-width: unset;
     max-width: none;
     position: relative;
+
+    &__content {
+        height: 100%;
+    }
     
     &__image {
       position: absolute;
@@ -247,6 +253,8 @@
         overflow: hidden;
         border-radius: $card-border-radius;
         position: relative;
+        background: rgba(255, 255, 255, 0.50);
+backdrop-filter: blur(30px);
 
         &__content {
             gap: 2rem;
