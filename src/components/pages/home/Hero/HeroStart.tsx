@@ -13,22 +13,7 @@ import lottiet2 from "../../../../../public/assets/hero-json/tablet/H2.json";
 import lottiet3 from "../../../../../public/assets/hero-json/tablet/H3.json";
 import Button from "@/components/shared/Button";
 import HeroIconsLayout from "./HeroIconsLayout";
-
-interface IAnimationState {
-  showFirstAnim: boolean;
-  showSecondAnim: boolean;
-  showThirdAnim: boolean;
-  firstAnimCompleted: boolean;
-  secondAnimSpeed: number;
-  thirdAnimProgress: number;
-  lottieThirdProgress: number; // Separate progress for Lottie animation
-  showText: boolean;
-  textHighlightIndex: number;
-  animationCompleted: boolean;
-  iconsLayoutProgress: number;
-  textFullyHighlighted: boolean;
-}
-
+import { IAnimationState } from "@/interfaces/components/hero.type";
 type DeviceType = 'desktop' | 'tablet' | 'mobile';
 
 const HeroStart = () => {
@@ -157,10 +142,10 @@ const HeroStart = () => {
     
     // Calculate opacity - fully visible in the middle of the journey
     let opacity = 0;
-    if (progress < 0.2) {
+    if (progress < 0.3) {
       // Fade in from 0 to 1 during first 20% of progress
       opacity = progress / 0.2;
-    } else if (progress > 0.8) {
+    } else if (progress > 0.7) {
       // Fade out from 1 to 0 during last 20% of progress
       opacity = 1 - ((progress - 0.8) / 0.2);
     } else {
@@ -761,7 +746,7 @@ const HeroStart = () => {
            Shape the future of AI
           </p>
           <div className="hero-start-button">
-            <Button text="Apply Now" mode="dark" onClick={() => {}} />
+            <Button text="Apply Now" mode="hybrid" onClick={() => {}} />
           </div>
         </div>
       )}

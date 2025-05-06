@@ -19,3 +19,18 @@ export interface IIconData {
       right?: string;
   };
 }
+
+export interface IAnimationState {
+  showFirstAnim: boolean;
+  showSecondAnim: boolean;
+  showThirdAnim: boolean;
+  firstAnimCompleted: boolean;
+  secondAnimSpeed: number;
+  thirdAnimProgress: number;
+  lottieThirdProgress: number; // Separate progress for Lottie animation
+  showText: boolean;
+  textHighlightIndex: number;
+  animationCompleted: boolean;
+  iconsLayoutProgress: number;
+  textFullyHighlighted: boolean;
+}

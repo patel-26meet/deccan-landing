@@ -8,7 +8,6 @@
   border-radius: 60px;
   border: 1px solid rgba(133, 133, 133, 0.30);
   background: rgba(255, 255, 255, 0.15);
-  font-family: "DM Sans";
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -51,34 +50,102 @@
       transform: skewX(-25deg);
       transition: all 0.75s ease;
       pointer-events: none;
+      opacity: 0;
     }
     
     &:hover {
       border: 1px solid rgba(255, 255, 255, 0.30);
       box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.3) inset;
       background: rgba(255, 255, 255, 0.05);
-      
-      &::before {
-        left: 150%;
-        transition: all 0.75s ease;
-      }
     }
+  }
+  
+  &.hybrid:active, &.hybrid.ripple {
+    border: 1px solid rgba(255, 255, 255, 0.40);
+    box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.4) inset;
+    transform: translateY(1px);
     
-    &:active {
-      border: 1px solid rgba(255, 255, 255, 0.40);
-      box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.4) inset;
-      transform: translateY(2px);
-      
-      &::before {
-        left: 150%;
-        background: linear-gradient(
-          to right,
-          transparent,
-          rgba(255, 255, 255, 0.3),
-          transparent
-        );
-        transition: all 0.4s ease;
-      }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+      opacity: 0;
+      border-radius: 100%;
+      transform: translate(-50%, -50%) scale(1);
+      animation: ripple-primary 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+  }
+  
+  // We use a separate rule for ::before to avoid conflict with the hover effect ::before
+  &.hybrid.ripple::before, &.hybrid:active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0;
+    border-radius: 100%;
+    transform: translate(-50%, -50%) scale(1);
+    animation: ripple-secondary 1.2s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  @keyframes ripple-primary {
+    0% {
+      width: 0;
+      height: 0;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0.8;
+    }
+    15% {
+      width: 10px;
+      height: 10px;
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 0.5;
+      width: 30px;
+      height: 30px;
+    }
+    100% {
+      width: 50px;
+      height: 50px;
+      transform: translate(-50%, -50%) scale(25);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes ripple-secondary {
+    0% {
+      width: 0;
+      height: 0;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0.6;
+    }
+    15% {
+      width: 15px;
+      height: 15px;
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.4;
+      width: 40px;
+      height: 40px;
+    }
+    100% {
+      width: 80px;
+      height: 80px;
+      transform: translate(-50%, -50%) scale(40);
+      opacity: 0;
     }
   }
   
@@ -111,6 +178,12 @@
     &.hidden {
       opacity: 0;
     }
+    
+    &.white-arrow {
+      width: 18px;
+      height: 18px;
+      transform-origin: center;
+    }
   }
   
   &:hover, &.hovered {
@@ -118,11 +191,20 @@
       &.icon-default {
         opacity: 0;
         transform: translateX(5px);
+        
+        &.white-arrow {
+          transform: translateX(5px);
+        }
       }
       
       &.icon-hover {
         opacity: 1;
         transform: translateX(0);
+        
+        &.white-arrow {
+          width: 18px;
+          height: 18px;
+        }
       }
     }
   }
