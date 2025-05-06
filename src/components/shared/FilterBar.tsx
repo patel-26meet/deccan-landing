@@ -1,22 +1,8 @@
 "use client"
 
-import { FC, ComponentType } from 'react';
+import { IFilterBarProps } from "@/interfaces/components/filterbar.type";
+import { FC } from "react";
 
-interface IFilterOption {
-  id: string;
-  text: string;
-}
-
-interface IFilterBarProps {
-  options: IFilterOption[];
-  selectedFilter: string;
-  onFilterChange: (filterId: string) => void;
-  className?: string;
-  FilterIcon: ComponentType<{
-    isSelected: boolean;
-    text: string;
-  }>;
-}
 
 const FilterBar: FC<IFilterBarProps> = ({
   options,

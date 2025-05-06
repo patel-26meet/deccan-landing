@@ -39,7 +39,7 @@ const HeroStart = () => {
     firstAnimCompleted: false,
     secondAnimSpeed: 1,
     thirdAnimProgress: 0,
-    lottieThirdProgress: 0, // Initialize separate Lottie progress
+    lottieThirdProgress: 0, 
     showText: false,
     textHighlightIndex: -1,
     animationCompleted: false,
@@ -89,6 +89,7 @@ const HeroStart = () => {
   const overlayTextWords = "Shape the Future of AI with Flexible, High Impact Remote opportunities across 50+ domains tailored for your expertise!".split(" ");
   
   const wheelEventRef = useRef<WheelEvent | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const totalScrollRef = useRef<number>(0);
   const isScrollingRef = useRef<boolean>(false);
@@ -206,6 +207,167 @@ const HeroStart = () => {
     if (animState.showFirstAnim && typeof document !== "undefined") {
       document.body.classList.add('scroll-disabled');
     }
+
+    // Touch event handlers for mobile devices
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        touchStartYRef.current = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      // If animation is completed or user has scrolled past the section, allow normal touch behavior
+      if (animState.animationCompleted || hasLeftSectionRef.current) {
+        // If user is scrolling up and has left the section before, enable the animation again
+        if (touchStartYRef.current !== null && 
+            e.touches[0].clientY > touchStartYRef.current && 
+            hasLeftSectionRef.current && 
+            window.scrollY < 100) {
+          
+          hasLeftSectionRef.current = false;
+          
+          // Re-enable animation controls
+          if (animState.animationCompleted) {
+            document.body.classList.add('scroll-disabled');
+            e.preventDefault();
+            
+            // Ensure we're at the top of the page
+            window.scrollTo({
+              top: 0,
+              behavior: 'auto'
+            });
+            
+            // Reset state for re-entering animations
+            isSecondAnimSpeeding = false;
+            secondAnimScrollAccumulator = 0;
+            
+            // Calculate deltaY equivalent for touch
+            const deltaY = touchStartYRef.current - e.touches[0].clientY;
+            
+            // Process the touch event for animation
+            if (!isScrollingRef.current) {
+              isScrollingRef.current = true;
+              totalScrollRef.current = deltaY;
+              
+              if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current);
+              }
+              
+              scrollTimeoutRef.current = setTimeout(() => {
+                processScroll();
+                isScrollingRef.current = false;
+              }, 50);
+            } else {
+              totalScrollRef.current += deltaY;
+            }
+            return;
+          }
+        } else {
+          return; // Allow normal touch behavior
+        }
+      }
+      
+      // Prevent default touch behavior during animations
+      if (animState.showFirstAnim || animState.showSecondAnim || animState.showThirdAnim) {
+        e.preventDefault();
+        
+        if (touchStartYRef.current === null) {
+          return;
+        }
+        
+        // Calculate deltaY equivalent for touch
+        const currentY = e.touches[0].clientY;
+        const deltaY = touchStartYRef.current - currentY;
+        
+        // Similar logic to wheel event but for touch
+        if (animState.showSecondAnim && !animState.showThirdAnim) {
+          // Accumulate scroll amount for animation 2
+          secondAnimScrollAccumulator += deltaY;
+          
+          // Transition to animation 3 when enough touch movement in the down direction
+          if (!isSecondAnimSpeeding && secondAnimScrollAccumulator > 100) {
+            isSecondAnimSpeeding = true;
+            console.log("Speeding up second animation (touch)");
+            
+            // Add scroll-disabled class to body
+            document.body.classList.add('scroll-disabled');
+            
+            // Speed up the second animation
+            setAnimState((prev) => ({
+              ...prev,
+              secondAnimSpeed: 3,
+            }));
+
+            // After a short delay, transition to the third animation
+            setTimeout(() => {
+              console.log("Transitioning to third animation (touch)");
+              // Ensure we're at the top of the page for animation 3
+              window.scrollTo({
+                top: 0,
+                behavior: 'auto'
+              });
+              
+              // Clear any pending timeouts
+              if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current);
+              }
+              
+              // Reset accumulators
+              secondAnimScrollAccumulator = 0;
+              totalScrollRef.current = 0;
+              isScrollingRef.current = false;
+              
+              setAnimState((prev) => ({
+                ...prev,
+                showSecondAnim: false,
+                showThirdAnim: true,
+                showText: false,
+                thirdAnimProgress: 0,
+                lottieThirdProgress: 0,
+                textHighlightIndex: -1,
+                iconsLayoutProgress: 0,
+                animationCompleted: false
+              }));
+              
+              isSecondAnimSpeeding = false;
+            }, 800);
+          }
+        } 
+        else if (animState.showThirdAnim) {
+          // Ensure we're at the top of the page during animation 3
+          if (window.scrollY > 0) {
+            window.scrollTo({
+              top: 0,
+              behavior: 'auto'
+            });
+          }
+          
+          // If we're already processing a scroll, accumulate the amount
+          if (isScrollingRef.current) {
+            totalScrollRef.current += deltaY;
+            return;
+          }
+          
+          isScrollingRef.current = true;
+          totalScrollRef.current = deltaY;
+          
+          // Process accumulated scroll after a short delay
+          if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+          }
+          
+          scrollTimeoutRef.current = setTimeout(() => {
+            processScroll();
+            isScrollingRef.current = false;
+          }, 50);
+        }
+      }
+    };
+
+    // Reset touch reference when touch ends
+    const handleTouchEnd = () => {
+      touchStartYRef.current = null;
+    };
 
     const handleWheel = (e: WheelEvent) => {
       // If animation is completed or user has scrolled past the section and back, allow normal scrolling
@@ -502,7 +664,7 @@ const HeroStart = () => {
 
     // At the end of useEffect, safely add event listeners with browser checks
     if (typeof window !== "undefined" && typeof document !== "undefined") {
-      // Add scroll and wheel event listeners
+      // Add scroll, wheel, and touch event listeners
       const checkScrollPosition = () => {
         if (animState.animationCompleted) return;
         
@@ -516,15 +678,21 @@ const HeroStart = () => {
       };
       
       window.addEventListener('scroll', checkScrollPosition, { passive: true });
-      // Passive event to ensure browser scrolling works normally in the document
       window.addEventListener('wheel', () => {}, { passive: true });
-      // Our custom wheel handler to control animations
       window.addEventListener('wheel', handleWheel, { passive: false });
+      
+      // Add touch event listeners for mobile
+      window.addEventListener('touchstart', handleTouchStart, { passive: true });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('touchend', handleTouchEnd, { passive: true });
       
       return () => {
         window.removeEventListener('wheel', handleWheel);
         window.removeEventListener('wheel', () => {});
         window.removeEventListener('scroll', checkScrollPosition);
+        window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
       };
     }
   }, [animState]);
