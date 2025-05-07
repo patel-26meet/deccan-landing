@@ -8,22 +8,44 @@ import Button from '@/components/shared/Button';
 
 const Stories = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [flippedCards, setFlippedCards] = useState<{[key: string]: boolean}>({});
   
-  // Check if we're on mobile
+  // Check if we're on mobile/tablet
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const checkDeviceSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsTablet(width > 768 && width <= 1024);
     };
     
     // Check on mount
-    checkMobile();
+    checkDeviceSize();
     
     // Add resize listener
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', checkDeviceSize);
     
     // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkDeviceSize);
   }, []);
+  
+  // Handle card touch/click for tablets
+  const handleCardFlip = (cardId: string) => {
+    if (isTablet) {
+      setFlippedCards(prev => ({
+        ...prev,
+        [cardId]: !prev[cardId]
+      }));
+    }
+  };
+  
+  // Get card class based on flip state
+  const getCardClass = (cardId: string) => {
+    const baseClass = "stories__flip-card-inner";
+    return isTablet && flippedCards[cardId] 
+      ? `${baseClass} flipped`
+      : baseClass;
+  };
   
   return (
     <div className='stories-section'>
@@ -73,8 +95,8 @@ const Stories = () => {
                         >
                           <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinPost}/>
                         </a>
-                        <div className="stories__flip-card">
-                          <div className="stories__flip-card-inner">
+                        <div className="stories__flip-card" onClick={() => handleCardFlip('card1')}>
+                          <div className={getCardClass('card1')}>
                             <div className="stories__flip-card-front">
                               <img className='stories__grid-image' src={storiesData.images.image1}/>
                             </div>
@@ -103,6 +125,8 @@ const Stories = () => {
                             />
                             <StoriesCard
                                 testimonial={storiesData.testimonials[1].testimonial}
+                                highlightedText={storiesData.testimonials[1].highlightedText}
+                                additionalText={storiesData.testimonials[1].additionalText}
                                 name={storiesData.testimonials[1].name}
                                 organization={storiesData.testimonials[1].organization}
                                 profileImage={storiesData.testimonials[1].profileImage}
@@ -117,6 +141,7 @@ const Stories = () => {
                         <StoriesCard
                             testimonial={storiesData.testimonials[2].testimonial}
                             highlightedText={storiesData.testimonials[2].highlightedText}
+                            additionalText={storiesData.testimonials[2].additionalText}
                             name={storiesData.testimonials[2].name}
                             role={storiesData.testimonials[2].role}
                             organization={storiesData.testimonials[2].organization}
@@ -125,8 +150,8 @@ const Stories = () => {
                         <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinMsg}/>
                     </div>
                     <div className='stories__grid-right-middle'>
-                        <div className="stories__flip-card">
-                          <div className="stories__flip-card-inner">
+                        <div className="stories__flip-card" onClick={() => handleCardFlip('card2')}>
+                          <div className={getCardClass('card2')}>
                             <div className="stories__flip-card-front">
                               <img className='stories__grid-image' src={storiesData.images.image2}/>
                             </div>
@@ -140,6 +165,7 @@ const Stories = () => {
                         <StoriesCard
                             testimonial={storiesData.testimonials[3].testimonial}
                             highlightedText={storiesData.testimonials[3].highlightedText}
+                            additionalText={storiesData.testimonials[3].additionalText}
                             name={storiesData.testimonials[3].name}
                             organization={storiesData.testimonials[3].organization}
                             profileImage={storiesData.testimonials[3].profileImage}
@@ -159,8 +185,8 @@ const Stories = () => {
             </div>
           )}
       </div>
-      <div className='stories__blur'></div>
-      <div className='stories__blur-gradient'></div>
+      <div className='stories-section__blur'></div>
+      <div className='stories-section__blur-gradient'></div>
       <div className='stories-section__button'>
         <Button
           text="View More Stories"

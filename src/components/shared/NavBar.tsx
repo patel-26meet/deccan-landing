@@ -143,13 +143,17 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
             {isResponsive && menuOpen && (
                 <div className="mobile-menu">
                     <div className="mobile-menu-items">
-                        <div>Opportunities</div>
-                        <div>Testimonials</div>
-                        <div>Blogs</div>
-                        <div>About Us</div>
-                        <div>FAQs</div>
-                        <div>Login</div>
-                        <div>Sign Up</div>
+                        <div className="main-nav-items">
+                            <div>Opportunities</div>
+                            <div>Testimonials</div>
+                            <div>Blogs</div>
+                            <div>About Us</div>
+                            <div>FAQs</div>
+                        </div>
+                        <div className="auth-nav-items">
+                            <div>Login</div>
+                            <div>Sign Up</div>
+                        </div>
                     </div>
                 </div>
             )}

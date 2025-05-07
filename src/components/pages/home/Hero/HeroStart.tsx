@@ -690,6 +690,8 @@ const HeroStart = () => {
           animationData={getLottieAnimation(1)}
           play
           onComplete={handleFirstAnimComplete}
+          style={{ width: '100vw', height: '100vh' }}
+          rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
         />
       )}
 
@@ -700,6 +702,8 @@ const HeroStart = () => {
             animationData={getLottieAnimation(2)}
             play
             speed={animState.secondAnimSpeed}
+            style={{ width: '100vw', height: '100vh' }}
+            rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
           />
         </div>
       )}
@@ -711,7 +715,9 @@ const HeroStart = () => {
             animationData={getLottieAnimation(3)}
             play
             speed={0}
-            goTo={animState.lottieThirdProgress * 100} // Use the separate Lottie progress
+            goTo={animState.lottieThirdProgress * 100}
+            style={{ width: '100vw', height: '100vh' }}
+            rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
           />
           
           <div className={`hero-content-overlay ${animState.thirdAnimProgress > 0 ? 'visible' : ''}`}>

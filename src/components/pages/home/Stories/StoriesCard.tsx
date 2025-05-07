@@ -14,13 +14,22 @@ const StoriesCard: React.FC<StoriesCardProps> = ({
   organization,
   profileImage
 }) => {
+  const isAzizullahTestimonial = name === "Azizullah C";
+
   return (
     <div className='stories-card'>
       <div className='stories-card__content'>
         <div className='stories-card__testimonial'>
-          <span className='stories-card__testimonial-text'>{testimonial}</span>
-          {highlightedText && <span className='stories-card__testimonial-highlight'>{highlightedText}</span>}
-          {additionalText && <span className='stories-card__testimonial-additional'>{additionalText}</span>}
+          <p className='stories-card__testimonial-text'>
+            {testimonial}
+            {highlightedText && <span className='stories-card__testimonial-highlight'>{highlightedText}</span>}
+            {additionalText && (
+              <>
+                {isAzizullahTestimonial ? <><br /><br /></> : null}
+                <span className='stories-card__testimonial-additional'>{additionalText}</span>
+              </>
+            )}
+          </p>
         </div>
         <div className='stories-card__author'>
           <div className='stories-card__author-info'>
