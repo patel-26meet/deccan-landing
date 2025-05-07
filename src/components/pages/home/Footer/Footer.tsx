@@ -53,7 +53,7 @@ const Footer = () => {
             {/* Left column */}
             <div className='footer-left'>
               <div className='footer-logo'>
-                <img src={"/assets/deccan-logo.svg"} alt="Deccan AI Logo" />
+                <img src={"/assets/logos/deccan-logo.svg"} alt="Deccan AI Logo" />
               </div>
               
               <div className='footer-description'>
