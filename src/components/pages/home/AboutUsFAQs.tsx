@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import FaqCard from './Faqs/FaqCard'
 import Button from '@/components/shared/Button';
 
-// Sample FAQ data
 const faqData = [
   {
     question: "How do I get started?",

@@ -47,6 +47,7 @@ const Opportunities = () => {
                     loop
                     play
                     style={{ width: '100%', height: '100%', backgroundColor: 'transparent', opacity: '1' }}
+                    rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
                 />  
             </div>
             <div className="benefits__opportunities__title">Bigger Opportunities</div>

@@ -79,6 +79,10 @@
             height: 205px;
             transform: translateY(-10%);
         }
+
+        &__title{
+            @include h5;
+        }
     }
 
     &__payments {
