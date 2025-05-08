@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 import FaqCard from './Faqs/FaqCard'
 import Button from '@/components/shared/Button';
 
@@ -79,7 +80,13 @@ export default function AboutUsFAQs() {
               We&apos;re on a mission to build AI for Good.</div>
             </div>
             <div className='about-us-image-wrapper'>
-              <img src={"/assets/deccan-people.svg"} alt="About Us" />
+              <Image 
+                src="/assets/deccan-people.svg" 
+                alt="About Us"
+                width={960}
+                height={509}
+                priority
+              />
             </div>
             <div className='about-us-btn-wrapper'>
               <Button

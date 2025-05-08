@@ -1,16 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import { IHowItWorksType } from '@/interfaces/components/howItWorks.type';
 
-interface HowItWorksCardProps {
-  header: string;
-  subheader: string;
-  index: number;
-  isActive: boolean;
-  onClick: (index: number) => void;
-}
-
-const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
+const HowItWorksCard: React.FC<IHowItWorksType> = ({
   header,
   subheader,
   index,
@@ -25,7 +18,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
       if (index === 0) {
         topPosition = 17;
       } else {
-        topPosition = 17 + (index * 5.625); 
+        topPosition = 17 + (index * 6); 
       }
       
       const contentElement = document.querySelector('.how-it-works__content');

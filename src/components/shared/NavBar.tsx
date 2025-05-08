@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from 'react';
+import Button from './Button';
 
 // Define breakpoint constants
 const BREAKPOINT_LG = 1024;
@@ -134,8 +135,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
                     </div>
                 ) : (
                     <>
-                        <div>Login</div>
-                        <div>Sign Up</div>
+                        <div>Log In</div>
+                        <Button text="Sign Up" mode="navbar" className="nav-signup-button" />
                     </>
                 )}
             </div>
@@ -151,8 +152,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
                             <div>FAQs</div>
                         </div>
                         <div className="auth-nav-items">
-                            <div>Login</div>
-                            <div>Sign Up</div>
+                            <Button text="Login" mode="navbar" className="mobile-nav-login-button" />
+                            <Button text="Sign Up" mode="navbar" className="mobile-nav-signup-button" />
                         </div>
                     </div>
                 </div>

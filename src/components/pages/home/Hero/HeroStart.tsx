@@ -107,13 +107,9 @@ const HeroStart = () => {
 
   // Calculate text transition styles based on progress
   const getTextTransitionStyles = () => {
-    // From progress 0 to 1:
-    // - Scale: 1 to 0.97
-    // - Blur: 0px to 4px (applied in both directions)
-    // - Opacity: 1 to 0
+    
     const progress = textTransitionProgress;
     const scale = 1 - (progress * 0.03);
-    // Apply blur in both directions to ensure smooth transitions
     const blur = progress * 4;
     const opacity = 1 - progress;
     

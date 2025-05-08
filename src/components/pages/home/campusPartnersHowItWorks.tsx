@@ -176,8 +176,11 @@ const HowItWorks = () => {
                     style={{
                       width: '100%', 
                       height: '100%', 
-                      borderRadius: isResponsiveLayout ? '8px' : '12px'
+                      overflow: 'hidden',
+                      borderTopLeftRadius: isResponsiveLayout ? '8px' : '12px',
+                      borderBottomLeftRadius: isResponsiveLayout ? '8px' : '12px',
                     }}
+                    rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
                 />
             </div>
             {isResponsiveLayout && (

@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 interface ButtonProps {
   text: string;
-  mode?: 'light' | 'dark' | 'hybrid';
+  mode?: 'light' | 'dark' | 'hybrid' | 'navbar';
   state?: 'default' | 'hover' | 'focused' | 'selected';
   onClick?: () => void;
   className?: string;
@@ -68,6 +68,20 @@ const Button: React.FC<ButtonProps> = ({
   const hoverArrowClass = `button-icon icon-hover ${
     isHovered || state === 'hover' || state === 'selected' ? '' : 'hidden'
   } ${mode === 'hybrid' ? 'white-arrow' : ''}`;
+  
+  // Navbar mode has no icon, render a simpler button
+  if (mode === 'navbar') {
+    return (
+      <button 
+        className={buttonClasses}
+        onClick={onClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <span>{text}</span>
+      </button>
+    );
+  }
   
   return (
     <button 

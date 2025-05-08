@@ -1,7 +1,7 @@
 "use client"
 
 import { ISimulatorProps } from "@/interfaces/components/simulator.type";
-import { FC, useState } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import SimulatorText from "./SimulatorText";
 import Lottie from "react-lottie-player";
 import lottie1 from "../../../../../public/assets/simulator/rlhf-lottie-1.json"
@@ -17,13 +17,10 @@ import lottie8 from "../../../../../public/assets/simulator/sft-lottie-3.json"
 
 const Simulator: FC<ISimulatorProps> = ({ 
     windowNames = ["SFT", "RLHF"],
-    activeWindow: initialActiveWindow,
     simulatorTexts = []
 }) => {
-    // Initialize active window
-    const [activeWindow, setActiveWindow] = useState<string>(
-        initialActiveWindow || windowNames[0]
-    );
+    // Initialize active window - default to "SFT" regardless of initialActiveWindow prop
+    const [activeWindow, setActiveWindow] = useState<string>("SFT");
 
     // Initialize with the first header from the data if available
     const [activeHeader, setActiveHeader] = useState<string>(
@@ -32,6 +29,42 @@ const Simulator: FC<ISimulatorProps> = ({
     
     // Counter to force animation reset
     const [resetAnimation, setResetAnimation] = useState<number>(0);
+    
+    const simulatorRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const [entry] = entries;
+                if (entry.isIntersecting && !isVisible) {
+                    setIsVisible(true);
+                    // Ensure SFT is selected when it becomes visible
+                    setActiveWindow("SFT");
+                    // Set the first header (Coding)
+                    if (simulatorTexts.length > 0) {
+                        setActiveHeader(simulatorTexts[0].header);
+                    }
+                    setResetAnimation(prev => prev + 1);
+                }
+            },
+            {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            }
+        );
+
+        if (simulatorRef.current) {
+            observer.observe(simulatorRef.current);
+        }
+
+        return () => {
+            if (simulatorRef.current) {
+                observer.unobserve(simulatorRef.current);
+            }
+        };
+    }, [simulatorTexts]);
     
     // Function to handle window change - keep the same header but trigger animation reset
     const handleWindowChange = (windowName: string) => {
@@ -104,7 +137,7 @@ const Simulator: FC<ISimulatorProps> = ({
     };
     
     return (
-        <div className="simulator__frame-wrapper">
+        <div className="simulator__frame-wrapper" ref={simulatorRef}>
             <div className="simulator__frame">
                 <div className="simulator__window-bar-wrapper">
                     {windowNames.map(windowName => (

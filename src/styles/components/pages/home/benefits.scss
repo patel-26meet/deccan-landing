@@ -75,9 +75,10 @@
         @include benefits-card-text;
 
         &__lottie {
-            width: 100%;
+            width: 104%;
             height: 205px;
             transform: translateY(-10%);
+            overflow: hidden;
         }
 
         &__title{

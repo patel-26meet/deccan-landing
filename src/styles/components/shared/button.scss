@@ -25,6 +25,75 @@
     background: #FFF;
   }
   
+  &.navbar {
+    height: auto;
+    padding: 0.5rem 1rem;
+    border-radius: 135px;
+    background: transparent;
+    transition: all 0.3s ease;
+    
+    // Default border style for light mode
+    border: 1px solid var(--Grey, #CCC);
+    
+    // Border style for dark mode
+    .transparent & {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    &.nav-login-button {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+    
+    &.nav-signup-button {
+      &:hover {
+        background-color: currentColor;
+        
+        span {
+          // Default for light mode
+          color: $white;
+          
+          // For dark mode (transparent navbar)
+          .transparent & {
+            color: $white;
+          }
+          
+          // For light mode (solid navbar)
+          .solid & {
+            color: $black;
+          }
+        }
+      }
+    }
+    
+    &.mobile-nav-login-button,
+    &.mobile-nav-signup-button {
+      width: 100%;
+      padding: 1.25rem;
+      border-radius: 0;
+      border: none;
+      justify-content: flex-start;
+      margin: 0.5rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+      }
+      
+      .transparent & {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+  
   &.hybrid {
     position: relative;
     border-radius: 60px;

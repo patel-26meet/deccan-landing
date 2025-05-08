@@ -35,7 +35,8 @@ body.menu-open {
     &.content-hidden {
         .nav-bar-left img,
         .nav-bar-middle div,
-        .nav-bar-right div {
+        .nav-bar-right div,
+        .nav-bar-right button {
             opacity: 0;
             transform: translateY(-10px);
         }
@@ -44,7 +45,8 @@ body.menu-open {
     &.content-visible {
         .nav-bar-left img,
         .nav-bar-middle div,
-        .nav-bar-right div {
+        .nav-bar-right div,
+        .nav-bar-right button {
             opacity: 1;
             transform: translateY(0);
             transition: opacity 0.5s ease, transform 0.5s ease;
@@ -69,8 +71,24 @@ body.menu-open {
         box-shadow: none;
         
         .nav-bar-middle div, 
-        .nav-bar-right div {
-            color: $white;
+        .nav-bar-right div,
+        .nav-bar-right button span {
+            color: #ADADAD;
+            
+            &:hover {
+                color: $white;
+            }
+        }
+        
+        .nav-signup-button {
+            &:hover {
+                background-color: $white !important;
+                border-color: $white !important;
+                
+                span {
+                    color: $black !important;
+                }
+            }
         }
     }
 
@@ -79,8 +97,24 @@ body.menu-open {
         box-shadow: $navbar-shadow;
         
         .nav-bar-middle div, 
-        .nav-bar-right div {
-            color: $black;
+        .nav-bar-right div,
+        .nav-bar-right button span {
+            color: #3E3E3E;
+            
+            &:hover {
+                color: $black;
+            }
+        }
+        
+        .nav-signup-button {
+            &:hover {
+                background-color: $black !important;
+                border-color: $black !important;
+                
+                span {
+                    color: $white !important;
+                }
+            }
         }
     }
 
@@ -103,21 +137,6 @@ body.menu-open {
             cursor: pointer;
             transition: color 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
             position: relative;
-            
-            &:after {
-                content: '';
-                position: absolute;
-                bottom: -5px;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background-color: currentColor;
-                transition: width 0.3s ease;
-            }
-            
-            &:hover:after {
-                width: 100%;
-            }
         }
     }
 
@@ -129,30 +148,12 @@ body.menu-open {
             cursor: pointer;
             padding: 0.5rem 1rem;
             border-radius: $border-radius-sm;
-            transition: all 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
-            
-            &:first-child:not(.menu-icon) {
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
-                }
-            }
-            
-            &:last-child:not(.menu-icon) {
-                border: 1px solid currentColor;
-                
-                &:hover {
-                    background-color: currentColor;
-                    color: var(--opposite-color, $black);
-                    
-                    .transparent & {
-                        color: $black;
-                    }
-                    
-                    .solid & {
-                        color: $white;
-                    }
-                }
-            }
+            transition: all 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .nav-login-button, 
+        .nav-signup-button {
+            transition: all 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
         }
     }
 
@@ -192,7 +193,8 @@ body.menu-open {
                 }
             }
             
-            div:not(.menu-icon) {
+            div:not(.menu-icon),
+            button {
                 display: none;
             }
         }
@@ -230,33 +232,33 @@ body.menu-open {
                     width: 100%;
                     @include flex-col(flex-start, flex-start);
                     background-color: unset !important;
+
+                    div {
+                        width: 100%;
+                        padding: 1.25rem;
+                        margin: 0.5rem 0;
+                        color: $black;
+                        @include h4;
+                        text-align: left;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                        cursor: pointer;
+                        transition: background-color 0.2s ease, transform 0.2s ease;
+                        
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                        
+                        &:hover {
+                            background-color: rgba(0, 0, 0, 0.05);
+                            transform: translateY(-2px);
+                        }
+                    }
                 }
                 
                 .auth-nav-items {
                     width: 100%;
                     @include flex-col(flex-start, flex-start);
                     margin-bottom: 2rem;
-                }
-                
-                div {
-                    width: 100%;
-                    padding: 1.25rem;
-                    margin: 0.5rem 0;
-                    color: $black;
-                    @include h4;
-                    text-align: left;
-                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-                    cursor: pointer;
-                    transition: background-color 0.2s ease, transform 0.2s ease;
-                    
-                    &:last-child {
-                        border-bottom: none;
-                    }
-                    
-                    &:hover {
-                        background-color: rgba(0, 0, 0, 0.05);
-                        transform: translateY(-2px);
-                    }
                 }
             }
         }
@@ -267,7 +269,7 @@ body.menu-open {
             -webkit-backdrop-filter: blur(26px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             
-            .mobile-menu-items div {
+            .mobile-menu-items .main-nav-items div {
                 color: #ADADAD;
                 
                 &:hover {
