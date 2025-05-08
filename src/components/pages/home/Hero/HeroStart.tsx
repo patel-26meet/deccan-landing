@@ -76,8 +76,66 @@ const HeroStart = () => {
     }
   };
   
-  // Split text into words for the word-by-word highlight effect
+  // Modified overlay text with span wrappers around "Future of AI" and "50+ domains"
   const overlayTextWords = "Shape the Future of AI with Flexible, High Impact Remote opportunities across 50+ domains tailored for your expertise!".split(" ");
+  
+  // Special texts that need gradient effects
+  const futureOfAiText = "Future of AI";
+  const domainsText = "50+ domains";
+
+  // Modified render function for overlay text to handle special gradient text
+  const renderOverlayText = () => {
+    const result = [];
+    let currentIndex = 0;
+    
+    for (let i = 0; i < overlayTextWords.length; i++) {
+      const word = overlayTextWords[i];
+      
+      // Determine the word state
+      let className = "text-word";
+      if (i <= animState.textHighlightIndex) {
+        className += " active";
+      } else if (i === animState.textHighlightIndex + 1) { 
+        // First intermediate state (closest to active)
+        className += " transitioning-1";
+      } else if (i === animState.textHighlightIndex + 2) {
+        // Second intermediate state
+        className += " transitioning-2";
+      }
+      
+      // Check if this word is part of "Future of AI"
+      if (word === "Future" && i + 2 < overlayTextWords.length && 
+          overlayTextWords[i + 1] === "of" && overlayTextWords[i + 2] === "AI") {
+        result.push(
+          <span key={currentIndex} className={`${className} gradient-future-ai`}>
+            {futureOfAiText}{' '}
+          </span>
+        );
+        i += 2; // Skip the next two words
+      }
+      // Check if this word is "50+ domains"
+      else if (word === "50+" && i + 1 < overlayTextWords.length && 
+               overlayTextWords[i + 1] === "domains") {
+        result.push(
+          <span key={currentIndex} className={`${className} gradient-domains`}>
+            {domainsText}{' '}
+          </span>
+        );
+        i += 1; // Skip the next word
+      }
+      // Regular word
+      else {
+        result.push(
+          <span key={currentIndex} className={className}>
+            {word}{' '}
+          </span>
+        );
+      }
+      currentIndex++;
+    }
+    
+    return result;
+  };
   
   const wheelEventRef = useRef<WheelEvent | null>(null);
   const touchStartYRef = useRef<number | null>(null);
@@ -233,6 +291,22 @@ const HeroStart = () => {
         
         body.scroll-disabled {
           overflow: hidden;
+        }
+        
+        .gradient-future-ai {
+          background: linear-gradient(85deg, #8591FF 34.63%, #D574E2 58.16%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+        }
+        
+        .gradient-domains {
+          background: linear-gradient(90deg, #8591FF 17.98%, #D574E2 36.59%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
         }
       `;
       document.head.appendChild(styleTag);
@@ -756,27 +830,7 @@ const HeroStart = () => {
           <div className="hero-content-overlay visible">
             <div className="overlay-text">
               <div className="text-sentence">
-                {overlayTextWords.map((word, index) => {
-                  // Determine the word state
-                  let className = "text-word";
-                  if (index <= animState.textHighlightIndex) {
-                    className += " active";
-                  } else if (index === animState.textHighlightIndex + 1) { 
-                    // First intermediate state (closest to active)
-                    className += " transitioning-1";
-                  } else if (index === animState.textHighlightIndex + 2) {
-                    // Second intermediate state
-                    className += " transitioning-2";
-                  }
-                  return (
-                    <span
-                      key={index}
-                      className={className}
-                    >
-                      {word}{' '}
-                    </span>
-                  );
-                })}
+                {renderOverlayText()}
               </div>
             </div>
           </div>
@@ -795,7 +849,9 @@ const HeroStart = () => {
           className={`login-text ${animState.showText ? 'fade-in' : ''} transitioning`}
           style={getTextTransitionStyles()}
         >
-          <h1 className="hero-start-title">Be Part of the AI Revolution</h1>
+          <h1 className="hero-start-title">
+            Be Part of the AI Revolution
+          </h1>
           <p className="hero-start-description">
            Join a global network of experts training LLMs. Work remotely, earn in dollars, and 
            Shape the future of AI

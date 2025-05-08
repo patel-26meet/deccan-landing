@@ -11,15 +11,15 @@ export const iconsWeb: IIconData[] = [
     { text: "Linguistics", position: { top: "40%", left: "12%" } },
     { text: "Data", position: { top: "45%", right: "20%" } },
     { text: "Engineering", position: { top: "30%", left: "32%" } },
-    { text: "Engineering", position: { top: "55%", right: "22%" } },
+    { text: "Engineering", position: { top: "55%", right: "9%" } },
     { text: "Medical Practices", position: { top: "65%", left: "15%" } },
-    { text: "Food and Nutrition", position: { top: "75%", right: "20%" } },
+    { text: "Food and Nutrition", position: { top: "70%", right: "20%" } },
     { text: "AI/ML", position: { top: "75%", right: "38%" } },
     { text: "Psychology", position: { top: "80%", left: "25%" } },
     { text: "Finance", position: { top: "85%", right: "28%" } },
     { text: "Humanities", position: { bottom: "10%", left: "15%" } },
     { text: "Supply Chain", position: { bottom: "9%", left: "35%" } },
-    { text: "Backend Development", position: { bottom: "8%", right: "30%" } },
+    { text: "Backend Development", position: { bottom: "8%", right: "39%" } },
     { text: "UI/UX", position: { bottom: "8%", right: "12%" } },
     { text: "Market Research", position: { bottom: "28%", left: "45%" } }
 ];
