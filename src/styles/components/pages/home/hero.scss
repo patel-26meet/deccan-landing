@@ -147,6 +147,10 @@
             &.active {
                 color: #FFFFFF;
                 filter: blur(0px);
+                
+                &.gradient-future-ai, &.gradient-domains {
+                    color: transparent;
+                }
             }
             
             &.transitioning-1 {
@@ -157,6 +161,16 @@
             &.transitioning-2 {
                 color: rgba(255, 255, 255, 0.65);
                 filter: blur(0.8px);
+            }
+
+            &.gradient-future-ai-wrapper{
+                position: relative;
+
+                .star-icon{
+                    position: absolute;
+                    top: 0;
+                    right: -10%;
+                }
             }
         }
     }
@@ -223,4 +237,21 @@
     left: 0;
     transition: transform 0.8s ease-out, opacity 0.8s ease-out;
     will-change: transform, opacity;
+}
+
+// Add gradient styles specifically for active (highlighted) elements
+.gradient-future-ai.active {
+    background: linear-gradient(85deg, #8591FF 34.63%, #D574E2 58.16%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gradient-domains.active {
+    background: linear-gradient(90deg, #8591FF 17.98%, #D574E2 36.59%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }

@@ -33,4 +33,7 @@ export interface IAnimationState {
   animationCompleted: boolean;
   iconsLayoutProgress: number;
   textFullyHighlighted: boolean;
+  animationDirection: 'forward' | 'reverse'; // Direction of the 2nd animation
+  hasScrolledDuringAnim2: boolean; // Track if user has scrolled during 2nd animation
+  secondAnimProgress: number; // Track progress of the 2nd animation
 }
