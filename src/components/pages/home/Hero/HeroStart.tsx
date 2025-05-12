@@ -395,12 +395,12 @@ const HeroStart = () => {
     setAnimState((prev) => {
       // For smoother transitions, adjust the step size based on direction
       // Smaller steps when reversing for better control
-      const progressMultiplier = scrollDirection < 0 ? 0.03 : 0.06; // Decreased from 0.04/0.08
+      const progressMultiplier = scrollDirection < 0 ? 0.05 : 0.1; // Increased from 0.03/0.06
       const progressStep = progressMultiplier * Math.sign(scrollAmount);
       const newThirdProgress = prev.thirdAnimProgress + progressStep;
       
       // Continuously update Lottie animation progress regardless of text highlighting
-      const lottieMultiplier = scrollDirection < 0 ? 1.0 : 1.6; // Decreased from 1.6/2.8
+      const lottieMultiplier = scrollDirection < 0 ? 1.5 : 2.2; // Increased from 1.0/1.6
       const newLottieProgress = Math.max(prev.lottieThirdProgress + (progressStep * lottieMultiplier), 0);
       
       // Calculate max highlight index
@@ -415,7 +415,7 @@ const HeroStart = () => {
         
         // Update text highlight index
         highlightIndex = Math.min(
-          Math.floor(Math.min(newThirdProgress, 1) * overlayTextWords.length),
+          Math.floor(Math.min(newThirdProgress, 1) * overlayTextWords.length * 1.2), // Added 1.2 multiplier for faster text highlighting
           maxHighlightIndex
         );
         
@@ -424,16 +424,16 @@ const HeroStart = () => {
         
         if (textIsFullyHighlighted) {
           // Text is fully highlighted, now animate icons layout
-          // Decreased from 1.8 to 1.5
-          iconsProgress = Math.min(iconsProgress + (progressStep * 1.5), 1);
+          // Increased from 1.5 to 2.0
+          iconsProgress = Math.min(iconsProgress + (progressStep * 2.0), 1);
         }
       } else {
         // REVERSE ANIMATION: First icons layout, then text highlight
         // Important change: Only unhighlight text after icons are fully retracted
         
         // When reversing, use a faster speed for icons layout
-        // Decreased from 4.2 to 3.5
-        const reverseIconStep = progressStep * 3.5;
+        // Increased from 3.5 to 4.5
+        const reverseIconStep = progressStep * 4.5;
         
         // First check if icons are fully retracted (if they were active)
         if (iconsProgress > 0) {
@@ -445,8 +445,8 @@ const HeroStart = () => {
         } else {
           // Only after icons are retracted (iconsProgress = 0), handle text unhighlighting
           // Unhighlight words one by one from end to beginning
-          // Decreased from 10 to 8
-          const textUnhighlightStep = progressStep * 8;
+          // Increased from 8 to 12 for faster text unhighlighting
+          const textUnhighlightStep = progressStep * 12;
           highlightIndex = Math.max(highlightIndex + Math.floor(textUnhighlightStep), -1);
         }
       }
@@ -500,8 +500,8 @@ const HeroStart = () => {
           
           // Animate the text transition from blurred to clear
           setTimeout(() => {
-            const duration = 500; // ms - longer for smoother transition
-            const steps = 20; // more steps for smoother transition
+            const duration = 400; // ms - reduced from 500 for faster transition
+            const steps = 15; // reduced from 20 for faster transition
             const interval = duration / steps;
             
             let step = 0;
@@ -519,7 +519,7 @@ const HeroStart = () => {
             // Start the animation
             animateTextAppearance();
           }, 100);
-        }, 300);
+        }, 200);
         
         return {
           ...prev,
@@ -542,7 +542,7 @@ const HeroStart = () => {
             top: 100, 
             behavior: 'smooth' 
           });
-        }, 300);
+        }, 200); // Reduced from 300ms for faster transition
       } else {
         // During animation, disable normal scrolling
         document.body.classList.add('scroll-disabled');
@@ -584,13 +584,13 @@ const HeroStart = () => {
     setScrollDirection(scrollDirection as 'up' | 'down');
     
     // Calculate scroll impact on animation progress
-    const scrollImpact = Math.abs(deltaY) * 0.0005; // Adjust multiplier for sensitivity
+    const scrollImpact = Math.abs(deltaY) * 0.001; // Doubled from 0.0005 for faster response
     
     // Calculate dynamic speed based on current progress position
     // Slower at extremes, faster in middle
     const calculateSpeedFactor = (progress: number) => {
       const distanceFromMiddle = Math.abs(0.5 - progress);
-      return 1 - 0.7 * distanceFromMiddle; // Ranges from 0.3-1.0
+      return 1 - 0.6 * distanceFromMiddle; // Ranges from 0.4-1.0, increased from 0.3-1.0
     };
     
     setAnimState(prev => {
@@ -658,7 +658,7 @@ const HeroStart = () => {
               // Reset text transition
               setTextTransitionProgress(0);
               isAnim2TransitioningRef.current = false;
-            }, 300);
+            }, 200);
           }
         } else {
           // Scrolling up - reverse the animation
@@ -725,6 +725,10 @@ const HeroStart = () => {
         const currentY = e.touches[0].clientY;
         const deltaY = touchStartYRef.current - currentY;
         
+        // Apply a multiplier to make touch scrolling faster - 3x faster for touch
+        const touchSpeedMultiplier = 3.0;
+        const enhancedDeltaY = deltaY * touchSpeedMultiplier;
+        
         // Determine scroll direction
         const touchDirection = deltaY > 0 ? 'down' : 'up';
         setScrollDirection(touchDirection);
@@ -736,28 +740,28 @@ const HeroStart = () => {
           // Handle animation 2 scroll
           if (animState.hasScrolledDuringAnim2) {
             // User already scrolling, continue controlling animation
-            handleSecondAnimScroll(deltaY);
+            handleSecondAnimScroll(enhancedDeltaY);
           } else {
             // Determine how to adjust the transition progress based on direction
             if (touchDirection === 'down') {
               // Scrolling down - increase progress
-              textTransitionScrollAccRef.current += Math.abs(deltaY);
+              textTransitionScrollAccRef.current += Math.abs(enhancedDeltaY);
             } else {
               // Scrolling up - decrease progress
-              textTransitionScrollAccRef.current = Math.max(0, textTransitionScrollAccRef.current - Math.abs(deltaY));
+              textTransitionScrollAccRef.current = Math.max(0, textTransitionScrollAccRef.current - Math.abs(enhancedDeltaY));
             }
             
             // Calculate transition progress based on accumulated scroll
-            // We'll use 500 as the threshold for complete transition
-            const scrollThreshold = 500;
+            // We'll use a lower threshold for touch to make it faster
+            const scrollThreshold = 300; // Reduced from 500 for faster touch response
             const progress = Math.min(Math.max(textTransitionScrollAccRef.current / scrollThreshold, 0), 1);
             
             // Update text transition
             setTextTransitionProgress(progress);
             
             // Start controlling animation 2 after small threshold
-            if (textTransitionScrollAccRef.current > 100) {
-              handleSecondAnimScroll(deltaY);
+            if (textTransitionScrollAccRef.current > 60) { // Reduced from 100 for faster response
+              handleSecondAnimScroll(enhancedDeltaY);
             }
             
             // If the text has fully transitioned out, move to animation 3
@@ -803,7 +807,7 @@ const HeroStart = () => {
                 // Reset text transition
                 setTextTransitionProgress(0);
                 isSecondAnimTransitioning = false;
-              }, 300);
+              }, 200);
             }
           }
         } 
@@ -818,14 +822,14 @@ const HeroStart = () => {
           
           // If we're already processing a scroll, accumulate the amount
           if (isScrollingRef.current) {
-            totalScrollRef.current += deltaY;
+            totalScrollRef.current += enhancedDeltaY;
             return;
           }
           
           isScrollingRef.current = true;
-          totalScrollRef.current = deltaY;
+          totalScrollRef.current = enhancedDeltaY;
           
-          // Process accumulated scroll after a short delay
+          // Process accumulated scroll with shorter delay for touch
           if (scrollTimeoutRef.current) {
             clearTimeout(scrollTimeoutRef.current);
           }
@@ -833,7 +837,7 @@ const HeroStart = () => {
           scrollTimeoutRef.current = setTimeout(() => {
             processScroll();
             isScrollingRef.current = false;
-          }, 50);
+          }, 30); // Reduced from 50ms for faster response
         }
       }
     };
@@ -938,7 +942,7 @@ const HeroStart = () => {
               // Reset text transition
               setTextTransitionProgress(0);
               isSecondAnimTransitioning = false;
-            }, 300);
+            }, 200);
           }
         }
       } 

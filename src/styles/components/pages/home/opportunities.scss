@@ -70,15 +70,15 @@
     position: relative;
     @include card-base;
     backdrop-filter: blur(30px);
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease-in-out;
     
     &:hover {
         background: rgba(255, 255, 255, 0.90);
         
         .opportunities-card__button {
             background: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
-            border: none;
             cursor: pointer;
+            border: 1px solid transparent;
             
             &-text {
                 color: $white;
@@ -126,7 +126,7 @@
         padding: 0.938rem 1.5rem;
         gap: 1rem;
         cursor: pointer;
-        transition: all 0.5s ease;
+        transition: all 0.3s ease-in-out;
 
         &-text {
             color: $black;
@@ -134,7 +134,7 @@
             font-size: $font-size-base;
             font-weight: 500;
             letter-spacing: -0.48px;
-            transition: color 0.5s ease;
+            transition: color 0.3s ease-in-out;
         }
     }
 
@@ -265,7 +265,6 @@
             
             .opportunities-card__button {
                 background: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
-                border: none;
                 
                 &-text {
                     color: $white;
