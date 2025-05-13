@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useRef, useEffect } from 'react';
 
@@ -10,13 +10,7 @@ interface IFaqCardProps {
   toggleFaq: (index: number) => void;
 }
 
-const FaqCard: React.FC<IFaqCardProps> = ({ 
-  question, 
-  answer, 
-  isOpen, 
-  index, 
-  toggleFaq 
-}) => {
+const FaqCard: React.FC<IFaqCardProps> = ({ question, answer, isOpen, index, toggleFaq }) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,7 +38,10 @@ const FaqCard: React.FC<IFaqCardProps> = ({
       <div className="faq-question-row">
         <div className="faq-question-text">{question}</div>
         <div className="faq-toggle-icon">
-          <img src={isOpen ? "/assets/faqs/faqs-minus.svg" : "/assets/faqs/faqs-plus-1.svg"} alt="Toggle" />
+          <img
+            src={isOpen ? '/assets/faqs/faqs-minus.svg' : '/assets/faqs/faqs-plus-1.svg'}
+            alt="Toggle"
+          />
         </div>
       </div>
       <div className="faq-answer-container" ref={contentRef}>
@@ -55,4 +52,3 @@ const FaqCard: React.FC<IFaqCardProps> = ({
 };
 
 export default FaqCard;
-

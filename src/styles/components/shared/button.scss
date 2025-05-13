@@ -6,7 +6,7 @@
   gap: 12px;
   flex-shrink: 0;
   border-radius: 60px;
-  border: 1px solid rgba(133, 133, 133, 0.30);
+  border: 1px solid rgba(133, 133, 133, 0.3);
   background: rgba(255, 255, 255, 0.15);
   font-size: 16px;
   font-style: normal;
@@ -15,50 +15,50 @@
   letter-spacing: -0.32px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  
+
   &.dark {
     color: var(--Black, #000);
   }
-  
+
   &.light {
     color: #000;
-    background: #FFF;
+    background: #fff;
   }
-  
+
   &.navbar {
     height: auto;
     padding: 0.5rem 1rem;
     border-radius: 135px;
     background: transparent;
     transition: all 0.3s ease;
-    
+
     // Default border style for light mode
-    border: 1px solid var(--Grey, #CCC);
-    
+    border: 1px solid var(--Grey, #ccc);
+
     // Border style for dark mode
     .transparent & {
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
-    
+
     &.nav-login-button {
       &:hover {
         background-color: rgba(255, 255, 255, 0.1);
       }
     }
-    
+
     &.nav-signup-button {
       &:hover {
         background-color: currentColor;
-        
+
         span {
           // Default for light mode
           color: $white;
-          
+
           // For dark mode (transparent navbar)
           .transparent & {
             color: $white;
           }
-          
+
           // For light mode (solid navbar)
           .solid & {
             color: $black;
@@ -66,7 +66,7 @@
         }
       }
     }
-    
+
     &.mobile-nav-login-button,
     &.mobile-nav-signup-button {
       width: 100%;
@@ -76,16 +76,16 @@
       justify-content: flex-start;
       margin: 0.5rem 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      
+
       &:last-child {
         border-bottom: none;
       }
-      
+
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
         transform: translateY(-2px);
       }
-      
+
       .transparent & {
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
@@ -93,55 +93,57 @@
       }
     }
   }
-  
+
   &.hybrid {
     position: relative;
     border-radius: 60px;
-    border: 1px solid rgba(255, 255, 255, 0.20);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.01);
     box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.22) inset;
-    color: var(--White, #FFF);
+    color: var(--White, #fff);
     overflow: hidden;
-    
+
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 50%;
       height: 100%;
-      background: linear-gradient(
-        to right,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-      );
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
       transform: skewX(-25deg);
       transition: all 0.75s ease;
       pointer-events: none;
       opacity: 0;
     }
-    
+
     &:hover {
-      border: 1px solid rgba(255, 255, 255, 0.30);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.3) inset;
       background: rgba(255, 255, 255, 0.05);
     }
   }
-  
-  &.hybrid:active, &.hybrid.ripple {
-    border: 1px solid rgba(255, 255, 255, 0.40);
+
+  &.hybrid:active,
+  &.hybrid.ripple {
+    border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0px 4px 38.4px 0px rgba(255, 255, 255, 0.4) inset;
     transform: translateY(1px);
-    
+
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
       width: 0;
       height: 0;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 40%,
+        rgba(255, 255, 255, 0.3) 70%,
+        rgba(255, 255, 255, 0) 100%
+      );
       opacity: 0;
       border-radius: 100%;
       transform: translate(-50%, -50%) scale(1);
@@ -150,16 +152,23 @@
       pointer-events: none;
     }
   }
-  
+
   // We use a separate rule for ::before to avoid conflict with the hover effect ::before
-  &.hybrid.ripple::before, &.hybrid:active::before {
-    content: "";
+  &.hybrid.ripple::before,
+  &.hybrid:active::before {
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     width: 0;
     height: 0;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 100%);
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 40%,
+      rgba(255, 255, 255, 0.2) 70%,
+      rgba(255, 255, 255, 0) 100%
+    );
     opacity: 0;
     border-radius: 100%;
     transform: translate(-50%, -50%) scale(1);
@@ -167,7 +176,7 @@
     z-index: 0;
     pointer-events: none;
   }
-  
+
   @keyframes ripple-primary {
     0% {
       width: 0;
@@ -192,7 +201,7 @@
       opacity: 0;
     }
   }
-  
+
   @keyframes ripple-secondary {
     0% {
       width: 0;
@@ -217,7 +226,7 @@
       opacity: 0;
     }
   }
-  
+
   .button-icon-container {
     position: relative;
     width: 20px;
@@ -226,50 +235,53 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .button-icon {
     width: 20px;
     height: 20px;
     aspect-ratio: 1/1;
     position: absolute;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+
     &.icon-default {
       opacity: 1;
       transform: translateX(0);
     }
-    
+
     &.icon-hover {
       opacity: 0;
       transform: translateX(-5px);
     }
-    
+
     &.hidden {
       opacity: 0;
     }
-    
+
     &.white-arrow {
       width: 18px;
       height: 18px;
       transform-origin: center;
     }
   }
-  
-  &:hover, &.hovered {
+
+  &:hover,
+  &.hovered {
     .button-icon {
       &.icon-default {
         opacity: 0;
         transform: translateX(5px);
-        
+
         &.white-arrow {
           transform: translateX(5px);
         }
       }
-      
+
       &.icon-hover {
         opacity: 1;
         transform: translateX(0);
-        
+
         &.white-arrow {
           width: 18px;
           height: 18px;
@@ -277,25 +289,25 @@
       }
     }
   }
-  
+
   &:hover {
-    background: rgba(255, 255, 255, 0.40);
-    
+    background: rgba(255, 255, 255, 0.4);
+
     &.hybrid {
       background: rgba(255, 255, 255, 0.05);
     }
   }
-  
+
   &.focused {
     border-radius: 24px;
-    border: 1px solid rgba(133, 133, 133, 0.50);
-    background: rgba(255, 255, 255, 0.40);
+    border: 1px solid rgba(133, 133, 133, 0.5);
+    background: rgba(255, 255, 255, 0.4);
     width: 156px;
     height: 48px;
     justify-content: center;
   }
-  
+
   &.selected {
-    background: rgba(255, 255, 255, 0.80);
+    background: rgba(255, 255, 255, 0.8);
   }
 }

@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import StoriesCard from './Stories/StoriesCard';
 import ImageBackside from './Stories/ImageBackside';
 import { storiesData } from '@/constants/pages/home/stories';
@@ -9,8 +9,8 @@ import Button from '@/components/shared/Button';
 const Stories = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
-  const [flippedCards, setFlippedCards] = useState<{[key: string]: boolean}>({});
-  
+  const [flippedCards, setFlippedCards] = useState<{ [key: string]: boolean }>({});
+
   // Check if we're on mobile/tablet
   useEffect(() => {
     const checkDeviceSize = () => {
@@ -18,183 +18,187 @@ const Stories = () => {
       setIsMobile(width <= 768);
       setIsTablet(width > 768 && width <= 1024);
     };
-    
+
     // Check on mount
     checkDeviceSize();
-    
+
     // Add resize listener
     window.addEventListener('resize', checkDeviceSize);
-    
+
     // Cleanup
     return () => window.removeEventListener('resize', checkDeviceSize);
   }, []);
-  
+
   // Handle card touch/click for tablets
   const handleCardFlip = (cardId: string) => {
     if (isTablet) {
       setFlippedCards(prev => ({
         ...prev,
-        [cardId]: !prev[cardId]
+        [cardId]: !prev[cardId],
       }));
     }
   };
-  
+
   // Get card class based on flip state
   const getCardClass = (cardId: string) => {
-    const baseClass = "stories__flip-card-inner";
-    return isTablet && flippedCards[cardId] 
-      ? `${baseClass} flipped`
-      : baseClass;
+    const baseClass = 'stories__flip-card-inner';
+    return isTablet && flippedCards[cardId] ? `${baseClass} flipped` : baseClass;
   };
-  
+
   return (
-    <div className='stories-section'>
-      <div className='stories'>
-          <div className='stories__header-container'>
-              <div className='stories__title'>
-                  {storiesData.header}
-              </div>
-              <div className='stories__description'>
-                  {storiesData.subheader}
-                  <span className='stories__description-highlight'>{storiesData.expertCount}</span> {storiesData.expertText}
-              </div>
+    <div className="stories-section">
+      <div className="stories">
+        <div className="stories__header-container">
+          <div className="stories__title">{storiesData.header}</div>
+          <div className="stories__description">
+            {storiesData.subheader}
+            <span className="stories__description-highlight">{storiesData.expertCount}</span>{' '}
+            {storiesData.expertText}
           </div>
-          
-          {isMobile ? (
-            <div className='stories__mobile'>
-              <StoriesCard
-                testimonial={storiesData.testimonials[0].testimonial}
-                highlightedText={storiesData.testimonials[0].highlightedText}
-                additionalText={storiesData.testimonials[0].additionalText}
-                name={storiesData.testimonials[0].name}
-                role={storiesData.testimonials[0].role}
-                organization={storiesData.testimonials[0].organization}
-                profileImage={storiesData.testimonials[0].profileImage}
-              />
-              <StoriesCard
-                testimonial={storiesData.testimonials[2].testimonial}
-                highlightedText={storiesData.testimonials[2].highlightedText}
-                name={storiesData.testimonials[2].name}
-                role={storiesData.testimonials[2].role}
-                organization={storiesData.testimonials[2].organization}
-                profileImage={storiesData.testimonials[2].profileImage}
-              />
-              <div className='stories__mobile-image'>
-                <img src={storiesData.images.image2} alt="Soul AI community member" />
+        </div>
+
+        {isMobile ? (
+          <div className="stories__mobile">
+            <StoriesCard
+              testimonial={storiesData.testimonials[0].testimonial}
+              highlightedText={storiesData.testimonials[0].highlightedText}
+              additionalText={storiesData.testimonials[0].additionalText}
+              name={storiesData.testimonials[0].name}
+              role={storiesData.testimonials[0].role}
+              organization={storiesData.testimonials[0].organization}
+              profileImage={storiesData.testimonials[0].profileImage}
+            />
+            <StoriesCard
+              testimonial={storiesData.testimonials[2].testimonial}
+              highlightedText={storiesData.testimonials[2].highlightedText}
+              name={storiesData.testimonials[2].name}
+              role={storiesData.testimonials[2].role}
+              organization={storiesData.testimonials[2].organization}
+              profileImage={storiesData.testimonials[2].profileImage}
+            />
+            <div className="stories__mobile-image">
+              <img src={storiesData.images.image2} alt="Soul AI community member" />
+            </div>
+          </div>
+        ) : (
+          <div className="stories__grid">
+            <div className="stories__grid-left">
+              <div className="stories__grid-left-top">
+                <a
+                  href="https://www.linkedin.com/feed/update/urn:li:activity:7298324135418478592/?actorCompanyId=96882481"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="stories__linkedin-link"
+                >
+                  <img
+                    className="stories__grid-image stories__grid-image--hover"
+                    src={storiesData.images.linkedinPost}
+                  />
+                </a>
+                <div className="stories__flip-card" onClick={() => handleCardFlip('card1')}>
+                  <div className={getCardClass('card1')}>
+                    <div className="stories__flip-card-front">
+                      <img className="stories__grid-image" src={storiesData.images.image1} />
+                    </div>
+                    <div className="stories__flip-card-back">
+                      <ImageBackside content={storiesData.flipCards.image1.content} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="stories__grid-left-bottom">
+                <div className="stories__grid-left-bottom-images">
+                  <img
+                    className="stories__grid-image stories__grid-image--hover"
+                    src={storiesData.images.whatsapp}
+                  />
+                  <img
+                    className="stories__grid-image stories__grid-image--hover"
+                    src={storiesData.images.woman}
+                  />
+                </div>
+                <div className="stories__grid-left-bottom-cards">
+                  <StoriesCard
+                    testimonial={storiesData.testimonials[0].testimonial}
+                    highlightedText={storiesData.testimonials[0].highlightedText}
+                    additionalText={storiesData.testimonials[0].additionalText}
+                    name={storiesData.testimonials[0].name}
+                    role={storiesData.testimonials[0].role}
+                    organization={storiesData.testimonials[0].organization}
+                    profileImage={storiesData.testimonials[0].profileImage}
+                  />
+                  <StoriesCard
+                    testimonial={storiesData.testimonials[1].testimonial}
+                    highlightedText={storiesData.testimonials[1].highlightedText}
+                    additionalText={storiesData.testimonials[1].additionalText}
+                    name={storiesData.testimonials[1].name}
+                    organization={storiesData.testimonials[1].organization}
+                    profileImage={storiesData.testimonials[1].profileImage}
+                  />
+                </div>
               </div>
             </div>
-          ) : (
-            <div className='stories__grid'>
-                <div className='stories__grid-left'>
-                    <div className='stories__grid-left-top'>
-                        <a 
-                          href="https://www.linkedin.com/feed/update/urn:li:activity:7298324135418478592/?actorCompanyId=96882481" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="stories__linkedin-link"
-                        >
-                          <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinPost}/>
-                        </a>
-                        <div className="stories__flip-card" onClick={() => handleCardFlip('card1')}>
-                          <div className={getCardClass('card1')}>
-                            <div className="stories__flip-card-front">
-                              <img className='stories__grid-image' src={storiesData.images.image1}/>
-                            </div>
-                            <div className="stories__flip-card-back">
-                              <ImageBackside 
-                                content={storiesData.flipCards.image1.content}
-                              />
-                            </div>
-                          </div>
-                        </div>
+            <div className="stories__grid-right">
+              <div className="stories__grid-right-space"></div>
+              <div className="stories__grid-right-top">
+                <StoriesCard
+                  testimonial={storiesData.testimonials[2].testimonial}
+                  highlightedText={storiesData.testimonials[2].highlightedText}
+                  additionalText={storiesData.testimonials[2].additionalText}
+                  name={storiesData.testimonials[2].name}
+                  role={storiesData.testimonials[2].role}
+                  organization={storiesData.testimonials[2].organization}
+                  profileImage={storiesData.testimonials[2].profileImage}
+                />
+                <img
+                  className="stories__grid-image stories__grid-image--hover"
+                  src={storiesData.images.linkedinMsg}
+                />
+              </div>
+              <div className="stories__grid-right-middle">
+                <div className="stories__flip-card" onClick={() => handleCardFlip('card2')}>
+                  <div className={getCardClass('card2')}>
+                    <div className="stories__flip-card-front">
+                      <img className="stories__grid-image" src={storiesData.images.image2} />
                     </div>
-                    <div className='stories__grid-left-bottom'>
-                        <div className='stories__grid-left-bottom-images'>
-                            <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.whatsapp}/>
-                            <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.woman}/>
-                        </div>
-                        <div className='stories__grid-left-bottom-cards'>
-                            <StoriesCard
-                                testimonial={storiesData.testimonials[0].testimonial}
-                                highlightedText={storiesData.testimonials[0].highlightedText}
-                                additionalText={storiesData.testimonials[0].additionalText}
-                                name={storiesData.testimonials[0].name}
-                                role={storiesData.testimonials[0].role}
-                                organization={storiesData.testimonials[0].organization}
-                                profileImage={storiesData.testimonials[0].profileImage}
-                            />
-                            <StoriesCard
-                                testimonial={storiesData.testimonials[1].testimonial}
-                                highlightedText={storiesData.testimonials[1].highlightedText}
-                                additionalText={storiesData.testimonials[1].additionalText}
-                                name={storiesData.testimonials[1].name}
-                                organization={storiesData.testimonials[1].organization}
-                                profileImage={storiesData.testimonials[1].profileImage}
-                            />
-                        </div>
+                    <div className="stories__flip-card-back">
+                      <ImageBackside content={storiesData.flipCards.image2.content} />
                     </div>
+                  </div>
                 </div>
-                <div className='stories__grid-right'>
-                    <div className='stories__grid-right-space'>
-                    </div>
-                    <div className='stories__grid-right-top'>
-                        <StoriesCard
-                            testimonial={storiesData.testimonials[2].testimonial}
-                            highlightedText={storiesData.testimonials[2].highlightedText}
-                            additionalText={storiesData.testimonials[2].additionalText}
-                            name={storiesData.testimonials[2].name}
-                            role={storiesData.testimonials[2].role}
-                            organization={storiesData.testimonials[2].organization}
-                            profileImage={storiesData.testimonials[2].profileImage}
-                        />
-                        <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinMsg}/>
-                    </div>
-                    <div className='stories__grid-right-middle'>
-                        <div className="stories__flip-card" onClick={() => handleCardFlip('card2')}>
-                          <div className={getCardClass('card2')}>
-                            <div className="stories__flip-card-front">
-                              <img className='stories__grid-image' src={storiesData.images.image2}/>
-                            </div>
-                            <div className="stories__flip-card-back">
-                              <ImageBackside 
-                                content={storiesData.flipCards.image2.content}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <StoriesCard
-                            testimonial={storiesData.testimonials[3].testimonial}
-                            highlightedText={storiesData.testimonials[3].highlightedText}
-                            additionalText={storiesData.testimonials[3].additionalText}
-                            name={storiesData.testimonials[3].name}
-                            organization={storiesData.testimonials[3].organization}
-                            profileImage={storiesData.testimonials[3].profileImage}
-                        />
-                    </div>
-                    <div className='stories__grid-right-bottom'>
-                        <a 
-                          href="https://www.linkedin.com/feed/update/urn:li:activity:7286402295943024640/?actorCompanyId=96882481" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="stories__linkedin-link"
-                        >
-                          <img className='stories__grid-image stories__grid-image--hover' src={storiesData.images.linkedinBotRight}/>
-                        </a>
-                    </div>
-                </div>
+                <StoriesCard
+                  testimonial={storiesData.testimonials[3].testimonial}
+                  highlightedText={storiesData.testimonials[3].highlightedText}
+                  additionalText={storiesData.testimonials[3].additionalText}
+                  name={storiesData.testimonials[3].name}
+                  organization={storiesData.testimonials[3].organization}
+                  profileImage={storiesData.testimonials[3].profileImage}
+                />
+              </div>
+              <div className="stories__grid-right-bottom">
+                <a
+                  href="https://www.linkedin.com/feed/update/urn:li:activity:7286402295943024640/?actorCompanyId=96882481"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="stories__linkedin-link"
+                >
+                  <img
+                    className="stories__grid-image stories__grid-image--hover"
+                    src={storiesData.images.linkedinBotRight}
+                  />
+                </a>
+              </div>
             </div>
-          )}
+          </div>
+        )}
       </div>
-      <div className='stories-section__blur'></div>
-      <div className='stories-section__blur-gradient'></div>
-      <div className='stories-section__button'>
-        <Button
-          text="View More Stories"
-          mode="light"
-        />
+      <div className="stories-section__blur"></div>
+      <div className="stories-section__blur-gradient"></div>
+      <div className="stories-section__button">
+        <Button text="View More Stories" mode="light" />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Stories;

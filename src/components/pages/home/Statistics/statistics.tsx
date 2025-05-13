@@ -1,16 +1,14 @@
-"use client";
+'use client';
 
-import { statsData } from "@/constants/pages/home/stats";
-import { FC } from "react";
-import CountUp from "react-countup";
+import { statsData } from '@/constants/pages/home/stats';
+import { FC } from 'react';
+import CountUp from 'react-countup';
 
 const Statistics: FC = () => {
   return (
     <div className="statistics">
       <div className="statistics__container">
-        <div className="statistics__heading">
-          Be a part of the Soul Community
-        </div>
+        <div className="statistics__heading">Be a part of the Soul Community</div>
         <div className="statistics__display">
           {statsData.map((item, index) => {
             return (
@@ -23,16 +21,16 @@ const Statistics: FC = () => {
                       end={Number(item.val)}
                       duration={5}
                       className="statistics__item__countup"
-                      formattingFn={(value) => {
+                      formattingFn={value => {
                         if (value < 1000) {
                           return `${value}K+`;
                         } else {
                           if (value === Number(item.val)) {
-                            return `${Math.floor(value/1000)}M+`;
+                            return `${Math.floor(value / 1000)}M+`;
                           }
-                          return item.noDecimals 
-                            ? `${Math.floor(value/1000)}M+` 
-                            : `${(value/1000).toFixed(1)}M+`;
+                          return item.noDecimals
+                            ? `${Math.floor(value / 1000)}M+`
+                            : `${(value / 1000).toFixed(1)}M+`;
                         }
                       }}
                       decimals={item.noDecimals ? 0 : 1}
@@ -48,9 +46,7 @@ const Statistics: FC = () => {
                     />
                   )}
                 </h1>
-                <p className="statistics__item__description">
-                  {item.description}
-                </p>
+                <p className="statistics__item__description">{item.description}</p>
               </div>
             );
           })}

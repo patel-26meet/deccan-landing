@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { TOutsideClickHandler } from "@/interfaces/hooks/OnClickOutside.type";
-import { RefObject, useEffect } from "react";
+import { TOutsideClickHandler } from '@/interfaces/hooks/OnClickOutside.type';
+import { RefObject, useEffect } from 'react';
 
 /**
  * Hook that handles click events outside of the specified element
@@ -15,8 +15,8 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
   handler: TOutsideClickHandler
 ): void => {
   useEffect(() => {
-    if (typeof document === "undefined") return;
-    
+    if (typeof document === 'undefined') return;
+
     const listener = (event: MouseEvent | TouchEvent) => {
       // Do nothing if clicking ref's element or descendent elements
       if (!ref.current || ref.current.contains(event.target as Node)) {
@@ -26,12 +26,12 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
       handler(event);
     };
 
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
 
     return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
     };
   }, [ref, handler]);
 };

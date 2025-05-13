@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import {
   IIntersectionObserverHookReturn,
   IIntersectionObserverOptions,
-} from "@/interfaces/hooks/intersection-observer.type";
-import { get } from "lodash";
-import { RefObject, useEffect, useState } from "react";
+} from '@/interfaces/hooks/intersection-observer.type';
+import { get } from 'lodash';
+import { RefObject, useEffect, useState } from 'react';
 
 /**
  * Hook that tracks when an element intersects with the viewport using IntersectionObserver
@@ -17,22 +17,18 @@ import { RefObject, useEffect, useState } from "react";
  */
 export const useIntersectionObserver = <T extends Element>(
   elementRef: RefObject<T>,
-  {
-    threshold = 0,
-    root = null,
-    rootMargin = "0%",
-  }: IIntersectionObserverOptions = {}
+  { threshold = 0, root = null, rootMargin = '0%' }: IIntersectionObserverOptions = {}
 ): IIntersectionObserverHookReturn => {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
 
   // Compute these values from the entry
-  const isIntersecting = get(entry, "isIntersecting", false);
-  const isFullyInView = get(entry, "intersectionRatio", 0) === 1;
+  const isIntersecting = get(entry, 'isIntersecting', false);
+  const isFullyInView = get(entry, 'intersectionRatio', 0) === 1;
 
   useEffect(() => {
     const element = elementRef?.current;
 
-    if (!element || typeof IntersectionObserver !== "function") {
+    if (!element || typeof IntersectionObserver !== 'function') {
       return;
     }
 

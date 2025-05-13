@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import HeroStart from "./HeroStart";
+import HeroStart from './HeroStart';
 
 const Hero = () => {
-    return (
-        <div className="hero-wrapper">
-            <HeroStart/>
-        </div>
-    )
-}
+  return (
+    <div className="hero-wrapper">
+      <HeroStart />
+    </div>
+  );
+};
 
 export default Hero;

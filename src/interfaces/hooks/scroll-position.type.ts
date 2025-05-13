@@ -4,6 +4,6 @@
 export interface IScrollData {
   scrollY: number;
   scrollX: number;
-  scrollDirection: "up" | "down" | "none";
+  scrollDirection: 'up' | 'down' | 'none';
   scrollPercentage: number;
 }

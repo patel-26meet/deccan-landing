@@ -1,15 +1,15 @@
-import Layout from "@/components/shared/Layout";
+import Layout from '@/components/shared/Layout';
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en">
-            <body >
-                <Layout>{children}</Layout>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body>
+        <Layout>{children}</Layout>
+      </body>
+    </html>
+  );
 }

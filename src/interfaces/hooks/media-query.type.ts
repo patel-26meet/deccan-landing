@@ -6,4 +6,4 @@ export type TMediaQueryHandler = () => void;
 /**
  * Type definition for device types detected with media queries
  */
-export type TDeviceType = "mobile" | "tablet" | "desktop" | "largeDesktop";
+export type TDeviceType = 'mobile' | 'tablet' | 'desktop' | 'largeDesktop';

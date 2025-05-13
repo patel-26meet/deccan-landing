@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { TPreviousValue } from "@/interfaces/hooks/Previous.type";
-import { useEffect, useRef } from "react";
+import { TPreviousValue } from '@/interfaces/hooks/Previous.type';
+import { useEffect, useRef } from 'react';
 
 /**
  * Hook that returns the previous value of a variable

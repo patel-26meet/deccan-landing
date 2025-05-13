@@ -1,76 +1,78 @@
 .faq-card {
+  display: flex;
+  width: 100%;
+  padding: 2rem 2.5rem 2rem 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .faq-question-row {
     display: flex;
     width: 100%;
-    padding: 2rem 2.5rem 2rem 0;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    &:last-child {
-        border-bottom: none;
-    }
-    
-    .faq-question-row {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .faq-question-text {
-        @include h5;
-        color: $black;
-    }
-    
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-question-text {
+    @include h5;
+    color: $black;
+  }
+
+  .faq-toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-answer-container {
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.5s ease,
+      padding 0.3s ease;
+    width: 100%;
+  }
+
+  .faq-answer-text {
+    @include b-r;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 0;
+  }
+
+  &.open {
     .faq-toggle-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.5rem;
-        height: 1.5rem;
-        transition: transform 0.3s ease;
+      transform: rotate(180deg);
     }
-    
+
     .faq-answer-container {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease, padding 0.3s ease;
-        width: 100%;
+      max-height: 500px;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
     }
-    
+
     .faq-answer-text {
-        @include b-r;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        padding: 0;
+      opacity: 1;
     }
-    
-    &.open {
-        .faq-toggle-icon {
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer-container {
-            max-height: 500px;
-            padding-top: 1rem;
-            padding-bottom: 1.5rem;
-        }
-        
-        .faq-answer-text {
-            opacity: 1;
-        }
-    }
+  }
 }
 
 @media screen and (max-width: $breakpoint-sm) {
-    .faq-card {
-        padding: 1.5rem 1.25rem 1.5rem 0;
-        
-        .faq-question-text {
-            font-size: 1.125rem;
-        }
+  .faq-card {
+    padding: 1.5rem 1.25rem 1.5rem 0;
+
+    .faq-question-text {
+      font-size: 1.125rem;
     }
-} 
+  }
+}

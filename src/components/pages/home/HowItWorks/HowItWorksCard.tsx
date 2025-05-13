@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { IHowItWorksType } from '@/interfaces/components/howItWorks.type';
@@ -8,19 +8,19 @@ const HowItWorksCard: React.FC<IHowItWorksType> = ({
   subheader,
   index,
   isActive,
-  onClick
+  onClick,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   useEffect(() => {
-    if (isActive && typeof document !== "undefined") {
+    if (isActive && typeof document !== 'undefined') {
       let topPosition;
       if (index === 0) {
         topPosition = 17;
       } else {
-        topPosition = 17 + (index * 6); 
+        topPosition = 17 + index * 6;
       }
-      
+
       const contentElement = document.querySelector('.how-it-works__content');
       if (contentElement) {
         const afterElement = contentElement as HTMLElement;
@@ -31,7 +31,7 @@ const HowItWorksCard: React.FC<IHowItWorksType> = ({
   }, [isActive, index]);
 
   return (
-    <div 
+    <div
       className={`how-it-works__card ${isActive ? 'active' : ''} ${isHovered ? 'hovered' : ''}`}
       onClick={() => onClick(index)}
       onMouseEnter={() => setIsHovered(true)}

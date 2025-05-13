@@ -1,259 +1,258 @@
 .opportunities-and-benefits-wrapper {
-    position: relative;
-    background: $grey url("/assets/opportunities-benefits-transparent-bg.svg");
-    background-size: cover;
-    padding-top: 20rem;
-    
-    // Create a pseudo-element for the black overlay - ONLY used when coming FROM simulator (black) TO opportunities/benefits (gray)
+  position: relative;
+  background: $grey url('/assets/opportunities-benefits-transparent-bg.svg');
+  background-size: cover;
+  padding-top: 20rem;
+
+  // Create a pseudo-element for the black overlay - ONLY used when coming FROM simulator (black) TO opportunities/benefits (gray)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $black;
+    z-index: 1;
+    transition: opacity 1.2s ease-in-out;
+    pointer-events: none;
+    opacity: 0; // By default, the black overlay is invisible
+  }
+
+  // When coming from the simulator (scrolling down)
+  &.from-simulator {
     &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: $black;
-        z-index: 1;
-        transition: opacity 1.2s ease-in-out;
-        pointer-events: none;
-        opacity: 0; // By default, the black overlay is invisible
+      opacity: 1; // Show black overlay initially when coming from simulator
     }
-    
-    // When coming from the simulator (scrolling down)
-    &.from-simulator {
-        &::before {
-            opacity: 1; // Show black overlay initially when coming from simulator
-        }
-        
-        &.fade-in-visible::before {
-            opacity: 0; // Fade out the black overlay to reveal gray background
-        }
+
+    &.fade-in-visible::before {
+      opacity: 0; // Fade out the black overlay to reveal gray background
     }
-    
-    // When coming from statistics or other sections below (scrolling up)
-    &.from-statistics {
-        &::before {
-            opacity: 0; // Never show black overlay when coming from statistics
-        }
+  }
+
+  // When coming from statistics or other sections below (scrolling up)
+  &.from-statistics {
+    &::before {
+      opacity: 0; // Never show black overlay when coming from statistics
     }
-    
-    // Hidden state - initial state when entering viewport
-    &.fade-in-hidden {
-        // Hide content initially regardless of which section we're coming from
-        .opportunities-wrapper, 
-        .benefits-wrapper {
-            opacity: 0;
-        }
+  }
+
+  // Hidden state - initial state when entering viewport
+  &.fade-in-hidden {
+    // Hide content initially regardless of which section we're coming from
+    .opportunities-wrapper,
+    .benefits-wrapper {
+      opacity: 0;
     }
-    
-    // Visible state - after section is visible in viewport
-    &.fade-in-visible {
-        // Show content
-        .opportunities-wrapper, 
-        .benefits-wrapper {
-            opacity: 1;
-            transition: opacity 0.8s ease-in-out;
-            transition-delay: 0.3s; // Start after background begins to fade (if any)
-        }
+  }
+
+  // Visible state - after section is visible in viewport
+  &.fade-in-visible {
+    // Show content
+    .opportunities-wrapper,
+    .benefits-wrapper {
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+      transition-delay: 0.3s; // Start after background begins to fade (if any)
     }
+  }
 }
 
 .opportunities-wrapper {
-    @include section-wrapper;
-    padding: 100px 80px 80px 80px;
-    position: relative;
-    z-index: 2; // Above the overlay
+  @include section-wrapper;
+  padding: 100px 80px 80px 80px;
+  position: relative;
+  z-index: 2; // Above the overlay
 
-    .opportunities-header {
-        @include h2;
-    }
+  .opportunities-header {
+    @include h2;
+  }
 
-    .opportunities-text {
-        @include section-text;
-    }
+  .opportunities-text {
+    @include section-text;
+  }
 
-    .opportunities-bar {
-        @include flex-center;
-        gap: 0.75rem;
-        align-self: stretch;
-    }
+  .opportunities-bar {
+    @include flex-center;
+    gap: 0.75rem;
+    align-self: stretch;
+  }
 }
 
 .benefits-wrapper {
-    @include section-wrapper;
-    padding: 5rem;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 2; // Above the black overlay
+  @include section-wrapper;
+  padding: 5rem;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 2; // Above the black overlay
 
-    .benefits-header {
-        @include section-header;
+  .benefits-header {
+    @include section-header;
+  }
+
+  .benefits-text {
+    @include section-text;
+  }
+
+  .benefits-cards-wrapper {
+    display: flex;
+    height: 635px;
+    min-height: 635px;
+    align-items: flex-start;
+    gap: $standard-gap;
+    align-self: stretch;
+    width: 100%;
+
+    .benefits-lnd-events {
+      @include flex-col(flex-start, center);
+      width: 32.52%;
+      height: 635px;
+      gap: $standard-gap;
+      align-self: stretch;
     }
 
-    .benefits-text {
-        @include section-text;
-    }
+    .benefits-others {
+      @include flex-column;
+      align-items: center;
+      height: 635px;
+      width: 66.43%;
+      gap: $standard-gap;
+      align-self: stretch;
 
-    .benefits-cards-wrapper {
+      .benefits-payments-flexible {
         display: flex;
-        height: 635px;
-        min-height: 635px;
+        height: 265px;
+        justify-content: center;
         align-items: flex-start;
         gap: $standard-gap;
         align-self: stretch;
         width: 100%;
+      }
 
-        .benefits-lnd-events {
-            @include flex-col(flex-start, center);
-            width: 32.52%;
-            height: 635px;
-            gap: $standard-gap;
-            align-self: stretch;
-        }
-
-        .benefits-others {
-            @include flex-column;
-            align-items: center;
-            height: 635px;
-            width: 66.43%;
-            gap: $standard-gap;
-            align-self: stretch;
-
-            .benefits-payments-flexible {
-                display: flex;
-                height: 265px;
-                justify-content: center;
-                align-items: flex-start;
-                gap: $standard-gap;
-                align-self: stretch;
-                width: 100%;
-            }
-
-            .benefits-opportunities-community {
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                gap: $standard-gap;
-                align-self: stretch;
-                width: 100%;
-                height: 358px;
-            }
-        }
+      .benefits-opportunities-community {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: $standard-gap;
+        align-self: stretch;
+        width: 100%;
+        height: 358px;
+      }
     }
+  }
 }
 
-@media screen and (max-width: $breakpoint-sm) {    
-    .opportunities-wrapper {
-        background: $grey url("/assets/opportunities-benefits-transparent-bg.svg");
-        @include section-wrapper;
-        padding: 3.5rem 1.5rem;
-    
-        .opportunities-header {
-            @include h2;
-        }
-    
-        .opportunities-text {
-            @include b-l;
-            text-align: center;
-        }
-    
-        .opportunities-bar {
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            gap: 0.75rem;
-            margin: 0 -1.5rem;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            justify-content: flex-start;
-            -webkit-overflow-scrolling: touch;
-            
-            &::-webkit-scrollbar {
-                display: none;
-            }
-            
-            -ms-overflow-style: none;  
-            scrollbar-width: none;
-            
-            > div:first-child {
-                margin-left: 0;
-            }
-        }
+@media screen and (max-width: $breakpoint-sm) {
+  .opportunities-wrapper {
+    background: $grey url('/assets/opportunities-benefits-transparent-bg.svg');
+    @include section-wrapper;
+    padding: 3.5rem 1.5rem;
+
+    .opportunities-header {
+      @include h2;
     }
-    
-    .benefits-wrapper {
-        background: $grey;
-        padding: 3.5rem 1.5rem;
-        gap: 1.5rem;
-    
-        .benefits-header {
-            @include section-header;
-            text-align: center;
-        }
-    
-        .benefits-text {
-            @include section-text;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-    
-        .benefits-cards-wrapper {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: auto;
-            min-height: auto;
-            gap: 0.75rem;
 
-            .benefits-lnd-events {
-                display: flex;
-                flex-direction: row;
-                width: 100%;
-                height: auto;
-                gap: 0.5rem;
-                > * {
-                    flex: 1;
-                    min-width: 0;
-                }
-            }
-
-            .benefits-others {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: auto;
-                gap: 0.75rem;
-
-                .benefits-payments-flexible {
-                    display: flex;
-                    width: 100%;
-                    height: 183px;
-                    justify-content: center;
-                    align-items: flex-start;
-                    align-self: stretch;
-                    gap: 0.5rem;
-                    > * {
-                        flex: 1;
-                        min-width: 0;
-                    }
-                }
-
-                .benefits-opportunities-community {
-                    display: flex;
-                    flex-direction: row;
-                    width: 100%;
-                    height: auto;
-                    gap: 0.5rem;
-                    > * {
-                        flex: 1;
-                        min-width: 0;
-                    }
-                }
-            }
-        }
+    .opportunities-text {
+      @include b-l;
+      text-align: center;
     }
+
+    .opportunities-bar {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      gap: 0.75rem;
+      margin: 0 -1.5rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      > div:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .benefits-wrapper {
+    background: $grey;
+    padding: 3.5rem 1.5rem;
+    gap: 1.5rem;
+
+    .benefits-header {
+      @include section-header;
+      text-align: center;
+    }
+
+    .benefits-text {
+      @include section-text;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .benefits-cards-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      min-height: auto;
+      gap: 0.75rem;
+
+      .benefits-lnd-events {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: auto;
+        gap: 0.5rem;
+        > * {
+          flex: 1;
+          min-width: 0;
+        }
+      }
+
+      .benefits-others {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 0.75rem;
+
+        .benefits-payments-flexible {
+          display: flex;
+          width: 100%;
+          height: 183px;
+          justify-content: center;
+          align-items: flex-start;
+          align-self: stretch;
+          gap: 0.5rem;
+          > * {
+            flex: 1;
+            min-width: 0;
+          }
+        }
+
+        .benefits-opportunities-community {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          height: auto;
+          gap: 0.5rem;
+          > * {
+            flex: 1;
+            min-width: 0;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: $breakpoint-lg) {
-    
 }

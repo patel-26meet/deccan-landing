@@ -1,3 +1,3 @@
 export interface IImageBackside {
-    content: string;
+  content: string;
 }

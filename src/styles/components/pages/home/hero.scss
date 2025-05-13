@@ -1,257 +1,264 @@
 .hero-start-wrapper {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    background-color: $black;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: $black;
 }
 
 .fade-in {
-    opacity: 0;
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 0.3s;
-    will-change: opacity;
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+  animation-delay: 0.3s;
+  will-change: opacity;
 }
 
 @keyframes fadeIn {
-    0% { 
-        opacity: 0;
-    }
-    100% { 
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .second-animation-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 30px;
-        height: 50px;
-        border: 2px solid rgba(255, 255, 255, 0.6);
-        border-radius: 25px;
-        animation: scrollIndicator 2s infinite;
-        opacity: 0;
-        transition: opacity 0.8s ease;
-        animation-delay: 3s;
-    }
-    
-    &::before {
-        content: '';
-        position: absolute;
-        bottom: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 6px;
-        height: 6px;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 50%;
-        animation: scrollDot 2s infinite;
-        opacity: 0;
-        z-index: 1;
-        animation-delay: 3s;
-    }
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 25px;
+    animation: scrollIndicator 2s infinite;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    animation-delay: 3s;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: scrollDot 2s infinite;
+    opacity: 0;
+    z-index: 1;
+    animation-delay: 3s;
+  }
 }
 
 .login-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    gap: 1rem;
-    text-align: center;
-    z-index: 2;
-    color: rgba(255, 255, 255, 0.90);
-    width: 90%;
-    max-width: 800px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    will-change: transform, opacity, filter;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 1rem;
+  text-align: center;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.9);
+  width: 90%;
+  max-width: 800px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
 
-    &.fade-in {
-        pointer-events: auto;
-    }
-    
-    // Add transition for scroll effect
-    &.transitioning {
-        transition: transform 0.3s ease-out, opacity 0.3s ease-out, filter 0.3s ease-out;
-    }
+  &.fade-in {
+    pointer-events: auto;
+  }
 
-    .hero-start-title {
-        @include h1;
-        color: $white;
-    }
+  // Add transition for scroll effect
+  &.transitioning {
+    transition:
+      transform 0.3s ease-out,
+      opacity 0.3s ease-out,
+      filter 0.3s ease-out;
+  }
 
-    .hero-start-description {
-        @include b-l-r;
-        align-self: stretch;
-        padding: 0 1rem;
-    }
+  .hero-start-title {
+    @include h1;
+    color: $white;
+  }
 
-    .hero-start-button {
-        margin-top: 1.5rem;
-    }
+  .hero-start-description {
+    @include b-l-r;
+    align-self: stretch;
+    padding: 0 1rem;
+  }
+
+  .hero-start-button {
+    margin-top: 1.5rem;
+  }
 }
 
 .third-animation-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-content-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    &.visible {
-        opacity: 1;
-    }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &.visible {
+    opacity: 1;
+  }
 }
 
 .overlay-text {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-    
-    .text-sentence {
-        @include h2;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        
-        .text-word {
-            color: rgba(255, 255, 255, 0.40);
-            transition: color 0.3s ease-out, filter 0.3s ease-out;
-            margin: 0 0.2rem;
-            filter: blur(1.6px);
-            
-            &.active {
-                color: #FFFFFF;
-                filter: blur(0px);
-                
-                &.gradient-future-ai, &.gradient-domains {
-                    color: transparent;
-                }
-            }
-            
-            &.transitioning-1 {
-                color: rgba(255, 255, 255, 0.85);
-                filter: blur(0.3px);
-            }
-            
-            &.transitioning-2 {
-                color: rgba(255, 255, 255, 0.65);
-                filter: blur(0.8px);
-            }
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
 
-            &.gradient-future-ai-wrapper{
-                position: relative;
+  .text-sentence {
+    @include h2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
-                .star-icon{
-                    position: absolute;
-                    top: 0;
-                    right: -10%;
-                }
-            }
+    .text-word {
+      color: rgba(255, 255, 255, 0.4);
+      transition:
+        color 0.3s ease-out,
+        filter 0.3s ease-out;
+      margin: 0 0.2rem;
+      filter: blur(1.6px);
+
+      &.active {
+        color: #ffffff;
+        filter: blur(0px);
+
+        &.gradient-future-ai,
+        &.gradient-domains {
+          color: transparent;
         }
+      }
+
+      &.transitioning-1 {
+        color: rgba(255, 255, 255, 0.85);
+        filter: blur(0.3px);
+      }
+
+      &.transitioning-2 {
+        color: rgba(255, 255, 255, 0.65);
+        filter: blur(0.8px);
+      }
+
+      &.gradient-future-ai-wrapper {
+        position: relative;
+
+        .star-icon {
+          position: absolute;
+          top: 0;
+          right: -10%;
+        }
+      }
     }
+  }
 }
 
 .scroll-disabled {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-.hero-icons{
-    display: inline-flex;
-    height: 3.25px;
-    padding: 1rem 1.5rem;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
-    border-radius: 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.09);
+.hero-icons {
+  display: inline-flex;
+  height: 3.25px;
+  padding: 1rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  border-radius: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.09);
 
-    .hero-icons-text{
-        @include b-r;
-        color: $white;
-        white-space: nowrap;
-    }
+  .hero-icons-text {
+    @include b-r;
+    color: $white;
+    white-space: nowrap;
+  }
 }
 
 // Icons layout styling
 .hero-icons-layout {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .hero-icon-container {
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    
-    // For icons using right/bottom positioning
-    &[style*="right"] {
-        transform: translate(50%, -50%);
-    }
-    
-    &[style*="bottom"] {
-        transform: translate(-50%, 50%);
-    }
-    
-    &[style*="right"][style*="bottom"] {
-        transform: translate(50%, 50%);
-    }
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  // For icons using right/bottom positioning
+  &[style*='right'] {
+    transform: translate(50%, -50%);
+  }
+
+  &[style*='bottom'] {
+    transform: translate(-50%, 50%);
+  }
+
+  &[style*='right'][style*='bottom'] {
+    transform: translate(50%, 50%);
+  }
 }
 
 // Add this new class for the container
 .hero-icons-layout-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    bottom: 0;
-    left: 0;
-    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-    will-change: transform, opacity;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  transition:
+    transform 0.8s ease-out,
+    opacity 0.8s ease-out;
+  will-change: transform, opacity;
 }
 
 // Add gradient styles specifically for active (highlighted) elements
 .gradient-future-ai.active {
-    background: linear-gradient(85deg, #8591FF 34.63%, #D574E2 58.16%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
+  background: linear-gradient(85deg, #8591ff 34.63%, #d574e2 58.16%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .gradient-domains.active {
-    background: linear-gradient(90deg, #8591FF 17.98%, #D574E2 36.59%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
+  background: linear-gradient(90deg, #8591ff 17.98%, #d574e2 36.59%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }

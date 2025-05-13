@@ -1,227 +1,226 @@
 .footer-container {
-    position: relative;
-    
-    // Create a pseudo-element for the gray overlay that will fade out
+  position: relative;
+
+  // Create a pseudo-element for the gray overlay that will fade out
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $grey;
+    z-index: 1;
+    transition: opacity 1.2s ease-in-out;
+    pointer-events: none;
+  }
+
+  // Hidden state - initial state when entering viewport
+  &.fade-in-hidden {
     &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: $grey;
-        z-index: 1;
-        transition: opacity 1.2s ease-in-out;
-        pointer-events: none;
+      opacity: 1; // Gray overlay fully visible
     }
-    
-    // Hidden state - initial state when entering viewport
-    &.fade-in-hidden {
-        &::before {
-            opacity: 1; // Gray overlay fully visible
-        }
-        
-        // Hide all content initially
-        .footer-get-started,
-        .footer-wrapper {
-            opacity: 0;
-        }
+
+    // Hide all content initially
+    .footer-get-started,
+    .footer-wrapper {
+      opacity: 0;
     }
-    
-    // Visible state - after section is visible in viewport
-    &.fade-in-visible {
-        &::before {
-            opacity: 0; // Gray overlay fades out to reveal black
-        }
-        
-        // Show content
-        .footer-get-started,
-        .footer-wrapper {
-            opacity: 1;
-            transition: opacity 0.8s ease-in-out;
-            transition-delay: 0.3s; // Start after background begins to fade
-        }
+  }
+
+  // Visible state - after section is visible in viewport
+  &.fade-in-visible {
+    &::before {
+      opacity: 0; // Gray overlay fades out to reveal black
     }
+
+    // Show content
+    .footer-get-started,
+    .footer-wrapper {
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+      transition-delay: 0.3s; // Start after background begins to fade
+    }
+  }
 }
 
 .footer-get-started {
-    background-color: #101010;
-    background-image: url("/assets/footer-bg.png");
-    background-origin: border-box;
-    background-position: center;
-    position: relative;
-    z-index: 2; // Above the overlay
-    height: 464px;
-    @include h2;
-    @include flex-col(center, center);
-    text-align: center;
-    gap: 1.5rem;
-    color: #fff;
+  background-color: #101010;
+  background-image: url('/assets/footer-bg.png');
+  background-origin: border-box;
+  background-position: center;
+  position: relative;
+  z-index: 2; // Above the overlay
+  height: 464px;
+  @include h2;
+  @include flex-col(center, center);
+  text-align: center;
+  gap: 1.5rem;
+  color: #fff;
 }
 
 .footer-wrapper {
-    background-color: #101010;
-    padding-top: 1.5px;
-    position: relative;
-    z-index: 2; // Above the overlay
+  background-color: #101010;
+  padding-top: 1.5px;
+  position: relative;
+  z-index: 2; // Above the overlay
 }
 
 .footer-body {
-    @include flex-column;
-    padding: 5rem 0px;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
+  @include flex-column;
+  padding: 5rem 0px;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 3.5rem 5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 3.5rem 5rem;
 }
 
 .footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 407px;
+
+  .footer-logo {
+    width: 200px;
+    height: 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-description {
+    padding: 8px 8px 8px 0;
+    color: #bfbfbf;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.8px;
+  }
+
+  .footer-social {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    max-width: 407px;
-    
-    .footer-logo {
-        width: 200px;
-        height: 72px;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .footer-description {
-        padding: 8px 8px 8px 0;
-        color: #BFBFBF;
+
+    .footer-follow {
+      display: flex;
+      padding: 8px 8px 8px 0;
+      align-items: center;
+      gap: 8px;
+
+      span {
+        color: white;
         font-size: 16px;
         font-weight: 400;
         line-height: 20.8px;
-    }
-    
-    .footer-social {
+      }
+
+      .footer-social-icons {
         display: flex;
-        flex-direction: column;
-        
-        .footer-follow {
-            display: flex;
-            padding: 8px 8px 8px 0;
-            align-items: center;
-            gap: 8px;
-            
-            span {
-                color: white;
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 20.8px;
-            }
-            
-            .footer-social-icons {
-                display: flex;
-                gap: 12px;
-                
-                .footer-social-icon {
-                    width: 20px;
-                    height: 20px;
-                    position: relative;
-                    overflow: hidden;
-                }
-            }
+        gap: 12px;
+
+        .footer-social-icon {
+          width: 20px;
+          height: 20px;
+          position: relative;
+          overflow: hidden;
         }
-        
-        .footer-made-with {
-            padding: 8px 8px 8px 0;
-            color: white;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 20.8px;
-        }
+      }
     }
+
+    .footer-made-with {
+      padding: 8px 8px 8px 0;
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20.8px;
+    }
+  }
 }
 
 .footer-right {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+
+  .footer-sitemap {
     display: flex;
-    justify-content: space-between;
-    width: 40%;
-    
-    .footer-sitemap {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-company-info {
+    width: 267px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .footer-company,
+    .footer-location {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    
-    .footer-company-info {
-        width: 267px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        
-        .footer-company, .footer-location {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-    }
-    
-    .footer-header {
-        color: white;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 20.8px;
-    }
-    
-    .footer-link {
-        color: rgba(255, 255, 255, 0.60);
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 20.8px;
-    }
+  }
+
+  .footer-header {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20.8px;
+  }
+
+  .footer-link {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.8px;
+  }
 }
 
 .footer-body-footer {
-    @include flex-row;
-    @include b-r;
-    gap: 17rem;
-    color: rgba(255, 255, 255, 0.60);
-    align-items: flex-start;
-    padding: 0px 5rem;
-    width: 100%;
+  @include flex-row;
+  @include b-r;
+  gap: 17rem;
+  color: rgba(255, 255, 255, 0.6);
+  align-items: flex-start;
+  padding: 0px 5rem;
+  width: 100%;
 }
 
 // Media queries for responsiveness
 @media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
-        gap: 3rem;
-        padding: 0 2rem;
-    }
-    
-    .footer-body-footer {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 0 2rem;
-        align-items: center;
-        text-align: center;
-    }
-    
-    .footer-right {
-        width: 100%;
-        flex-direction: column;
-        gap: 2rem;
-    }
+  .footer-content {
+    flex-direction: column;
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+
+  .footer-body-footer {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 2rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-right {
+    width: 100%;
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
 
 @media screen and (max-width: $breakpoint-sm) {
-    
-    .footer-body-footer{
-        @include b-s;
-        margin-top: 3rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .footer-body-footer {
+    @include b-s;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
-  

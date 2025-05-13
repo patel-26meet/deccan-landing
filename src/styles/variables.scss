@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 // Background colors
-$white: #FFF;
+$white: #fff;
 
 // Colors
 $black: #000;
-$dark-grey: #3E3E3E;
-$grey: #EBEBEB;
-$grey-light: #F5F5F5;
-$white: #FFFFFF;
-$purple-dark: #6F18CC;
-$purple-light: #B247FF;
-$blue: #293DF6;
-$blue-light: #33C9E4;
+$dark-grey: #3e3e3e;
+$grey: #ebebeb;
+$grey-light: #f5f5f5;
+$white: #ffffff;
+$purple-dark: #6f18cc;
+$purple-light: #b247ff;
+$blue: #293df6;
+$blue-light: #33c9e4;
 $gray-text: rgba(0, 0, 0, 0.8);
 $light-gray-text: rgba(0, 0, 0, 0.6);
 $very-light-gray-text: #808080;
@@ -29,7 +29,7 @@ $navbar-light-bg: $white;
 $navbar-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
 // Typography
-$font-family-base: "DM Sans";
+$font-family-base: 'DM Sans';
 $font-size-base: 16px;
 $line-height-base: 1.5;
 
@@ -67,14 +67,14 @@ $transition-fast: all 0.15s ease-in-out;
 $transition-slow: all 0.5s ease-in-out;
 
 $card-border-radius: 20px;
-$card-background: rgba(255, 255, 255, 0.50);
+$card-background: rgba(255, 255, 255, 0.5);
 $card-border: 1px solid rgba(0, 0, 0, 0.12);
-$gradient-primary: linear-gradient(28deg, #2F41E3 47.38%, #DB6EE9 119.67%);
-$gradient-text: linear-gradient(92deg, #3D4FF3 0%, #C23BD4 120.86%);
+$gradient-primary: linear-gradient(28deg, #2f41e3 47.38%, #db6ee9 119.67%);
+$gradient-text: linear-gradient(92deg, #3d4ff3 0%, #c23bd4 120.86%);
 $standard-gap: 12px;
 $large-gap: 24px;
 
-// Root CSS variables 
+// Root CSS variables
 :root {
   --navbar-dark-bg: #{$navbar-dark-bg};
   --navbar-light-bg: #{$navbar-light-bg};

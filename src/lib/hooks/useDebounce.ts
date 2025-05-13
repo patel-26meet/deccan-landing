@@ -1,11 +1,8 @@
-"use client";
+'use client';
 
-import {
-  IDebouncedFunction,
-  TDebounceable,
-} from "@/interfaces/hooks/debounce.type";
-import { debounce } from "lodash";
-import { useEffect, useRef, useState } from "react";
+import { IDebouncedFunction, TDebounceable } from '@/interfaces/hooks/debounce.type';
+import { debounce } from 'lodash';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Hook that debounces a value to avoid frequent updates

@@ -1,0 +1,26 @@
+# Build artifacts
+.next/
+build/
+dist/
+out/
+
+# Dependencies
+node_modules/
+
+# Cache
+.cache/
+
+# Generated files
+*.generated.*
+*.min.js
+
+# Package lock files
+package-lock.json
+yarn.lock
+
+# Config files that may have specific formatting
+*.config.js
+next.config.js
+
+# Public assets
+public/ 

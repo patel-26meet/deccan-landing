@@ -1,54 +1,54 @@
 .faqs-page {
-    @include flex-col();
-    padding: 7.5rem 5rem;
-    background: $grey;
+  @include flex-col();
+  padding: 7.5rem 5rem;
+  background: $grey;
 
-    &__header {
-        @include flex-column;
-        align-items: flex-start;
-        gap: 1rem;
-        align-self: stretch;
-    }
+  &__header {
+    @include flex-column;
+    align-items: flex-start;
+    gap: 1rem;
+    align-self: stretch;
+  }
 
-    &__header-text {
-        @include h1;
-        background: linear-gradient(90deg, #2F41E3, #DB6EE9);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-    }
+  &__header-text {
+    @include h1;
+    background: linear-gradient(90deg, #2f41e3, #db6ee9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-    &__description-text {
-        @include b-l;
-        color: $black;
-    }
+  &__description-text {
+    @include b-l;
+    color: $black;
+  }
 
-    &__filter-container {
-        @include flex-column;
-        align-items: flex-start;
-        gap: 0.75rem;
-        align-self: stretch;
-        margin-top: 2rem;
-    }
+  &__filter-container {
+    @include flex-column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    align-self: stretch;
+    margin-top: 2rem;
+  }
 
-    &__header-filters {
-        @include flex-row;
-        align-items: center;
-        gap: 1rem;
-        align-self: stretch;
-    }
+  &__header-filters {
+    @include flex-row;
+    align-items: center;
+    gap: 1rem;
+    align-self: stretch;
+  }
 
-    &__faq-section {
-        @include flex-column;
-        padding-top: 40px;
-        align-items: flex-start;
-        align-self: stretch;
-    }
+  &__faq-section {
+    @include flex-column;
+    padding-top: 40px;
+    align-items: flex-start;
+    align-self: stretch;
+  }
 
-    .faqs-page-wrapper {
-        @include flex-column;
-        align-items: flex-start;
-        gap: 3rem;
-        align-self: stretch;
-    }
+  .faqs-page-wrapper {
+    @include flex-column;
+    align-items: flex-start;
+    gap: 3rem;
+    align-self: stretch;
+  }
 }

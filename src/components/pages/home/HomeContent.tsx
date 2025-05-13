@@ -1,15 +1,15 @@
-"use client"
+'use client';
 
-import AboutUsFAQs from "./AboutUsFAQs";
-import HowItWorks from "./campusPartnersHowItWorks";
-import Footer from "./Footer/Footer";
-import Hero from "./Hero/Hero";
-import SimulatorPage from "./Simulator/SimulatorPage";
-import Statistics from "./Statistics/statistics";
-import Stories from "./Stories";
-import NavBar from "../../shared/NavBar";
-import { useEffect, useState } from "react";
-import OpportunitiesAndBenifits from "./Opportunitiesandbenifits";
+import AboutUsFAQs from './AboutUsFAQs';
+import HowItWorks from './campusPartnersHowItWorks';
+import Footer from './Footer/Footer';
+import Hero from './Hero/Hero';
+import SimulatorPage from './Simulator/SimulatorPage';
+import Statistics from './Statistics/statistics';
+import Stories from './Stories';
+import NavBar from '../../shared/NavBar';
+import { useEffect, useState } from 'react';
+import OpportunitiesAndBenifits from './Opportunitiesandbenifits';
 
 const HomeContent = () => {
   // Use state to control rendering on the client side
@@ -28,7 +28,7 @@ const HomeContent = () => {
   return (
     <div className="main-content">
       <NavBar initiallyTransparent={true} />
-      <Hero/>
+      <Hero />
       <SimulatorPage />
       <OpportunitiesAndBenifits />
       <Statistics />
@@ -40,4 +40,4 @@ const HomeContent = () => {
   );
 };
 
-export default HomeContent; 
+export default HomeContent;

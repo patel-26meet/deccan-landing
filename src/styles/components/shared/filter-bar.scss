@@ -3,11 +3,11 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 24px;
-  
+
   > div {
     cursor: pointer;
     transition: transform 0.2s ease;
-    
+
     &:hover {
       transform: translateY(-2px);
     }
@@ -20,18 +20,18 @@
     border-radius: 1rem;
     background-color: $white;
     cursor: pointer;
-  
+
     &.selected {
-        background: $gradient-primary;
-  
-        .filter-icon-text {
-            color: $white;
-        }
+      background: $gradient-primary;
+
+      .filter-icon-text {
+        color: $white;
+      }
     }
-  
+
     .filter-icon-text {
-        @include b-l;
-        color: $black;
+      @include b-l;
+      color: $black;
     }
   }
 }
@@ -40,22 +40,22 @@
   .filter-bar {
     flex-wrap: nowrap;
     overflow-x: auto;
-    scrollbar-width: none; 
+    scrollbar-width: none;
     -ms-overflow-style: none;
     margin-left: unset;
     margin-right: unset;
     width: calc(100% + 100px);
-    
+
     /* Hide scrollbar for Chrome, Safari and Opera */
     &::-webkit-scrollbar {
       display: none;
     }
-    
+
     > div {
       flex: 0 0 auto;
     }
   }
-  
+
   .filter-icon-btn {
     padding: 1rem 1.5rem;
     white-space: nowrap;
@@ -70,11 +70,11 @@
     margin-left: unset;
     width: calc(100% + 30px); /* Ensure full width accounting for negative margins */
   }
-  
+
   .filter-icon-btn {
     padding: 1rem 1.5rem;
     min-height: 50px;
-    
+
     .filter-icon-text {
       @include b-s;
     }

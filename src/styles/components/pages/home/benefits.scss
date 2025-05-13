@@ -1,208 +1,208 @@
 .benefits {
-    &__learning-and-dev {
-        height: 51.97%;
-        @include benefits-card-base;
-        @include flex-col(center, center);
-        gap: 12px;
-        align-self: stretch;
-        
-        @include benefits-card-text;
+  &__learning-and-dev {
+    height: 51.97%;
+    @include benefits-card-base;
+    @include flex-col(center, center);
+    gap: 12px;
+    align-self: stretch;
 
-        &__header {
-            text-align: center;
-        }
+    @include benefits-card-text;
 
-        &__content {
-            text-align: center;
-        }
-
-        &__image {
-            width: 372px;
-            height: 221px;
-        }
+    &__header {
+      text-align: center;
     }
 
-    &__events-and-meetups {
-        @include benefits-card-base;
-        height: 38.58%;
-        @include flex-col(flex-start, flex-end);
-        gap: 12px;
-        flex: 1 0 0;
-        align-self: stretch;
-
-        @include benefits-card-text;
-
-        &__image {
-            width: 100%;
-            height: 100%;
-        }
-
-        &__header {
-            text-align: center;
-            align-self: stretch;
-        }
-
-        &__content {
-            text-align: center;
-        }
+    &__content {
+      text-align: center;
     }
 
-    &__work-and-impact {
-        width: 33.45%;
-        @include benefits-card-base;
-        padding: 20px;
-        @include flex-col(flex-start, flex-end);
-        align-self: stretch;
-        gap: 8px;
+    &__image {
+      width: 372px;
+      height: 221px;
+    }
+  }
 
-        @include benefits-card-text;
+  &__events-and-meetups {
+    @include benefits-card-base;
+    height: 38.58%;
+    @include flex-col(flex-start, flex-end);
+    gap: 12px;
+    flex: 1 0 0;
+    align-self: stretch;
 
-        &__content {
-            @include flex-column;
-            gap: 12px;
-            align-items: flex-start;
-            align-self: stretch;
-        }
+    @include benefits-card-text;
+
+    &__image {
+      width: 100%;
+      height: 100%;
     }
 
-    &__opportunities {
-        width: 57.19%;
-        @include benefits-card-base;
-        @include flex-col(flex-start, flex-start);
-        gap: 16px;
-        align-self: stretch;
-        
-        @include benefits-card-text;
-
-        &__lottie {
-            width: 104%;
-            height: 205px;
-            transform: translateY(-10%);
-            overflow: hidden;
-        }
-
-        &__title{
-            @include h5;
-        }
+    &__header {
+      text-align: center;
+      align-self: stretch;
     }
 
-    &__payments {
-        @include benefits-card-base;
-        @include flex-col(flex-start, flex-end);
-        gap: 8px;
-        align-self: stretch;
-        position: relative;
-        width: 65%;
+    &__content {
+      text-align: center;
+    }
+  }
 
-        @include benefits-card-text;
+  &__work-and-impact {
+    width: 33.45%;
+    @include benefits-card-base;
+    padding: 20px;
+    @include flex-col(flex-start, flex-end);
+    align-self: stretch;
+    gap: 8px;
 
-        &__lottie {
-            transform: translateY(35%);
-        }
+    @include benefits-card-text;
+
+    &__content {
+      @include flex-column;
+      gap: 12px;
+      align-items: flex-start;
+      align-self: stretch;
+    }
+  }
+
+  &__opportunities {
+    width: 57.19%;
+    @include benefits-card-base;
+    @include flex-col(flex-start, flex-start);
+    gap: 16px;
+    align-self: stretch;
+
+    @include benefits-card-text;
+
+    &__lottie {
+      width: 104%;
+      height: 205px;
+      transform: translateY(-10%);
+      overflow: hidden;
     }
 
-    &__community {
-        width: 41.27%;
-        @include benefits-card-base;
-        @include flex-col(flex-start, flex-end);
-        gap: 16px;
-        align-self: stretch;
-
-        @include benefits-card-text;
-
-        &__image {
-            width: 100%;
-            height: 90%;
-            transform: translateY(20%);
-        }
+    &__title {
+      @include h5;
     }
+  }
+
+  &__payments {
+    @include benefits-card-base;
+    @include flex-col(flex-start, flex-end);
+    gap: 8px;
+    align-self: stretch;
+    position: relative;
+    width: 65%;
+
+    @include benefits-card-text;
+
+    &__lottie {
+      transform: translateY(35%);
+    }
+  }
+
+  &__community {
+    width: 41.27%;
+    @include benefits-card-base;
+    @include flex-col(flex-start, flex-end);
+    gap: 16px;
+    align-self: stretch;
+
+    @include benefits-card-text;
+
+    &__image {
+      width: 100%;
+      height: 90%;
+      transform: translateY(20%);
+    }
+  }
 }
 
 @media screen and (max-width: $breakpoint-sm) {
-    .benefits {
-        &__learning-and-dev {
-            height: 220px;
-            width: 48.84%;
-            max-width: 48.84%;
-            @include benefits-card-mobile-base;
-            @include flex-col(center, center);
-            gap: 12px;
-            align-self: stretch;
-            
-            @include benefits-card-mobile-text;
-        
-            &__image {
-                width: 100%;
-                height: 113px;
-            }
-        }
-        
-        &__events-and-meetups {
-            height: 220px;
-            width: 48.84%;
-            @include benefits-card-mobile-base;
-            @include flex-col(flex-start, flex-end);
-            gap: 12px;
-            flex: 1 0 0;
-            align-self: stretch;
-            
-            @include benefits-card-mobile-text;
-        }
-        
-        &__work-and-impact {
-            height: 183px;
-            width: 39.71%;
-            max-width: 39.71%;
-            @include benefits-card-mobile-base;
-            @include flex-column;
-            align-items: center;
-            gap: 12px;
-            
-            @include benefits-card-mobile-text;
-        }
-        
-        &__payments {
-            height: 183px;
-            width: 57.97%;
-            @include benefits-card-base;
-            @include flex-col(flex-start, flex-end);
-            gap: 8px;
-            flex: 1 0 0;
-            align-self: stretch;
-            border-radius: 16.38px;
-            border: 1.024px solid rgba(0, 0, 0, 0.12);
-        
-            &__lottie {
-                width: 100%;
-                transform: translateY(2rem);
-            }
-        
-            @include benefits-card-mobile-text;
-        }
-        
-        &__opportunities {
-            height: 188px;
-            width: 48.84%;
-            @include benefits-card-mobile-base;
-            @include flex-column;
-            align-items: center;
-            gap: 0.75rem;
-            align-self: stretch;
-            
-            @include benefits-card-mobile-text;
-        }
+  .benefits {
+    &__learning-and-dev {
+      height: 220px;
+      width: 48.84%;
+      max-width: 48.84%;
+      @include benefits-card-mobile-base;
+      @include flex-col(center, center);
+      gap: 12px;
+      align-self: stretch;
 
-        &__community {
-            height: 188px;
-            width: 48.84%;
-            @include benefits-card-mobile-base;
-            @include flex-column;
-            align-items: center;
-            gap: 0.75rem;
-            align-self: stretch;
-            flex: 1 0 0;
-            
-            @include benefits-card-mobile-text;
-        }    
+      @include benefits-card-mobile-text;
+
+      &__image {
+        width: 100%;
+        height: 113px;
+      }
     }
+
+    &__events-and-meetups {
+      height: 220px;
+      width: 48.84%;
+      @include benefits-card-mobile-base;
+      @include flex-col(flex-start, flex-end);
+      gap: 12px;
+      flex: 1 0 0;
+      align-self: stretch;
+
+      @include benefits-card-mobile-text;
+    }
+
+    &__work-and-impact {
+      height: 183px;
+      width: 39.71%;
+      max-width: 39.71%;
+      @include benefits-card-mobile-base;
+      @include flex-column;
+      align-items: center;
+      gap: 12px;
+
+      @include benefits-card-mobile-text;
+    }
+
+    &__payments {
+      height: 183px;
+      width: 57.97%;
+      @include benefits-card-base;
+      @include flex-col(flex-start, flex-end);
+      gap: 8px;
+      flex: 1 0 0;
+      align-self: stretch;
+      border-radius: 16.38px;
+      border: 1.024px solid rgba(0, 0, 0, 0.12);
+
+      &__lottie {
+        width: 100%;
+        transform: translateY(2rem);
+      }
+
+      @include benefits-card-mobile-text;
+    }
+
+    &__opportunities {
+      height: 188px;
+      width: 48.84%;
+      @include benefits-card-mobile-base;
+      @include flex-column;
+      align-items: center;
+      gap: 0.75rem;
+      align-self: stretch;
+
+      @include benefits-card-mobile-text;
+    }
+
+    &__community {
+      height: 188px;
+      width: 48.84%;
+      @include benefits-card-mobile-base;
+      @include flex-column;
+      align-items: center;
+      gap: 0.75rem;
+      align-self: stretch;
+      flex: 1 0 0;
+
+      @include benefits-card-mobile-text;
+    }
+  }
 }

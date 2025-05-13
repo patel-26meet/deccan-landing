@@ -1,28 +1,25 @@
-"use client"
+'use client';
 
-import { IFilterIconType } from "@/interfaces/components/filtericon.type";
-import { FC } from "react";
+import { IFilterIconType } from '@/interfaces/components/filtericon.type';
+import { FC } from 'react';
 
-const FilterIcon: FC<IFilterIconType> = ({
-  isSelected,
-  text
-}) => {
+const FilterIcon: FC<IFilterIconType> = ({ isSelected, text }) => {
   const getIconPath = () => {
-    const suffix = isSelected ? "-2" : "-1";
-    
-    switch(text) {
-      case "All":
+    const suffix = isSelected ? '-2' : '-1';
+
+    switch (text) {
+      case 'All':
         return null; // No icon for "All"
-      case "Coding and Software":
+      case 'Coding and Software':
         return `/assets/opportunities/filter/coding${suffix}.svg`;
-      case "AI/ML":
+      case 'AI/ML':
         return `/assets/opportunities/filter/ml${suffix}.svg`;
-      case "Linguistics":
+      case 'Linguistics':
         return `/assets/opportunities/filter/linguistics${suffix}.svg`;
-      case "Specialist":
+      case 'Specialist':
         return `/assets/opportunities/filter/specialist${suffix}.svg`;
       default:
-        return null; 
+        return null;
     }
   };
 

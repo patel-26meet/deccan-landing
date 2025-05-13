@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { TLocalStorageHookReturn } from "@/interfaces/hooks/local-storage.type";
-import { isFunction } from "lodash";
-import { useEffect, useState } from "react";
+import { TLocalStorageHookReturn } from '@/interfaces/hooks/local-storage.type';
+import { isFunction } from 'lodash';
+import { useEffect, useState } from 'react';
 
 /**
  * Hook for managing state that persists in localStorage
@@ -10,13 +10,10 @@ import { useEffect, useState } from "react";
  * @param initialValue - initial value to use if no value exists in localStorage
  * @returns [storedValue, setValue] - Tuple of the stored value and a function to update it
  */
-export const useLocalStorage = <T>(
-  key: string,
-  initialValue: T
-): TLocalStorageHookReturn<T> => {
+export const useLocalStorage = <T>(key: string, initialValue: T): TLocalStorageHookReturn<T> => {
   // Get value from localStorage or use initialValue
   const getStoredValue = (): T => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return initialValue;
     }
 
@@ -34,7 +31,7 @@ export const useLocalStorage = <T>(
 
   // Update localStorage whenever storedValue changes
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       try {
         window.localStorage.setItem(key, JSON.stringify(storedValue));
       } catch (error) {
@@ -47,15 +44,10 @@ export const useLocalStorage = <T>(
   const setValue = (value: T | ((val: T) => T)) => {
     try {
       // Allow value to be a function to match useState's API
-      const valueToStore = isFunction(value)
-        ? (value as (val: T) => T)(storedValue)
-        : value;
+      const valueToStore = isFunction(value) ? (value as (val: T) => T)(storedValue) : value;
       setStoredValue(valueToStore);
     } catch (error) {
-      console.error(
-        `Error setting value for localStorage key "${key}":`,
-        error
-      );
+      console.error(`Error setting value for localStorage key "${key}":`, error);
     }
   };
 

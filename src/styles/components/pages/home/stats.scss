@@ -13,7 +13,7 @@
 
   &__heading {
     text-align: center;
-    color: rgba(0, 0, 0, 0.50);
+    color: rgba(0, 0, 0, 0.5);
     @include h4;
   }
 
@@ -110,7 +110,7 @@
       text-align: center;
       align-self: stretch;
       @include h5;
-      color: #3E3E3E;
+      color: #3e3e3e;
     }
 
     &__display {

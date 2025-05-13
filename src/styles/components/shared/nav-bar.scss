@@ -1,311 +1,334 @@
 // Define tablet breakpoint mixin
 @mixin tablet {
-    @media screen and (max-width: $breakpoint-lg) {
-        @content;
-    }
+  @media screen and (max-width: $breakpoint-lg) {
+    @content;
+  }
 }
 
 // Disable body scroll when menu is open
 body.menu-open {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .nav-bar-wrapper {
-    height: $navbar-height;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: $z-index-fixed;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1);
-    @include flex-row(space-between);
-    padding: 0 2rem;
-    
-    // When menu is open, ensure navbar is solid
-    &.menu-open {
-        background-color: $white;
-        box-shadow: none;
-        
-        &.transparent {
-            background-color: rgba(0, 0, 0, 0.95);
-        }
-    }
-    
-    // Content visibility states
-    &.content-hidden {
-        .nav-bar-left img,
-        .nav-bar-middle div,
-        .nav-bar-right div,
-        .nav-bar-right button {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-    }
-    
-    &.content-visible {
-        .nav-bar-left img,
-        .nav-bar-middle div,
-        .nav-bar-right div,
-        .nav-bar-right button {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-    }
+  height: $navbar-height;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index-fixed;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  @include flex-row(space-between);
+  padding: 0 2rem;
 
-    // Visibility states
-    &.visible {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  // When menu is open, ensure navbar is solid
+  &.menu-open {
+    background-color: $white;
+    box-shadow: none;
 
-    &.hidden {
-        transform: translateY(-100%);
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    // Background states
     &.transparent {
-        background-color: transparent;
-        box-shadow: none;
-        
-        .nav-bar-middle div, 
-        .nav-bar-right div,
-        .nav-bar-right button span {
-            color: #ADADAD;
-            
-            &:hover {
-                color: $white;
-            }
-        }
-        
-        .nav-signup-button {
-            &:hover {
-                background-color: $white !important;
-                border-color: $white !important;
-                
-                span {
-                    color: $black !important;
-                }
-            }
-        }
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+  }
+
+  // Content visibility states
+  &.content-hidden {
+    .nav-bar-left img,
+    .nav-bar-middle div,
+    .nav-bar-right div,
+    .nav-bar-right button {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  &.content-visible {
+    .nav-bar-left img,
+    .nav-bar-middle div,
+    .nav-bar-right div,
+    .nav-bar-right button {
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+    }
+  }
+
+  // Visibility states
+  &.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  &.hidden {
+    transform: translateY(-100%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  // Background states
+  &.transparent {
+    background-color: transparent;
+    box-shadow: none;
+
+    .nav-bar-middle div,
+    .nav-bar-right div,
+    .nav-bar-right button span {
+      color: #adadad;
+
+      &:hover {
+        color: $white;
+      }
     }
 
-    &.solid {
-        background-color: $white;
-        box-shadow: $navbar-shadow;
-        
-        .nav-bar-middle div, 
-        .nav-bar-right div,
-        .nav-bar-right button span {
-            color: #3E3E3E;
-            
-            &:hover {
-                color: $black;
-            }
+    .nav-signup-button {
+      &:hover {
+        background-color: $white !important;
+        border-color: $white !important;
+
+        span {
+          color: $black !important;
         }
-        
-        .nav-signup-button {
-            &:hover {
-                background-color: $black !important;
-                border-color: $black !important;
-                
-                span {
-                    color: $white !important;
-                }
-            }
-        }
+      }
+    }
+  }
+
+  &.solid {
+    background-color: $white;
+    box-shadow: $navbar-shadow;
+
+    .nav-bar-middle div,
+    .nav-bar-right div,
+    .nav-bar-right button span {
+      color: #3e3e3e;
+
+      &:hover {
+        color: $black;
+      }
     }
 
-    .nav-bar-left {
-        position: relative;
-        z-index: 12;
-        
-        img {
-            height: 2.5rem;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+    .nav-signup-button {
+      &:hover {
+        background-color: $black !important;
+        border-color: $black !important;
+
+        span {
+          color: $white !important;
         }
+      }
+    }
+  }
+
+  .nav-bar-left {
+    position: relative;
+    z-index: 12;
+
+    img {
+      height: 2.5rem;
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+    }
+  }
+
+  .nav-bar-middle {
+    @include flex-row;
+    @include b-l;
+    gap: 2.5rem;
+
+    div {
+      cursor: pointer;
+      transition:
+        color 0.3s ease,
+        opacity 0.5s ease,
+        transform 0.5s ease;
+      position: relative;
+    }
+  }
+
+  .nav-bar-right {
+    @include flex-row;
+    gap: 1rem;
+
+    div {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: $border-radius-sm;
+      transition:
+        all 0.5s ease,
+        opacity 0.5s ease,
+        transform 0.5s ease;
     }
 
-    .nav-bar-middle {
-        @include flex-row;
-        @include b-l;
-        gap: 2.5rem;
-
-        div {
-            cursor: pointer;
-            transition: color 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
-            position: relative;
-        }
+    .nav-login-button,
+    .nav-signup-button {
+      transition:
+        all 0.5s ease,
+        opacity 0.5s ease,
+        transform 0.5s ease;
     }
+  }
 
-    .nav-bar-right {
-        @include flex-row;
-        gap: 1rem;
-
-        div {
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: $border-radius-sm;
-            transition: all 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
-        }
-        
-        .nav-login-button, 
-        .nav-signup-button {
-            transition: all 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
-        }
-    }
-
-    &.initial-fade-in {
-        transition: background-color 1.8s cubic-bezier(0.4,0,0.2,1), color 1.8s cubic-bezier(0.4,0,0.2,1), transform 1.8s cubic-bezier(0.4,0,0.2,1), opacity 1.8s cubic-bezier(0.4,0,0.2,1);
-    }
+  &.initial-fade-in {
+    transition:
+      background-color 1.8s cubic-bezier(0.4, 0, 0.2, 1),
+      color 1.8s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 1.8s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 // Mobile and tablet styles (responsive)
 @include tablet {
-    .nav-bar-wrapper {
-        padding: 0 1.5rem;
-        
-        .nav-bar-middle {
-            display: none;
-        }
-        
-        .nav-bar-right {
-            .menu-icon {
-                cursor: pointer;
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
-                z-index: 11;
-                
-                img {
-                    width: 24px;
-                    height: 24px;
-                    transition: transform 0.3s ease;
-                }
-                
-                &:hover img {
-                    transform: scale(1.1);
-                }
-            }
-            
-            div:not(.menu-icon),
-            button {
-                display: none;
-            }
-        }
-        
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            border-radius: 0px 0px 10px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(26px);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            animation: mobileMenuFadeIn 0.3s ease forwards;
-            padding-top: $navbar-height;
-            
-            .mobile-menu-items {
-                @include flex-col(flex-start, flex-start);
-                width: 100%;
-                height: calc(100% - #{$navbar-height});
-                padding: 2rem;
-                overflow-y: auto;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                
-                .main-nav-items {
-                    width: 100%;
-                    @include flex-col(flex-start, flex-start);
-                    background-color: unset !important;
+  .nav-bar-wrapper {
+    padding: 0 1.5rem;
 
-                    div {
-                        width: 100%;
-                        padding: 1.25rem;
-                        margin: 0.5rem 0;
-                        color: $black;
-                        @include h4;
-                        text-align: left;
-                        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-                        cursor: pointer;
-                        transition: background-color 0.2s ease, transform 0.2s ease;
-                        
-                        &:last-child {
-                            border-bottom: none;
-                        }
-                        
-                        &:hover {
-                            background-color: rgba(0, 0, 0, 0.05);
-                            transform: translateY(-2px);
-                        }
-                    }
-                }
-                
-                .auth-nav-items {
-                    width: 100%;
-                    @include flex-col(flex-start, flex-start);
-                    margin-bottom: 2rem;
-                }
-            }
-        }
-        
-        &.transparent .mobile-menu {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(26px);
-            -webkit-backdrop-filter: blur(26px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            
-            .mobile-menu-items .main-nav-items div {
-                color: #ADADAD;
-                
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
-                }
-            }
-        }
+    .nav-bar-middle {
+      display: none;
     }
+
+    .nav-bar-right {
+      .menu-icon {
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        z-index: 11;
+
+        img {
+          width: 24px;
+          height: 24px;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+          transform: scale(1.1);
+        }
+      }
+
+      div:not(.menu-icon),
+      button {
+        display: none;
+      }
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0px 0px 10px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(26px);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      animation: mobileMenuFadeIn 0.3s ease forwards;
+      padding-top: $navbar-height;
+
+      .mobile-menu-items {
+        @include flex-col(flex-start, flex-start);
+        width: 100%;
+        height: calc(100% - #{$navbar-height});
+        padding: 2rem;
+        overflow-y: auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .main-nav-items {
+          width: 100%;
+          @include flex-col(flex-start, flex-start);
+          background-color: unset !important;
+
+          div {
+            width: 100%;
+            padding: 1.25rem;
+            margin: 0.5rem 0;
+            color: $black;
+            @include h4;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition:
+              background-color 0.2s ease,
+              transform 0.2s ease;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.05);
+              transform: translateY(-2px);
+            }
+          }
+        }
+
+        .auth-nav-items {
+          width: 100%;
+          @include flex-col(flex-start, flex-start);
+          margin-bottom: 2rem;
+        }
+      }
+    }
+
+    &.transparent .mobile-menu {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+
+      .mobile-menu-items .main-nav-items div {
+        color: #adadad;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
 }
 
 // Mobile-specific adjustments
 @include mobile {
-    .nav-bar-wrapper {
-        padding: 0 1rem;
-        
-        .mobile-menu {
-            .mobile-menu-items {
-                padding: 1rem;
-                
-                div {
-                    @include b-l;
-                    padding: 1rem;
-                    margin: 0.25rem 0;
-                    width: 100%;
-                    text-align: left;
-                }
-            }
+  .nav-bar-wrapper {
+    padding: 0 1rem;
+
+    .mobile-menu {
+      .mobile-menu-items {
+        padding: 1rem;
+
+        div {
+          @include b-l;
+          padding: 1rem;
+          margin: 0.25rem 0;
+          width: 100%;
+          text-align: left;
         }
+      }
     }
+  }
 }
 
 @keyframes mobileMenuFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

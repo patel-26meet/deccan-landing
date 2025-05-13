@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { IScrollData } from "@/interfaces/hooks/scroll-position.type";
-import { throttle } from "lodash";
-import { useEffect, useState } from "react";
+import { IScrollData } from '@/interfaces/hooks/scroll-position.type';
+import { throttle } from 'lodash';
+import { useEffect, useState } from 'react';
 
 /**
  * Hook for tracking the scroll position and direction
@@ -12,13 +12,13 @@ const useScrollPosition = (): IScrollData => {
   const [scrollData, setScrollData] = useState<IScrollData>({
     scrollY: 0,
     scrollX: 0,
-    scrollDirection: "none",
+    scrollDirection: 'none',
     scrollPercentage: 0,
   });
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof document === "undefined") return;
-    
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
     let lastScrollY = window.scrollY;
 
     // Create throttled handler to improve performance
@@ -28,17 +28,11 @@ const useScrollPosition = (): IScrollData => {
 
       // Calculate scroll direction
       const direction =
-        currentScrollY > lastScrollY
-          ? "down"
-          : currentScrollY < lastScrollY
-            ? "up"
-            : "none";
+        currentScrollY > lastScrollY ? 'down' : currentScrollY < lastScrollY ? 'up' : 'none';
 
       // Calculate percentage scrolled
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercentage =
-        scrollHeight > 0 ? (currentScrollY / scrollHeight) * 100 : 0;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercentage = scrollHeight > 0 ? (currentScrollY / scrollHeight) * 100 : 0;
 
       setScrollData({
         scrollY: currentScrollY,
@@ -50,13 +44,13 @@ const useScrollPosition = (): IScrollData => {
       lastScrollY = currentScrollY;
     }, 100); // Throttle to 100ms for better performance
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Call once to initialize
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
       // Cancel any pending throttled executions
       handleScroll.cancel();
     };
