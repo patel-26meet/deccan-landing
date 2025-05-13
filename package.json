@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@solar-icons/react": "^1.0.1",
@@ -36,7 +38,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "prettier --write"
+      "prettier --write",
+      "eslint --fix --max-warnings=0 --quiet"
     ],
     "*.{json,css,scss,md}": [
       "prettier --write"
