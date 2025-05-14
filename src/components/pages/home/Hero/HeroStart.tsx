@@ -17,9 +17,9 @@ type LottieFile = {
   w: number;
   h: number;
   nm: string;
-  assets: any[];
-  layers: any[];
-  markers: any[];
+  assets: Array<Record<string, unknown>>;
+  layers: Array<Record<string, unknown>>;
+  markers: Array<Record<string, unknown>>;
   [key: string]: unknown;
 };
 
@@ -70,7 +70,7 @@ const HeroStart = () => {
         if (deviceType === 'desktop') {
           // Load desktop animations
           const [lottie1, lottie2, lottie3] = await Promise.all([
-            import('../../../../../public/assets/hero-json/H1.json'),
+            import('../../../../../public/assets/hero-json/H1-v3.json'),
             import('../../../../../public/assets/hero-json/H2.json'),
             import('../../../../../public/assets/hero-json/H3.json')
           ]);
@@ -78,9 +78,10 @@ const HeroStart = () => {
           setLottieFiles(prev => ({
             ...prev, 
             desktop: { 
-              1: lottie1.default, 
-              2: lottie2.default, 
-              3: lottie3.default 
+              ...prev.desktop,
+              1: lottie1.default as LottieFile, 
+              2: lottie2.default as LottieFile, 
+              3: lottie3.default as LottieFile 
             }
           }));
         } else if (deviceType === 'mobile') {
@@ -94,9 +95,10 @@ const HeroStart = () => {
           setLottieFiles(prev => ({
             ...prev, 
             mobile: { 
-              1: lottiem1.default, 
-              2: lottiem2.default, 
-              3: lottiem3.default 
+              ...prev.mobile,
+              1: lottiem1.default as LottieFile, 
+              2: lottiem2.default as LottieFile, 
+              3: lottiem3.default as LottieFile 
             }
           }));
         } else if (deviceType === 'tablet') {
@@ -110,9 +112,10 @@ const HeroStart = () => {
           setLottieFiles(prev => ({
             ...prev, 
             tablet: { 
-              1: lottiet1.default, 
-              2: lottiet2.default, 
-              3: lottiet3.default 
+              ...prev.tablet,
+              1: lottiet1.default as LottieFile, 
+              2: lottiet2.default as LottieFile, 
+              3: lottiet3.default as LottieFile 
             }
           }));
         }
@@ -657,9 +660,6 @@ const HeroStart = () => {
 
     // Only proceed with animation control if scrolling down
     if (scrollDirection === 'down') {
-      // Determine how much of animation 2 remains to complete
-      const remainingProgress = 1 - animState.secondAnimProgress;
-
       // Calculate text transition progress
       textTransitionScrollAccRef.current += Math.abs(deltaY);
 
