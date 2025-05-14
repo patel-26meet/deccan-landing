@@ -490,13 +490,13 @@ const HeroStart = () => {
     // Update the animation progress
     setAnimState(prev => {
       // For smoother transitions, adjust the step size based on direction
-      // Smaller steps when reversing for better control
-      const progressMultiplier = scrollDirection < 0 ? 0.05 : 0.1; // Increased from 0.03/0.06
+      // Use balanced multipliers for touch-based interactions
+      const progressMultiplier = scrollDirection < 0 ? 0.07 : 0.12; // Adjusted from 0.08/0.15
       const progressStep = progressMultiplier * Math.sign(scrollAmount);
       const newThirdProgress = prev.thirdAnimProgress + progressStep;
 
       // Continuously update Lottie animation progress regardless of text highlighting
-      const lottieMultiplier = scrollDirection < 0 ? 1.5 : 2.2; // Increased from 1.0/1.6
+      const lottieMultiplier = scrollDirection < 0 ? 1.8 : 2.5; // Adjusted from 2.0/2.8
       const newLottieProgress = Math.max(
         prev.lottieThirdProgress + progressStep * lottieMultiplier,
         0
@@ -512,9 +512,9 @@ const HeroStart = () => {
       if (scrollDirection > 0) {
         // FORWARD ANIMATION: First text highlight, then icons layout
 
-        // Update text highlight index
+        // Update text highlight index with balanced speed
         highlightIndex = Math.min(
-          Math.floor(Math.min(newThirdProgress, 1) * overlayTextWords.length * 1.2), // Added 1.2 multiplier for faster text highlighting
+          Math.floor(Math.min(newThirdProgress, 1) * overlayTextWords.length * 1.35), // Adjusted from 1.5
           maxHighlightIndex
         );
 
@@ -523,16 +523,13 @@ const HeroStart = () => {
 
         if (textIsFullyHighlighted) {
           // Text is fully highlighted, now animate icons layout
-          // Increased from 1.5 to 2.0
-          iconsProgress = Math.min(iconsProgress + progressStep * 2.0, 1);
+          iconsProgress = Math.min(iconsProgress + progressStep * 2.2, 1); // Adjusted from 2.5
         }
       } else {
         // REVERSE ANIMATION: First icons layout, then text highlight
-        // Important change: Only unhighlight text after icons are fully retracted
-
-        // When reversing, use a faster speed for icons layout
-        // Increased from 3.5 to 4.5
-        const reverseIconStep = progressStep * 4.5;
+        
+        // When reversing, use a balanced speed for icons layout
+        const reverseIconStep = progressStep * 5.2; // Adjusted from 6.0
 
         // First check if icons are fully retracted (if they were active)
         if (iconsProgress > 0) {
@@ -543,9 +540,8 @@ const HeroStart = () => {
           highlightIndex = maxHighlightIndex;
         } else {
           // Only after icons are retracted (iconsProgress = 0), handle text unhighlighting
-          // Unhighlight words one by one from end to beginning
-          // Increased from 8 to 12 for faster text unhighlighting
-          const textUnhighlightStep = progressStep * 12;
+          // Unhighlight words one by one from end to beginning 
+          const textUnhighlightStep = progressStep * 14; // Adjusted from 16
           highlightIndex = Math.max(highlightIndex + Math.floor(textUnhighlightStep), -1);
         }
       }
@@ -823,37 +819,34 @@ const HeroStart = () => {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      // If animation is completed or user has scrolled past the section, allow normal touch behavior
-      if (animState.animationCompleted || hasLeftSectionRef.current) {
-        // Allow normal behavior for completed animations
+      // Only process if we have a valid starting touch position
+      if (touchStartYRef.current === null) {
         return;
       }
+      
+      // If animation is completed or user has scrolled past the section, allow normal touch behavior
+      if (animState.animationCompleted || hasLeftSectionRef.current) {
+        return; // Allow normal behavior for completed animations
+      }
 
-      // Prevent default touch behavior during animations
-      if (animState.showFirstAnim || animState.showSecondAnim || animState.showThirdAnim) {
+      // Calculate deltaY equivalent for touch
+      const currentY = e.touches[0].clientY;
+      const deltaY = touchStartYRef.current - currentY;
+      
+      // Only prevent default if we're actually handling the touch - adjusted threshold
+      if (Math.abs(deltaY) > 3 && (animState.showFirstAnim || animState.showSecondAnim || animState.showThirdAnim)) {
         e.preventDefault();
 
-        if (touchStartYRef.current === null) {
-          return;
-        }
-
-        // Calculate deltaY equivalent for touch
-        const currentY = e.touches[0].clientY;
-        const deltaY = touchStartYRef.current - currentY;
-
-        // Apply a multiplier to make touch scrolling faster - 3x faster for touch
-        const touchSpeedMultiplier = 3.0;
+        // Apply a balanced multiplier for responsive but not too fast scrolling
+        const touchSpeedMultiplier = 6.5; // Adjusted from 8.0 for slightly slower response
         const enhancedDeltaY = deltaY * touchSpeedMultiplier;
 
         // Use global scroll direction from hook, converting 'none' to null
-        const touchDirection =
-          globalScrollDirection === 'none' ? null : (globalScrollDirection as 'up' | 'down');
-        setScrollDirection(touchDirection);
+        const touchDirection = deltaY > 0 ? 'down' : 'up';
+        setScrollDirection(touchDirection as 'up' | 'down');
 
         // Process touch for animation 2
         if (animState.showSecondAnim && !animState.showThirdAnim) {
-          e.preventDefault();
-
           // Handle animation 2 scroll
           if (animState.hasScrolledDuringAnim2) {
             // User already scrolling, continue controlling animation
@@ -873,7 +866,7 @@ const HeroStart = () => {
 
             // Calculate transition progress based on accumulated scroll
             // We'll use a lower threshold for touch to make it faster
-            const scrollThreshold = 300; // Reduced from 500 for faster touch response
+            const scrollThreshold = 150; // Adjusted from 120 for slightly slower response
             const progress = Math.min(
               Math.max(textTransitionScrollAccRef.current / scrollThreshold, 0),
               1
@@ -882,14 +875,13 @@ const HeroStart = () => {
             // Update text transition
             setTextTransitionProgress(progress);
 
-            // Start controlling animation 2 after small threshold
-            if (textTransitionScrollAccRef.current > 60) {
-              // Reduced from 100 for faster response
+            // Start controlling animation 2 after small threshold for touch
+            if (textTransitionScrollAccRef.current > 20) { // Adjusted from 15 for slightly slower response
               handleSecondAnimScroll(enhancedDeltaY);
             }
 
             // If the text has fully transitioned out, move to animation 3
-            if (progress >= 1 && !isSecondAnimTransitioning && touchDirection === 'down') {
+            if (progress >= 0.9 && !isSecondAnimTransitioning && touchDirection === 'down') { // Adjusted from 0.85
               isSecondAnimTransitioning = true;
 
               // Add scroll-disabled class to body
@@ -931,7 +923,7 @@ const HeroStart = () => {
                 // Reset text transition
                 setTextTransitionProgress(0);
                 isSecondAnimTransitioning = false;
-              }, 200);
+              }, 175); // Adjusted from 150ms for slightly slower transition
             }
           }
         } else if (animState.showThirdAnim) {
@@ -960,7 +952,7 @@ const HeroStart = () => {
           scrollTimeoutRef.current = setTimeout(() => {
             processScroll();
             isScrollingRef.current = false;
-          }, 30); // Reduced from 50ms for faster response
+          }, 15); // Adjusted from 10ms for slightly slower response
         }
       }
     };
@@ -968,6 +960,14 @@ const HeroStart = () => {
     // Reset touch reference when touch ends
     const handleTouchEnd = () => {
       touchStartYRef.current = null;
+    };
+
+    // Update touchStartY on touch moves to handle continuous gestures better
+    const handleTouchUpdate = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        // Always update the touch position, regardless of scroll state
+        touchStartYRef.current = e.touches[0].clientY;
+      }
     };
 
     const handleWheel = (e: WheelEvent) => {
@@ -1113,10 +1113,12 @@ const HeroStart = () => {
       window.addEventListener('wheel', () => {}, { passive: true });
       window.addEventListener('wheel', handleWheel, { passive: false });
 
-      // Add touch event listeners for mobile
+      // Add touch event listeners for mobile with improved configuration
       window.addEventListener('touchstart', handleTouchStart, { passive: true });
       window.addEventListener('touchmove', handleTouchMove, { passive: false });
       window.addEventListener('touchend', handleTouchEnd, { passive: true });
+      // Add an update handler that runs after each frame to improve continuous touch tracking
+      window.addEventListener('touchmove', handleTouchUpdate, { passive: true });
 
       return () => {
         window.removeEventListener('wheel', handleWheel);
@@ -1124,6 +1126,7 @@ const HeroStart = () => {
         window.removeEventListener('touchstart', handleTouchStart);
         window.removeEventListener('touchmove', handleTouchMove);
         window.removeEventListener('touchend', handleTouchEnd);
+        window.removeEventListener('touchmove', handleTouchUpdate);
       };
     }
   }, [animState, processScroll, globalScrollDirection]);
