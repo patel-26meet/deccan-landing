@@ -2,7 +2,7 @@
 
 import { iconsMobile, iconsTablet, iconsWeb } from '@/constants/pages/home/hero';
 import { IHeroIconsProps } from '@/interfaces/components/hero.type';
-import { useState, useEffect } from 'react';
+import useDeviceType from '@/lib/hooks/useDeviceType';
 
 const HeroIcons = ({ text }: IHeroIconsProps) => {
   return (
@@ -12,34 +12,8 @@ const HeroIcons = ({ text }: IHeroIconsProps) => {
   );
 };
 
-type DeviceType = 'mobile' | 'tablet' | 'desktop';
-
 const HeroIconsLayout = () => {
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width <= 493) {
-        setDeviceType('mobile');
-      } else if (width <= 1024) {
-        setDeviceType('tablet');
-      } else {
-        setDeviceType('desktop');
-      }
-    };
-
-    // Initial check
-    handleResize();
-
-    // Set up listener for window resize
-    window.addEventListener('resize', handleResize);
-
-    // Clean up
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const deviceType = useDeviceType();
 
   // Select the appropriate icon set based on device type
   const iconsToRender =

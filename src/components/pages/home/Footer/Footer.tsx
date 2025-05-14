@@ -53,7 +53,7 @@ const Footer = () => {
             {/* Left column */}
             <div className="footer-left">
               <div className="footer-logo">
-                <img src={'/assets/logos/deccan-logo.svg'} alt="Deccan AI Logo" />
+                <img src={'/assets/logos/deccan-logo.svg'} alt="Deccan AI Logo" loading="lazy" />
               </div>
 
               <div className="footer-description">
@@ -66,10 +66,10 @@ const Footer = () => {
                   <span>Follow Us on:</span>
                   <div className="footer-social-icons">
                     <div className="footer-social-icon">
-                      <img src={'/assets/logos/huggingface.svg'} alt="Huggingface Logo" />
+                      <img src={'/assets/logos/huggingface.svg'} alt="Huggingface Logo" loading="lazy" />
                     </div>
                     <div className="footer-social-icon">
-                      <img src={'/assets/logos/linkedin.svg'} alt="LinkedIn Logo" />
+                      <img src={'/assets/logos/linkedin.svg'} alt="LinkedIn Logo" loading="lazy" />
                     </div>
                   </div>
                 </div>

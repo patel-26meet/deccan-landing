@@ -35,7 +35,7 @@ const OpportunitiesCard: FC<IOpportunitiesCard> = ({ header, description, rate, 
         </div>
       </div>
       <div className="opportunities-card__image">
-        <img src={getImagePath()} alt={`${category} illustration`} />
+        <img src={getImagePath()} alt={`${category} illustration`} loading="lazy" />
       </div>
     </div>
   );

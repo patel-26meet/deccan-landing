@@ -120,6 +120,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
             isTransparent ? '/assets/logos/deccan-logo.svg' : '/assets/logos/deccan-logo-black.svg'
           }
           alt="logo"
+          loading="eager"
         />
       </div>
       <div className="nav-bar-middle">
@@ -141,6 +142,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
                     : '/assets/menu-black.svg'
               }
               alt="Menu"
+              loading="eager"
             />
           </div>
         ) : (

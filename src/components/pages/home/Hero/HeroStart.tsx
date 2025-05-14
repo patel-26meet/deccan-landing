@@ -3,19 +3,25 @@
 import Button from '@/components/shared/Button';
 import { IAnimationState } from '@/interfaces/components/hero.type';
 import useScrollPosition from '@/lib/hooks/useScrollPosition';
+import useDeviceType from '@/lib/hooks/useDeviceType';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie-player';
-import lottie1 from '../../../../../public/assets/hero-json/H1.json';
-import lottie2 from '../../../../../public/assets/hero-json/H2.json';
-import lottie3 from '../../../../../public/assets/hero-json/H3.json';
-import lottiem1 from '../../../../../public/assets/hero-json/mobile/H1.json';
-import lottiem2 from '../../../../../public/assets/hero-json/mobile/H2.json';
-import lottiem3 from '../../../../../public/assets/hero-json/mobile/H3.json';
-import lottiet1 from '../../../../../public/assets/hero-json/tablet/H1.json';
-import lottiet2 from '../../../../../public/assets/hero-json/tablet/H2.json';
-import lottiet3 from '../../../../../public/assets/hero-json/tablet/H3.json';
 import HeroIconsLayout from './HeroIconsLayout';
-type DeviceType = 'desktop' | 'tablet' | 'mobile';
+
+// Define a type for Lottie animation JSON
+type LottieFile = {
+  v: string;
+  fr: number;
+  ip: number;
+  op: number;
+  w: number;
+  h: number;
+  nm: string;
+  assets: any[];
+  layers: any[];
+  markers: any[];
+  [key: string]: unknown;
+};
 
 const HeroStart = () => {
   const { scrollY, scrollDirection: globalScrollDirection } = useScrollPosition();
@@ -37,47 +43,95 @@ const HeroStart = () => {
     secondAnimProgress: 0,
   });
 
+  // State for dynamically loaded Lottie animations
+  const [lottieFiles, setLottieFiles] = useState<{
+    desktop: { [key: number]: LottieFile };
+    mobile: { [key: number]: LottieFile };
+    tablet: { [key: number]: LottieFile };
+  }>({
+    desktop: {},
+    mobile: {},
+    tablet: {},
+  });
+
   // Add state for text transition
   const [textTransitionProgress, setTextTransitionProgress] = useState(0);
   // Using scrollDirection to control animation behavior, so suppressing the linter warning
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
 
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  // Use the deviceType hook instead of managing device state manually
+  const deviceType = useDeviceType();
 
-  // Detect device type based on window width
+  // Load Lottie animations dynamically based on device type
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        const width = window.innerWidth;
-        if (width <= 493) {
-          setDeviceType('mobile');
-        } else if (width <= 1024) {
-          setDeviceType('tablet');
-        } else {
-          setDeviceType('desktop');
+    const loadAnimations = async () => {
+      try {
+        if (deviceType === 'desktop') {
+          // Load desktop animations
+          const [lottie1, lottie2, lottie3] = await Promise.all([
+            import('../../../../../public/assets/hero-json/H1.json'),
+            import('../../../../../public/assets/hero-json/H2.json'),
+            import('../../../../../public/assets/hero-json/H3.json')
+          ]);
+          
+          setLottieFiles(prev => ({
+            ...prev, 
+            desktop: { 
+              1: lottie1.default, 
+              2: lottie2.default, 
+              3: lottie3.default 
+            }
+          }));
+        } else if (deviceType === 'mobile') {
+          // Load mobile animations
+          const [lottiem1, lottiem2, lottiem3] = await Promise.all([
+            import('../../../../../public/assets/hero-json/mobile/H1.json'),
+            import('../../../../../public/assets/hero-json/mobile/H2.json'),
+            import('../../../../../public/assets/hero-json/mobile/H3.json')
+          ]);
+          
+          setLottieFiles(prev => ({
+            ...prev, 
+            mobile: { 
+              1: lottiem1.default, 
+              2: lottiem2.default, 
+              3: lottiem3.default 
+            }
+          }));
+        } else if (deviceType === 'tablet') {
+          // Load tablet animations
+          const [lottiet1, lottiet2, lottiet3] = await Promise.all([
+            import('../../../../../public/assets/hero-json/tablet/H1.json'),
+            import('../../../../../public/assets/hero-json/tablet/H2.json'),
+            import('../../../../../public/assets/hero-json/tablet/H3.json')
+          ]);
+          
+          setLottieFiles(prev => ({
+            ...prev, 
+            tablet: { 
+              1: lottiet1.default, 
+              2: lottiet2.default, 
+              3: lottiet3.default 
+            }
+          }));
         }
-      };
+      } catch (error) {
+        console.error('Failed to load Lottie animations:', error);
+      }
+    };
 
-      // Initial detection
-      handleResize();
-
-      // Add listener for window resize
-      window.addEventListener('resize', handleResize);
-
-      // Cleanup
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
+    loadAnimations();
+  }, [deviceType]);
 
   // Get the appropriate Lottie animations based on device type
   const getLottieAnimation = (index: 1 | 2 | 3) => {
     if (deviceType === 'mobile') {
-      return index === 1 ? lottiem1 : index === 2 ? lottiem2 : lottiem3;
+      return lottieFiles.mobile[index];
     } else if (deviceType === 'tablet') {
-      return index === 1 ? lottiet1 : index === 2 ? lottiet2 : lottiet3;
+      return lottieFiles.tablet[index];
     } else {
-      return index === 1 ? lottie1 : index === 2 ? lottie2 : lottie3;
+      return lottieFiles.desktop[index];
     }
   };
 
@@ -128,7 +182,7 @@ const HeroStart = () => {
             >
               {futureOfAiText}{' '}
             </span>
-            {isHighlighted && <img src="/assets/stars.svg" className="star-icon" />}
+            {isHighlighted && <img src="/assets/stars.svg" className="star-icon" loading="eager" />}
           </div>
         );
         i += 2; // Skip the next two words
@@ -603,7 +657,7 @@ const HeroStart = () => {
 
     // Only proceed with animation control if scrolling down
     if (scrollDirection === 'down') {
-      // Calculate how much of animation 2 remains to complete
+      // Determine how much of animation 2 remains to complete
       const remainingProgress = 1 - animState.secondAnimProgress;
 
       // Calculate text transition progress
@@ -622,7 +676,7 @@ const HeroStart = () => {
 
       // Synchronize animation progress with text transition
       // This ensures both finish at the same time
-      const newAnimProgress = animState.secondAnimProgress + remainingProgress * (textProgress / 1);
+      // const newAnimProgress = animState.secondAnimProgress + remainingProgress * (textProgress / 1);
 
       setAnimState(prev => {
         // Apply speed boost for animations that start further from completion

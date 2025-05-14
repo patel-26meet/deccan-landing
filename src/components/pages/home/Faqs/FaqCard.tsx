@@ -41,6 +41,7 @@ const FaqCard: React.FC<IFaqCardProps> = ({ question, answer, isOpen, index, tog
           <img
             src={isOpen ? '/assets/faqs/faqs-minus.svg' : '/assets/faqs/faqs-plus-1.svg'}
             alt="Toggle"
+            loading="lazy"
           />
         </div>
       </div>

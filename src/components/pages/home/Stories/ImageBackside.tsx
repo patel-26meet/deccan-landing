@@ -9,7 +9,7 @@ const ImageBackside: FC<ImageBacksideProps> = ({ content }) => {
   return (
     <div className="image-backside-wrapper">
       <div className="image-backside-icon">
-        <img src="/assets/stories/image-backside-icon.svg" />
+        <img src="/assets/stories/image-backside-icon.svg" alt="Backside icon" loading="lazy" />
       </div>
       <div className="image-backside-content">{content}</div>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import Button from '@/components/shared/Button';
 import HowItWorksCard from './HowItWorks/HowItWorksCard';
 import dynamic from 'next/dynamic';
@@ -10,15 +10,11 @@ import lottie2 from '../../../../public/assets/how-it-works/selection-process-2-
 import lottie3 from '../../../../public/assets/how-it-works/selection-process-3-v2.json';
 import lottie4 from '../../../../public/assets/how-it-works/selection-process-4-v2.json';
 import { howItWorksData } from '@/constants/pages/home/how-it-works';
+import useDeviceType from '@/lib/hooks/useDeviceType';
+import { useInView } from 'react-intersection-observer';
 
 // Dynamically import Lottie to prevent SSR issues
 const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
-
-// Define breakpoints matching SCSS
-const BREAKPOINT_SM = 768;
-const BREAKPOINT_LG = 1024;
-
-type DeviceType = 'mobile' | 'tablet' | 'desktop';
 
 // Generate array of campus partner icons (1-29)
 const CAMPUS_PARTNER_ICONS = Array.from({ length: 29 }, (_, i) => `I${i + 1}.svg`);
@@ -26,8 +22,15 @@ const CAMPUS_PARTNER_ICONS = Array.from({ length: 29 }, (_, i) => `I${i + 1}.svg
 const HowItWorks = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  const deviceType = useDeviceType();
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Use react-intersection-observer for the Lottie animation
+  const { ref: lottieRef, inView } = useInView({
+    triggerOnce: false,
+    rootMargin: '0px 0px 200px 0px',
+    threshold: 0.2
+  });
 
   const lottieAnimations = [lottie1, lottie2, lottie3, lottie4];
 
@@ -45,26 +48,6 @@ const HowItWorks = () => {
     const icons = CAMPUS_PARTNER_ICONS.slice(15).reverse();
     // Double the array for smooth infinite loop
     return [...icons, ...icons];
-  }, []);
-
-  useEffect(() => {
-    const checkDeviceType = () => {
-      const width = window.innerWidth;
-      if (width <= BREAKPOINT_SM) {
-        setDeviceType('mobile');
-      } else if (width <= BREAKPOINT_LG) {
-        setDeviceType('tablet');
-      } else {
-        setDeviceType('desktop');
-      }
-    };
-
-    checkDeviceType();
-    window.addEventListener('resize', checkDeviceType);
-
-    return () => {
-      window.removeEventListener('resize', checkDeviceType);
-    };
   }, []);
 
   // Calculates the position of the indicator based on activeCardIndex
@@ -162,22 +145,24 @@ const HowItWorks = () => {
             </div>
           )}
         </div>
-        <div className="how-it-works__lottie">
-          <Lottie
-            animationData={lottieAnimations[activeCardIndex]}
-            loop={false}
-            play
-            key={`lottie-${activeCardIndex}-${animationKey}`}
-            onComplete={handleAnimationComplete}
-            style={{
-              width: '100%',
-              height: '100%',
-              overflow: 'hidden',
-              borderTopLeftRadius: isResponsiveLayout ? '8px' : '12px',
-              borderBottomLeftRadius: isResponsiveLayout ? '8px' : '12px',
-            }}
-            rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
-          />
+        <div ref={lottieRef} className="how-it-works__lottie">
+          {inView && (
+            <Lottie
+              animationData={lottieAnimations[activeCardIndex]}
+              loop={false}
+              play={inView}
+              key={`lottie-${activeCardIndex}-${animationKey}`}
+              onComplete={handleAnimationComplete}
+              style={{
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                borderTopLeftRadius: isResponsiveLayout ? '8px' : '12px',
+                borderBottomLeftRadius: isResponsiveLayout ? '8px' : '12px',
+              }}
+              rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
+            />
+          )}
         </div>
         {isResponsiveLayout && (
           <div

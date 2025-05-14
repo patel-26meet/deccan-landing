@@ -4,7 +4,7 @@ const WorkAndImpact = () => {
   return (
     <div className="benefits__work-and-impact">
       <div className="benefits__work-and-impact__content">
-        <img className="benefits__work-and-impact__image" src="/assets/benefits/work.svg" alt="" />
+        <img className="benefits__work-and-impact__image" src="/assets/benefits/work.svg" alt="" loading="lazy" />
         <div className="benefits__work-and-impact__header">
           <div>Flexible Work,</div>
           <div>Global impact</div>

@@ -1,33 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import StoriesCard from './Stories/StoriesCard';
 import ImageBackside from './Stories/ImageBackside';
 import { storiesData } from '@/constants/pages/home/stories';
 import Button from '@/components/shared/Button';
+import useDeviceType from '@/lib/hooks/useDeviceType';
 
 const Stories = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
+  const deviceType = useDeviceType();
+  const isMobile = deviceType === 'mobile';
+  const isTablet = deviceType === 'tablet';
   const [flippedCards, setFlippedCards] = useState<{ [key: string]: boolean }>({});
-
-  // Check if we're on mobile/tablet
-  useEffect(() => {
-    const checkDeviceSize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width <= 768);
-      setIsTablet(width > 768 && width <= 1024);
-    };
-
-    // Check on mount
-    checkDeviceSize();
-
-    // Add resize listener
-    window.addEventListener('resize', checkDeviceSize);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', checkDeviceSize);
-  }, []);
 
   // Handle card touch/click for tablets
   const handleCardFlip = (cardId: string) => {
@@ -77,7 +61,7 @@ const Stories = () => {
               profileImage={storiesData.testimonials[2].profileImage}
             />
             <div className="stories__mobile-image">
-              <img src={storiesData.images.image2} alt="Soul AI community member" />
+              <img src={storiesData.images.image2} alt="Soul AI community member" loading="lazy" />
             </div>
           </div>
         ) : (
@@ -93,12 +77,13 @@ const Stories = () => {
                   <img
                     className="stories__grid-image stories__grid-image--hover"
                     src={storiesData.images.linkedinPost}
+                    loading="lazy"
                   />
                 </a>
                 <div className="stories__flip-card" onClick={() => handleCardFlip('card1')}>
                   <div className={getCardClass('card1')}>
                     <div className="stories__flip-card-front">
-                      <img className="stories__grid-image" src={storiesData.images.image1} />
+                      <img className="stories__grid-image" src={storiesData.images.image1} loading="lazy" />
                     </div>
                     <div className="stories__flip-card-back">
                       <ImageBackside content={storiesData.flipCards.image1.content} />
@@ -111,10 +96,12 @@ const Stories = () => {
                   <img
                     className="stories__grid-image stories__grid-image--hover"
                     src={storiesData.images.whatsapp}
+                    loading="lazy"
                   />
                   <img
                     className="stories__grid-image stories__grid-image--hover"
                     src={storiesData.images.woman}
+                    loading="lazy"
                   />
                 </div>
                 <div className="stories__grid-left-bottom-cards">
@@ -153,13 +140,14 @@ const Stories = () => {
                 <img
                   className="stories__grid-image stories__grid-image--hover"
                   src={storiesData.images.linkedinMsg}
+                  loading="lazy"
                 />
               </div>
               <div className="stories__grid-right-middle">
                 <div className="stories__flip-card" onClick={() => handleCardFlip('card2')}>
                   <div className={getCardClass('card2')}>
                     <div className="stories__flip-card-front">
-                      <img className="stories__grid-image" src={storiesData.images.image2} />
+                      <img className="stories__grid-image" src={storiesData.images.image2} loading="lazy" />
                     </div>
                     <div className="stories__flip-card-back">
                       <ImageBackside content={storiesData.flipCards.image2.content} />
@@ -185,6 +173,7 @@ const Stories = () => {
                   <img
                     className="stories__grid-image stories__grid-image--hover"
                     src={storiesData.images.linkedinBotRight}
+                    loading="lazy"
                   />
                 </a>
               </div>

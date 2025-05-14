@@ -44,7 +44,7 @@ const StoriesCard: React.FC<StoriesCardProps> = ({
             <div className="stories-card__author-role">{role}</div>
             <div className="stories-card__author-organization">{organization}</div>
           </div>
-          <img className="stories-card__author-image" src={profileImage} alt={`${name} profile`} />
+          <img className="stories-card__author-image" src={profileImage} alt={`${name} profile`} loading="lazy" />
         </div>
       </div>
     </div>

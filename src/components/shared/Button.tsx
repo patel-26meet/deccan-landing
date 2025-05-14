@@ -100,8 +100,8 @@ const Button: React.FC<ButtonProps> = ({
     >
       <span>{text}</span>
       <div className="button-icon-container">
-        <img src={defaultArrow} alt="arrow" className={defaultArrowClass} />
-        <img src={hoverArrow} alt="arrow" className={hoverArrowClass} />
+        <img src={defaultArrow} alt="arrow" className={defaultArrowClass} loading="lazy" />
+        <img src={hoverArrow} alt="arrow" className={hoverArrowClass} loading="lazy" />
       </div>
     </button>
   );

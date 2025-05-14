@@ -27,7 +27,7 @@ const FilterIcon: FC<IFilterIconType> = ({ isSelected, text }) => {
 
   return (
     <div className={`filter-icon-btn ${isSelected ? 'selected' : ''}`}>
-      {iconPath && <img src={iconPath} alt="" />}
+      {iconPath && <img src={iconPath} alt="" loading="lazy" />}
       <div className="filter-icon-text">{text}</div>
     </div>
   );

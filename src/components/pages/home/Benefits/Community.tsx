@@ -7,6 +7,7 @@ const Community = () => {
         src="/assets/benefits/community.svg"
         alt="community"
         className="benefits__community__image"
+        loading="lazy"
       />
       <div className="benefits__community__header">Elite Community</div>
       <div className="benefits__community__text">

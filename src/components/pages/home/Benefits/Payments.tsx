@@ -2,15 +2,22 @@
 
 import Lottie from 'react-lottie-player';
 import moneyAnimation from '../../../../../public/assets/benefits/lottie/Money-2.json';
+import { useInView } from 'react-intersection-observer';
 
 const Payments = () => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: '0px 0px 200px 0px',
+    threshold: 0.2
+  });
+
   return (
-    <div className="benefits__payments">
+    <div ref={ref} className="benefits__payments">
       <div className="benefits__payments__lottie">
         <Lottie
           animationData={moneyAnimation}
           loop
-          play
+          play={inView}
           style={{ width: '100%', height: '100%', backgroundColor: 'transparent', opacity: '1' }}
         />
       </div>

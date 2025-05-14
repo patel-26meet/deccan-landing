@@ -1,51 +1,26 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
 import Lottie from 'react-lottie-player';
 import moneyAnimation from '../../../../../public/assets/benefits/lottie/opportunities.json';
+import { useInView } from 'react-intersection-observer';
 
 const Opportunities = () => {
-  // Reference to the opportunities card
-  const opportunitiesRef = useRef<HTMLDivElement>(null);
-  // State to track visibility
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Custom intersection observer implementation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Update state when intersection status changes
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0.5, // Trigger when 50% visible
-        rootMargin: '0px',
-      }
-    );
-
-    // Start observing when component mounts
-    if (opportunitiesRef.current) {
-      observer.observe(opportunitiesRef.current);
-    }
-
-    // Clean up observer on unmount
-    return () => {
-      if (opportunitiesRef.current) {
-        observer.disconnect();
-      }
-    };
-  }, []);
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: '0px 0px 200px 0px',
+    threshold: 0.5
+  });
 
   return (
     <div
-      ref={opportunitiesRef}
-      className={`benefits__opportunities ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
+      ref={ref}
+      className={`benefits__opportunities ${inView ? 'fade-in-visible' : 'fade-in-hidden'}`}
     >
       <div className="benefits__opportunities__lottie">
         <Lottie
           animationData={moneyAnimation}
           loop
-          play
+          play={inView}
           style={{ width: '100%', height: '100%', backgroundColor: 'transparent', opacity: '1' }}
           rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
         />
