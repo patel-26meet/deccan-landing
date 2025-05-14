@@ -9,6 +9,30 @@ import Lottie from 'react-lottie-player';
 import HeroIconsLayout from './HeroIconsLayout';
 
 // Define a type for Lottie animation JSON
+interface LottieAsset {
+  id?: string;
+  w?: number;
+  h?: number;
+  u?: string;
+  p?: string;
+  e?: number;
+  [key: string]: unknown;
+}
+
+interface LottieLayer {
+  ind?: number;
+  ty?: number;
+  nm?: string;
+  [key: string]: unknown;
+}
+
+interface LottieMarker {
+  tm?: number;
+  cm?: string;
+  dr?: number;
+  [key: string]: unknown;
+}
+
 type LottieFile = {
   v: string;
   fr: number;
@@ -17,9 +41,9 @@ type LottieFile = {
   w: number;
   h: number;
   nm: string;
-  assets: Array<Record<string, unknown>>;
-  layers: Array<Record<string, unknown>>;
-  markers: Array<Record<string, unknown>>;
+  assets: LottieAsset[];
+  layers: LottieLayer[];
+  markers: LottieMarker[];
   [key: string]: unknown;
 };
 
@@ -78,7 +102,7 @@ const HeroStart = () => {
           setLottieFiles(prev => ({
             ...prev, 
             desktop: { 
-              ...prev.desktop,
+              ...prev.desktop, // Keep existing items in the desktop object
               1: lottie1.default as LottieFile, 
               2: lottie2.default as LottieFile, 
               3: lottie3.default as LottieFile 
@@ -95,7 +119,7 @@ const HeroStart = () => {
           setLottieFiles(prev => ({
             ...prev, 
             mobile: { 
-              ...prev.mobile,
+              ...prev.mobile, // Keep existing items in the mobile object
               1: lottiem1.default as LottieFile, 
               2: lottiem2.default as LottieFile, 
               3: lottiem3.default as LottieFile 
@@ -112,7 +136,7 @@ const HeroStart = () => {
           setLottieFiles(prev => ({
             ...prev, 
             tablet: { 
-              ...prev.tablet,
+              ...prev.tablet, // Keep existing items in the tablet object
               1: lottiet1.default as LottieFile, 
               2: lottiet2.default as LottieFile, 
               3: lottiet3.default as LottieFile 

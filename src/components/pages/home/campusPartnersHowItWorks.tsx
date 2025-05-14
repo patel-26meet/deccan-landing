@@ -1,14 +1,10 @@
 'use client';
 
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect, useCallback } from 'react';
 import Button from '@/components/shared/Button';
 import HowItWorksCard from './HowItWorks/HowItWorksCard';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import lottie1 from '../../../../public/assets/how-it-works/selection-process-1-v2.json';
-import lottie2 from '../../../../public/assets/how-it-works/selection-process-2-v2.json';
-import lottie3 from '../../../../public/assets/how-it-works/selection-process-3-v2.json';
-import lottie4 from '../../../../public/assets/how-it-works/selection-process-4-v2.json';
 import { howItWorksData } from '@/constants/pages/home/how-it-works';
 import useDeviceType from '@/lib/hooks/useDeviceType';
 import { useInView } from 'react-intersection-observer';
@@ -19,11 +15,53 @@ const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
 // Generate array of campus partner icons (1-29)
 const CAMPUS_PARTNER_ICONS = Array.from({ length: 29 }, (_, i) => `I${i + 1}.svg`);
 
+// Type for Lottie animation data
+interface ILottieAnimationData {
+  v: string;
+  fr: number;
+  ip: number;
+  op: number;
+  w: number;
+  h: number;
+  nm: string;
+  ddd: number;
+  assets: Array<{
+    id: string;
+    w?: number;
+    h?: number;
+    u?: string;
+    p?: string;
+    e?: number;
+    layers?: unknown[];
+  }>;
+  layers: Array<{
+    ddd: number;
+    ind: number;
+    ty: number;
+    nm: string;
+    sr: number;
+    ks: Record<string, unknown>;
+    ao: number;
+    ip: number;
+    op: number;
+    st: number;
+    bm: number;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}
+
 const HowItWorks = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
+  const [currentAnimation, setCurrentAnimation] = useState<ILottieAnimationData | null>(null);
+  const [isLoadingAnimation, setIsLoadingAnimation] = useState(false);
   const deviceType = useDeviceType();
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+  // Cache persists between component mounts
+  const animationCache = useRef<Record<number, ILottieAnimationData>>({});
+  // Track which animations have already been requested to prevent duplicate requests
+  const requestedAnimations = useRef<Set<number>>(new Set());
   
   // Use react-intersection-observer for the Lottie animation
   const { ref: lottieRef, inView } = useInView({
@@ -32,7 +70,69 @@ const HowItWorks = () => {
     threshold: 0.2
   });
 
-  const lottieAnimations = [lottie1, lottie2, lottie3, lottie4];
+  // Dynamic import paths for Lottie animations
+  const animationPaths = useMemo(() => [
+    '/assets/how-it-works/selection-process-1-v2.json',
+    '/assets/how-it-works/selection-process-2-v2.json',
+    '/assets/how-it-works/selection-process-3-v2.json',
+    '/assets/how-it-works/selection-process-4-v2.json'
+  ], []);
+
+  // Memoize animation loading function to prevent recreation on each render
+  const loadAnimation = useCallback(async (index: number) => {
+    // Skip if already requested or cached
+    if (requestedAnimations.current.has(index)) {
+      return animationCache.current[index] || null;
+    }
+
+    try {
+      setIsLoadingAnimation(true);
+      // Mark as requested immediately to prevent parallel requests
+      requestedAnimations.current.add(index);
+      
+      // Fetch the animation data
+      const animationData = await fetch(animationPaths[index]).then(res => res.json()) as ILottieAnimationData;
+      
+      // Cache the loaded animation
+      animationCache.current[index] = animationData;
+      return animationData;
+    } catch (error) {
+      console.error('Failed to load animation:', error);
+      return null;
+    } finally {
+      setIsLoadingAnimation(false);
+    }
+  }, [animationPaths]);
+
+  // Effect to update current animation when active index changes or component comes into view
+  useEffect(() => {
+    if (!inView) return;
+
+    // If animation is cached, use it immediately
+    if (animationCache.current[activeCardIndex]) {
+      setCurrentAnimation(animationCache.current[activeCardIndex]);
+      
+      // Preload the next animation
+      const nextIndex = (activeCardIndex + 1) % howItWorksData.length;
+      if (!requestedAnimations.current.has(nextIndex)) {
+        loadAnimation(nextIndex);
+      }
+      return;
+    }
+
+    // Otherwise load it
+    loadAnimation(activeCardIndex).then(animation => {
+      if (animation) {
+        setCurrentAnimation(animation);
+        
+        // Preload the next animation
+        const nextIndex = (activeCardIndex + 1) % howItWorksData.length;
+        if (!requestedAnimations.current.has(nextIndex)) {
+          loadAnimation(nextIndex);
+        }
+      }
+    });
+  }, [inView, activeCardIndex, loadAnimation, howItWorksData.length]);
 
   // Split icons into two different sets for top and bottom rows
   const topRowIcons = useMemo(() => {
@@ -59,16 +159,29 @@ const HowItWorks = () => {
     return '0rem';
   };
 
+  // Function to handle card click
   const handleCardClick = (index: number) => {
-    setActiveCardIndex(index);
-    setAnimationKey(prev => prev + 1);
+    if (index !== activeCardIndex) {
+      setActiveCardIndex(index);
+      setAnimationKey(prev => prev + 1);
+    }
   };
 
   // Function to advance to the next card/animation
   const handleAnimationComplete = () => {
     const nextIndex = (activeCardIndex + 1) % howItWorksData.length;
-    setActiveCardIndex(nextIndex);
-    setAnimationKey(prev => prev + 1);
+    
+    // Only advance if the next animation is ready
+    if (animationCache.current[nextIndex]) {
+      setActiveCardIndex(nextIndex);
+      setAnimationKey(prev => prev + 1);
+    } else {
+      // If next animation isn't ready yet, start loading it and wait
+      loadAnimation(nextIndex).then(() => {
+        setActiveCardIndex(nextIndex);
+        setAnimationKey(prev => prev + 1);
+      });
+    }
   };
 
   // Check if we should use mobile/tablet layout
@@ -146,11 +259,11 @@ const HowItWorks = () => {
           )}
         </div>
         <div ref={lottieRef} className="how-it-works__lottie">
-          {inView && (
+          {inView && currentAnimation && (
             <Lottie
-              animationData={lottieAnimations[activeCardIndex]}
+              animationData={currentAnimation}
               loop={false}
-              play={inView}
+              play={inView && !!currentAnimation}
               key={`lottie-${activeCardIndex}-${animationKey}`}
               onComplete={handleAnimationComplete}
               style={{
@@ -162,6 +275,9 @@ const HowItWorks = () => {
               }}
               rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }}
             />
+          )}
+          {inView && isLoadingAnimation && (
+            <div className="animation-loading-placeholder" />
           )}
         </div>
         {isResponsiveLayout && (
