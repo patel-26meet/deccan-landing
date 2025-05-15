@@ -155,8 +155,9 @@
       max-width: 39.71%;
       @include benefits-card-mobile-base;
       @include flex-column;
+      align-self: stretch;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
 
       @include benefits-card-mobile-text;
     }
@@ -203,6 +204,11 @@
       flex: 1 0 0;
 
       @include benefits-card-mobile-text;
+
+      &__image {
+        height: 70%;
+        transform: translateY(25%);
+      }
     }
   }
 }

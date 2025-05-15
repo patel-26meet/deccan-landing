@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import StoriesCard from './Stories/StoriesCard';
 import ImageBackside from './Stories/ImageBackside';
 import { storiesData } from '@/constants/pages/home/stories';
-import Button from '@/components/shared/Button';
 import useDeviceType from '@/lib/hooks/useDeviceType';
 
 const Stories = () => {
@@ -30,7 +29,7 @@ const Stories = () => {
   };
 
   return (
-    <div className="stories-section">
+    <div id="stories-section" className="stories-section">
       <div className="stories">
         <div className="stories__header-container">
           <div className="stories__title">{storiesData.header}</div>
@@ -61,7 +60,7 @@ const Stories = () => {
               profileImage={storiesData.testimonials[2].profileImage}
             />
             <div className="stories__mobile-image">
-              <img src={storiesData.images.image2} alt="Soul AI community member" loading="lazy" />
+              <img className="stories__mobile-image-img" src={storiesData.images.image2} alt="Soul AI community member" loading="lazy" />
             </div>
           </div>
         ) : (
@@ -183,9 +182,11 @@ const Stories = () => {
       </div>
       <div className="stories-section__blur"></div>
       <div className="stories-section__blur-gradient"></div>
+      {/* No button for now 
       <div className="stories-section__button">
         <Button text="View More Stories" mode="light" />
       </div>
+      */}
     </div>
   );
 };

@@ -348,14 +348,14 @@
 
         ~ .how-it-works__card:nth-child(3) {
           & ~ .how-it-works__cards-container::after {
-            top: calc(3.625rem + 2rem);
+            top: 5.625rem;
             opacity: 1;
           }
         }
 
         ~ .how-it-works__card:nth-child(4) {
           & ~ .how-it-works__cards-container::after {
-            top: calc((3.625rem + 2rem) * 2);
+            top: 11.25rem;
             opacity: 1;
           }
         }
@@ -369,15 +369,15 @@
         }
 
         &:nth-child(2) ~ .how-it-works__cards-container::after {
-          top: calc(3.625rem + 2rem);
+          top: 5.625rem;
         }
 
         &:nth-child(3) ~ .how-it-works__cards-container::after {
-          top: calc((3.625rem + 2rem) * 2);
+          top: 11.25rem;
         }
 
         &:nth-child(4) ~ .how-it-works__cards-container::after {
-          top: calc((3.625rem + 2rem) * 3);
+          top: 16.875rem;
         }
       }
     }
@@ -507,14 +507,14 @@
 
         ~ .how-it-works__card:nth-child(3) {
           & ~ .how-it-works__cards-container::after {
-            top: calc(3.525rem + 2rem);
+            top: 3.625rem;
             opacity: 1;
           }
         }
 
         ~ .how-it-works__card:nth-child(4) {
           & ~ .how-it-works__cards-container::after {
-            top: calc((3.525rem + 2rem) * 2);
+            top: 10.25rem;
             opacity: 1;
           }
         }
@@ -528,15 +528,15 @@
         }
 
         &:nth-child(2) ~ .how-it-works__cards-container::after {
-          top: calc(3.625rem + 2rem);
+          top: 3.625rem;
         }
 
         &:nth-child(3) ~ .how-it-works__cards-container::after {
-          top: calc((3.625rem + 2rem) * 2);
+          top: 10.25rem;
         }
 
         &:nth-child(4) ~ .how-it-works__cards-container::after {
-          top: calc((3.625rem + 2rem) * 3);
+          top: 16.875rem;
         }
       }
     }
