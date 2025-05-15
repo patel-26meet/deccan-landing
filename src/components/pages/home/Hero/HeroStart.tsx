@@ -11,12 +11,16 @@ import Lottie from 'react-lottie-player';
 import HeroIconsLayout from './HeroIconsLayout';
 
 const HeroStart = () => {
+  // ======== HOOKS ========
   const { scrollY, scrollDirection: globalScrollDirection } = useScrollPosition();
+  const deviceType = useDeviceType();
+
+  // ======== STATE VARIABLES ========
+  // Animation state
   const [animState, setAnimState] = useState<IAnimationState>({
-    showFirstAnim: true,
+    firstAnimCompleted: false, // Controls first animation state
     showSecondAnim: false,
     showThirdAnim: false,
-    firstAnimCompleted: false,
     secondAnimSpeed: 1,
     thirdAnimProgress: 0,
     lottieThirdProgress: 0,
@@ -30,22 +34,46 @@ const HeroStart = () => {
     secondAnimProgress: 0,
   });
 
-  // State for dynamically loaded Lottie animations
+  // Lottie animations state
   const [lottieFiles, setLottieFiles] = useState<IHeroLottieFiles>({
     desktop: {},
     mobile: {},
     tablet: {},
   });
 
-  // Add state for text transition
+  // Text transition state
   const [textTransitionProgress, setTextTransitionProgress] = useState(0);
   // Using scrollDirection to control animation behavior, so suppressing the linter warning
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
 
-  // Use the deviceType hook instead of managing device state manually
-  const deviceType = useDeviceType();
+  // ======== REFS ========
+  // Scroll tracking refs
+  const wheelEventRef = useRef<WheelEvent | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const totalScrollRef = useRef<number>(0);
+  const isScrollingRef = useRef<boolean>(false);
+  const hasLeftSectionRef = useRef<boolean>(false);
+  const textTransitionScrollAccRef = useRef<number>(0);
 
+  // Animation control refs
+  const anim2IntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isAnim2TransitioningRef = useRef<boolean>(false);
+  const isAtAnimationEndpointRef = useRef<boolean>(false);
+
+  // ======== CONSTANTS ========
+  // Text content
+  const overlayTextWords =
+    'Shape the Future of AI  with Flexible, High Impact Remote opportunities across 50+ domains tailored for your expertise!'.split(
+      ' '
+    );
+
+  // Special texts that need gradient effects
+  const futureOfAiText = 'Future of AI ';
+  const domainsText = '50+ domains';
+
+  // ======== EFFECTS ========
   // Load Lottie animations dynamically based on device type
   useEffect(() => {
     const loadAnimations = async () => {
@@ -110,7 +138,31 @@ const HeroStart = () => {
     loadAnimations();
   }, [deviceType]);
 
-  // Get the appropriate Lottie animations based on device type
+  // Set up CSS styles for hero section
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const styleTag = document.createElement('style');
+      styleTag.innerHTML = `
+        .hero-start-wrapper {
+          min-height: 100vh;
+          position: relative; 
+          overflow: hidden;
+        }
+        
+        body.scroll-disabled {
+          overflow: hidden;
+        }
+      `;
+      document.head.appendChild(styleTag);
+
+      return () => {
+        document.head.removeChild(styleTag);
+      };
+    }
+  }, []);
+
+  // ======== UTILITY FUNCTIONS ========
+  // Get appropriate Lottie animation based on device
   const getLottieAnimation = (index: 1 | 2 | 3) => {
     if (deviceType === 'mobile') {
       return lottieFiles.mobile[index];
@@ -121,17 +173,7 @@ const HeroStart = () => {
     }
   };
 
-  // Modified overlay text with span wrappers around "Future of AI" and "50+ domains"
-  const overlayTextWords =
-    'Shape the Future of AI  with Flexible, High Impact Remote opportunities across 50+ domains tailored for your expertise!'.split(
-      ' '
-    );
-
-  // Special texts that need gradient effects
-  const futureOfAiText = 'Future of AI ';
-  const domainsText = '50+ domains';
-
-  // Modified render function for overlay text to handle special gradient text
+  // Render overlay text with gradient effects
   const renderOverlayText = () => {
     const result = [];
     let currentIndex = 0;
@@ -202,21 +244,78 @@ const HeroStart = () => {
 
     return result;
   };
+  
+  // ======== ANIMATION HANDLERS ========
+  // Handle first animation completion
+  const handleFirstAnimComplete = () => {
+    // Set initial text transition to fully visible
+    setTextTransitionProgress(0);
 
-  const wheelEventRef = useRef<WheelEvent | null>(null);
-  const touchStartYRef = useRef<number | null>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const totalScrollRef = useRef<number>(0);
-  const isScrollingRef = useRef<boolean>(false);
-  const hasLeftSectionRef = useRef<boolean>(false);
-  const textTransitionScrollAccRef = useRef<number>(0);
+    setAnimState(prev => ({
+      ...prev,
+      firstAnimCompleted: true,
+      showSecondAnim: true,
+      showText: true,
+      animationDirection: 'forward',
+      secondAnimSpeed: 1,
+      secondAnimProgress: 0,
+      hasScrolledDuringAnim2: false,
+    }));
 
-  // Track animation 2 loop with useRef
-  const anim2IntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const isAnim2TransitioningRef = useRef<boolean>(false);
-  // Add a flag to track if we're at an endpoint
-  const isAtAnimationEndpointRef = useRef<boolean>(false);
+    // Remove scroll lock after first animation completes
+    document.body.classList.remove('scroll-disabled');
+  };
 
+  // Calculate text transition styles based on progress
+  const getTextTransitionStyles = () => {
+    const progress = textTransitionProgress;
+    const scale = 1 - progress * 0.03;
+    const blur = progress * 4;
+    const opacity = 1 - progress;
+
+    return {
+      transform: `translate(-50%, -50%) scale(${scale}, ${scale})`,
+      filter: `blur(${blur}px)`,
+      opacity,
+    };
+  };
+
+  // Calculate icon layout position and opacity
+  const getIconsLayoutStyle = () => {
+    if (!animState.textFullyHighlighted) {
+      return {
+        transform: 'translateY(100%)',
+        opacity: 0,
+      };
+    }
+
+    // After text is fully highlighted, start showing icons layout
+    const progress = animState.iconsLayoutProgress;
+
+    // Calculate starting position (100% = bottom of screen)
+    // Move from 100% (bottom) to -30% (30% above the top)
+    const translateY = 100 - progress * 130;
+
+    // Calculate opacity - fully visible in the middle of the journey
+    let opacity = 0;
+    if (progress < 0.3) {
+      // Fade in from 0 to 1 during first 20% of progress
+      opacity = progress / 0.2;
+    } else if (progress > 0.7) {
+      // Fade out from 1 to 0 during last 20% of progress
+      opacity = 1 - (progress - 0.8) / 0.2;
+    } else {
+      // Fully visible in the middle
+      opacity = 1;
+    }
+
+    return {
+      transform: `translateY(${translateY}%)`,
+      opacity,
+    };
+  };
+
+  // ======== ANIMATION HANDLERS ========
   // Handle animation 2 loop
   useEffect(() => {
     // Only run when animation 2 is active and user hasn't scrolled
@@ -322,46 +421,8 @@ const HeroStart = () => {
     }
   }, [animState.showSecondAnim]);
 
-  // Handle first animation completion
-  const handleFirstAnimComplete = () => {
-    console.log('First animation completed');
-    // Set initial text transition to fully visible
-    setTextTransitionProgress(0);
-
-    setAnimState(prev => ({
-      ...prev,
-      showFirstAnim: false,
-      firstAnimCompleted: true,
-      showSecondAnim: true,
-      showText: true,
-      animationDirection: 'forward',
-      secondAnimSpeed: 1,
-      secondAnimProgress: 0,
-      hasScrolledDuringAnim2: false,
-    }));
-
-    // Remove scroll lock after first animation completes
-    document.body.classList.remove('scroll-disabled');
-  };
-
-  // Calculate text transition styles based on progress
-  const getTextTransitionStyles = () => {
-    const progress = textTransitionProgress;
-    const scale = 1 - progress * 0.03;
-    const blur = progress * 4;
-    const opacity = 1 - progress;
-
-    return {
-      transform: `translate(-50%, -50%) scale(${scale}, ${scale})`,
-      filter: `blur(${blur}px)`,
-      opacity,
-    };
-  };
-
   // Log state changes for debugging
   useEffect(() => {
-    console.log('Animation state updated:', animState);
-
     // Check if text is fully highlighted (all words are white)
     if (
       !animState.textFullyHighlighted &&
@@ -384,9 +445,7 @@ const HeroStart = () => {
       hasLeftSectionRef.current = false;
 
       // Only reset if animation was completed before
-      if (animState.animationCompleted && !animState.showFirstAnim) {
-        console.log('Returning to hero section - resetting to animation 3 in reverse');
-
+      if (animState.animationCompleted && animState.firstAnimCompleted) {
         // Place user at animation 3 with fully highlighted text and visible icons layout
         setAnimState(prev => ({
           ...prev,
@@ -411,72 +470,12 @@ const HeroStart = () => {
 
         // Ensure scroll is disabled to control the animation
         document.body.classList.add('scroll-disabled');
-
-        // Show a message to indicate user should scroll (optional)
-        console.log('Scroll to control the reverse animation');
       }
     }
-  }, [scrollY, animState.animationCompleted, animState.showFirstAnim, overlayTextWords.length]);
+  }, [scrollY, animState.animationCompleted, animState.firstAnimCompleted, overlayTextWords.length]);
 
-  // Calculate icon layout position and opacity
-  const getIconsLayoutStyle = () => {
-    if (!animState.textFullyHighlighted) {
-      return {
-        transform: 'translateY(100%)',
-        opacity: 0,
-      };
-    }
-
-    // After text is fully highlighted, start showing icons layout
-    const progress = animState.iconsLayoutProgress;
-
-    // Calculate starting position (100% = bottom of screen)
-    // Move from 100% (bottom) to -30% (30% above the top)
-    const translateY = 100 - progress * 130;
-
-    // Calculate opacity - fully visible in the middle of the journey
-    let opacity = 0;
-    if (progress < 0.3) {
-      // Fade in from 0 to 1 during first 20% of progress
-      opacity = progress / 0.2;
-    } else if (progress > 0.7) {
-      // Fade out from 1 to 0 during last 20% of progress
-      opacity = 1 - (progress - 0.8) / 0.2;
-    } else {
-      // Fully visible in the middle
-      opacity = 1;
-    }
-
-    return {
-      transform: `translateY(${translateY}%)`,
-      opacity,
-    };
-  };
-
-  // Add a style that ensures the hero section covers the full viewport
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const styleTag = document.createElement('style');
-      styleTag.innerHTML = `
-        .hero-start-wrapper {
-          min-height: 100vh;
-          position: relative; 
-          overflow: hidden;
-        }
-        
-        body.scroll-disabled {
-          overflow: hidden;
-        }
-      `;
-      document.head.appendChild(styleTag);
-
-      return () => {
-        document.head.removeChild(styleTag);
-      };
-    }
-  }, []);
-
-  // Modify the processScroll function for better scroll-based control
+  // ======== SCROLL HANDLING ========
+  // Process accumulated scroll for animation 3
   const processScroll = useCallback(() => {
     // Calculate new progress and text highlight based on accumulated scroll
     const scrollAmount = totalScrollRef.current;
@@ -537,9 +536,8 @@ const HeroStart = () => {
           // Keep text fully highlighted while icons are retracting
           highlightIndex = maxHighlightIndex;
         } else {
-          // Only after icons are retracted (iconsProgress = 0), handle text unhighlighting
           // Unhighlight words one by one from end to beginning 
-          const textUnhighlightStep = progressStep * 14; // Adjusted from 16
+          const textUnhighlightStep = progressStep * 14; 
           highlightIndex = Math.max(highlightIndex + Math.floor(textUnhighlightStep), -1);
         }
       }
@@ -575,7 +573,7 @@ const HeroStart = () => {
           });
 
           // Start with blurred text that gradually becomes clear
-          setTextTransitionProgress(0.8); // Start partially blurred for smoother transition
+          setTextTransitionProgress(0.8);
 
           setAnimState(prev => ({
             ...prev,
@@ -583,7 +581,6 @@ const HeroStart = () => {
             showSecondAnim: true,
             secondAnimSpeed: 1,
             showText: true,
-            // Reset all progress values to prevent stuck states
             thirdAnimProgress: 0,
             lottieThirdProgress: 0,
             textHighlightIndex: -1,
@@ -656,8 +653,6 @@ const HeroStart = () => {
   const handleSecondAnimScroll = (deltaY: number) => {
     // Mark that user has scrolled during animation 2
     if (!animState.hasScrolledDuringAnim2) {
-      console.log('User started scrolling during animation 2');
-
       // Clear the auto-loop interval
       if (anim2IntervalRef.current) {
         clearInterval(anim2IntervalRef.current);
@@ -692,10 +687,6 @@ const HeroStart = () => {
       // Update text transition
       setTextTransitionProgress(textProgress);
 
-      // Synchronize animation progress with text transition
-      // This ensures both finish at the same time
-      // const newAnimProgress = animState.secondAnimProgress + remainingProgress * (textProgress / 1);
-
       setAnimState(prev => {
         // Apply speed boost for animations that start further from completion
         // The lower the starting position, the faster it needs to move
@@ -708,7 +699,6 @@ const HeroStart = () => {
         // Check if animation has completed
         if (finalProgress >= 0.99 || textProgress >= 0.99) {
           // Transition to animation 3 when complete
-          console.log('Animation 2 completed via scroll, transitioning to animation 3');
           isAnim2TransitioningRef.current = true;
 
           // Add scroll-disabled class to body
@@ -800,12 +790,161 @@ const HeroStart = () => {
     }
   };
 
+  // Touch event handlers
+  const handleTouchEnd = () => {
+    touchStartYRef.current = null;
+  };
+
+  // Update touchStartY on touch moves to handle continuous gestures better
+  const handleTouchUpdate = (e: TouchEvent) => {
+    if (e.touches.length === 1) {
+      // Always update the touch position, regardless of scroll state
+      touchStartYRef.current = e.touches[0].clientY;
+    }
+  };
+
+  // Wheel event handler
+  const handleWheel = (e: WheelEvent) => {
+    // If animation is completed or user has scrolled past the section and back, allow normal scrolling
+    if (animState.animationCompleted || hasLeftSectionRef.current) {
+      return; // Allow normal scroll behavior
+    }
+
+    // Prevent scrolling during first animation
+    if (!animState.firstAnimCompleted) {
+      e.preventDefault();
+      return;
+    }
+
+    // Store the original wheel event for later use
+    wheelEventRef.current = e;
+
+    // Determine scroll direction
+    const wheelDirection = e.deltaY > 0 ? 'down' : 'up';
+    setScrollDirection(wheelDirection);
+
+    // Process wheel event for animation 2
+    if (animState.showSecondAnim && !animState.showThirdAnim) {
+      // Prevent default scrolling during second animation
+      e.preventDefault();
+
+      // Handle animation 2 scroll
+      if (animState.hasScrolledDuringAnim2) {
+        // User already scrolling, continue controlling animation
+        handleSecondAnimScroll(e.deltaY);
+      } else {
+        // Determine how to adjust the transition progress based on direction
+        if (wheelDirection === 'down') {
+          // Scrolling down - increase progress
+          textTransitionScrollAccRef.current += Math.abs(e.deltaY);
+        } else {
+          // Scrolling up - decrease progress
+          textTransitionScrollAccRef.current = Math.max(
+            0,
+            textTransitionScrollAccRef.current - Math.abs(e.deltaY)
+          );
+        }
+
+        // Calculate transition progress based on accumulated scroll
+        // We'll use 500 as the threshold for complete transition
+        const scrollThreshold = 500;
+        const progress = Math.min(
+          Math.max(textTransitionScrollAccRef.current / scrollThreshold, 0),
+          1
+        );
+
+        // Update text transition
+        setTextTransitionProgress(progress);
+
+        // Start controlling animation 2 after small threshold
+        if (textTransitionScrollAccRef.current > 100) {
+          handleSecondAnimScroll(e.deltaY);
+        }
+
+        // If the text has fully transitioned out, move to animation 3
+        if (progress >= 1 && !isAnim2TransitioningRef.current && wheelDirection === 'down') {
+          isAnim2TransitioningRef.current = true;
+
+          // Add scroll-disabled class to body
+          document.body.classList.add('scroll-disabled');
+
+          // Transition to animation 3 after text fade out
+          setTimeout(() => {
+            // Ensure we're at the top of the page for animation 3
+            window.scrollTo({
+              top: 0,
+              behavior: 'auto',
+            });
+
+            // Clear any pending timeouts
+            if (scrollTimeoutRef.current) {
+              clearTimeout(scrollTimeoutRef.current);
+            }
+
+            // Reset accumulators
+            textTransitionScrollAccRef.current = 0;
+            totalScrollRef.current = 0;
+            isScrollingRef.current = false;
+
+            setAnimState(prev => ({
+              ...prev,
+              showSecondAnim: false,
+              showThirdAnim: true,
+              showText: false,
+              // Reset animation progress to ensure it starts from the beginning
+              thirdAnimProgress: 0,
+              lottieThirdProgress: 0,
+              textHighlightIndex: -1,
+              iconsLayoutProgress: 0,
+              animationCompleted: false,
+              hasScrolledDuringAnim2: false,
+            }));
+
+            // Reset text transition
+            setTextTransitionProgress(0);
+            isAnim2TransitioningRef.current = false;
+          }, 200);
+        }
+      }
+    } else if (animState.showThirdAnim) {
+      // Custom scroll behavior for third animation
+      e.preventDefault();
+
+      // Ensure we're at the top of the page during animation 3
+      if (window.scrollY > 0) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'auto',
+        });
+      }
+
+      // If we're already processing a scroll, accumulate the scroll amount
+      if (isScrollingRef.current) {
+        totalScrollRef.current += e.deltaY;
+        return;
+      }
+
+      isScrollingRef.current = true;
+      totalScrollRef.current = e.deltaY;
+
+      // Process accumulated scroll after a short delay
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      scrollTimeoutRef.current = setTimeout(() => {
+        processScroll();
+        isScrollingRef.current = false;
+      }, 50);
+    }
+  };
+
   // Handle scroll events for animation control and disable default scroll
   useEffect(() => {
     let isSecondAnimTransitioning = false;
 
     // Disable scrolling when first animation is running
-    if (animState.showFirstAnim && typeof document !== 'undefined') {
+    if (!animState.firstAnimCompleted && typeof document !== 'undefined') {
       document.body.classList.add('scroll-disabled');
     }
 
@@ -832,7 +971,7 @@ const HeroStart = () => {
       const deltaY = touchStartYRef.current - currentY;
       
       // Only prevent default if we're actually handling the touch - adjusted threshold
-      if (Math.abs(deltaY) > 3 && (animState.showFirstAnim || animState.showSecondAnim || animState.showThirdAnim)) {
+      if (Math.abs(deltaY) > 3 && (!animState.firstAnimCompleted || animState.showSecondAnim || animState.showThirdAnim)) {
         e.preventDefault();
 
         // Apply a balanced multiplier for responsive but not too fast scrolling
@@ -887,8 +1026,6 @@ const HeroStart = () => {
 
               // Transition to animation 3 after text fade out
               setTimeout(() => {
-                console.log('Transitioning to animation 3 after text fade (touch)');
-
                 // Ensure we're at the top of the page for animation 3
                 window.scrollTo({
                   top: 0,
@@ -955,156 +1092,6 @@ const HeroStart = () => {
       }
     };
 
-    // Reset touch reference when touch ends
-    const handleTouchEnd = () => {
-      touchStartYRef.current = null;
-    };
-
-    // Update touchStartY on touch moves to handle continuous gestures better
-    const handleTouchUpdate = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        // Always update the touch position, regardless of scroll state
-        touchStartYRef.current = e.touches[0].clientY;
-      }
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      // If animation is completed or user has scrolled past the section and back, allow normal scrolling
-      if (animState.animationCompleted || hasLeftSectionRef.current) {
-        return; // Allow normal scroll behavior
-      }
-
-      // Prevent scrolling during first animation
-      if (animState.showFirstAnim) {
-        e.preventDefault();
-        return;
-      }
-
-      // Store the original wheel event for later use
-      wheelEventRef.current = e;
-
-      // Determine scroll direction
-      const wheelDirection = e.deltaY > 0 ? 'down' : 'up';
-      setScrollDirection(wheelDirection);
-
-      // Process wheel event for animation 2
-      if (animState.showSecondAnim && !animState.showThirdAnim) {
-        // Prevent default scrolling during second animation
-        e.preventDefault();
-
-        // Handle animation 2 scroll
-        if (animState.hasScrolledDuringAnim2) {
-          // User already scrolling, continue controlling animation
-          handleSecondAnimScroll(e.deltaY);
-        } else {
-          // Determine how to adjust the transition progress based on direction
-          if (wheelDirection === 'down') {
-            // Scrolling down - increase progress
-            textTransitionScrollAccRef.current += Math.abs(e.deltaY);
-          } else {
-            // Scrolling up - decrease progress
-            textTransitionScrollAccRef.current = Math.max(
-              0,
-              textTransitionScrollAccRef.current - Math.abs(e.deltaY)
-            );
-          }
-
-          // Calculate transition progress based on accumulated scroll
-          // We'll use 500 as the threshold for complete transition
-          const scrollThreshold = 500;
-          const progress = Math.min(
-            Math.max(textTransitionScrollAccRef.current / scrollThreshold, 0),
-            1
-          );
-
-          // Update text transition
-          setTextTransitionProgress(progress);
-
-          // Start controlling animation 2 after small threshold
-          if (textTransitionScrollAccRef.current > 100) {
-            handleSecondAnimScroll(e.deltaY);
-          }
-
-          // If the text has fully transitioned out, move to animation 3
-          if (progress >= 1 && !isSecondAnimTransitioning && wheelDirection === 'down') {
-            isSecondAnimTransitioning = true;
-
-            // Add scroll-disabled class to body
-            document.body.classList.add('scroll-disabled');
-
-            // Transition to animation 3 after text fade out
-            setTimeout(() => {
-              console.log('Transitioning to animation 3 after text fade');
-
-              // Ensure we're at the top of the page for animation 3
-              window.scrollTo({
-                top: 0,
-                behavior: 'auto',
-              });
-
-              // Clear any pending timeouts
-              if (scrollTimeoutRef.current) {
-                clearTimeout(scrollTimeoutRef.current);
-              }
-
-              // Reset accumulators
-              textTransitionScrollAccRef.current = 0;
-              totalScrollRef.current = 0;
-              isScrollingRef.current = false;
-
-              setAnimState(prev => ({
-                ...prev,
-                showSecondAnim: false,
-                showThirdAnim: true,
-                showText: false,
-                // Reset animation progress to ensure it starts from the beginning
-                thirdAnimProgress: 0,
-                lottieThirdProgress: 0,
-                textHighlightIndex: -1,
-                iconsLayoutProgress: 0,
-                animationCompleted: false,
-                hasScrolledDuringAnim2: false,
-              }));
-
-              // Reset text transition
-              setTextTransitionProgress(0);
-              isSecondAnimTransitioning = false;
-            }, 200);
-          }
-        }
-      } else if (animState.showThirdAnim) {
-        // Custom scroll behavior for third animation
-        e.preventDefault();
-
-        // Ensure we're at the top of the page during animation 3
-        if (window.scrollY > 0) {
-          window.scrollTo({
-            top: 0,
-            behavior: 'auto',
-          });
-        }
-
-        // If we're already processing a scroll, accumulate the scroll amount
-        if (isScrollingRef.current) {
-          totalScrollRef.current += e.deltaY;
-          return;
-        }
-
-        isScrollingRef.current = true;
-        totalScrollRef.current = e.deltaY;
-
-        // Process accumulated scroll after a short delay
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-
-        scrollTimeoutRef.current = setTimeout(() => {
-          processScroll();
-          isScrollingRef.current = false;
-        }, 50);
-      }
-    };
-
     // At the end of useEffect, safely add event listeners with browser checks
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       // Add wheel and touch event listeners
@@ -1131,7 +1118,7 @@ const HeroStart = () => {
 
   return (
     <div className="hero-start-wrapper">
-      {animState.showFirstAnim && (
+      {!animState.firstAnimCompleted && (
         <Lottie
           loop={false}
           animationData={getLottieAnimation(1)}

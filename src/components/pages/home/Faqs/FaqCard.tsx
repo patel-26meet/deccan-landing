@@ -18,13 +18,12 @@ const FaqCard: React.FC<IFaqCardProps> = ({ question, answer, isOpen, index, tog
       if (isOpen) {
         // First set the height to auto to measure full content height
         contentRef.current.style.height = 'auto';
-        const height = contentRef.current.scrollHeight;
         // Then set it to 0 and force a reflow
         contentRef.current.style.height = '0px';
         // Force browser to acknowledge the change
         void contentRef.current.offsetHeight;
         // Then animate to the full height
-        contentRef.current.style.height = `${height}px`;
+        contentRef.current.style.height = `60px`;
         contentRef.current.style.opacity = '1';
       } else {
         contentRef.current.style.height = '0px';

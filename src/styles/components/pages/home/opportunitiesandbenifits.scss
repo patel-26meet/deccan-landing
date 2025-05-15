@@ -2,7 +2,7 @@
   position: relative;
   background: $grey url('/assets/opportunities-benefits-transparent-bg.svg');
   background-size: cover;
-  padding-top: 20rem;
+  padding-top: 4rem;
 
   // Create a pseudo-element for the black overlay - ONLY used when coming FROM simulator (black) TO opportunities/benefits (gray)
   &::before {
@@ -14,7 +14,7 @@
     height: 100%;
     background-color: $black;
     z-index: 1;
-    transition: opacity 1.2s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
     pointer-events: none;
     opacity: 0; // By default, the black overlay is invisible
   }
@@ -52,7 +52,7 @@
     .opportunities-wrapper,
     .benefits-wrapper {
       opacity: 1;
-      transition: opacity 0.8s ease-in-out;
+      transition: opacity 0.5s ease-in-out;
       transition-delay: 0.3s; // Start after background begins to fade (if any)
     }
   }

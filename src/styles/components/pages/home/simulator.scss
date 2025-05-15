@@ -4,6 +4,7 @@
     @include flex-center;
     padding: 5.5rem 5rem;
     padding-top: 20rem;
+    padding-bottom: 13rem;
     position: relative;
     z-index: 0; // Base z-index
 
@@ -17,7 +18,7 @@
       height: 100%;
       background-color: $grey;
       z-index: 1;
-      transition: opacity 1.2s ease-in-out;
+      transition: opacity 0.5s ease-in-out;
       pointer-events: none;
       opacity: 0; // By default, the gray overlay is invisible
     }
