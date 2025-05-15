@@ -1,0 +1,119 @@
+// Container for all
+.popup-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: fixed;
+    align-items: flex-start;
+    bottom: 1.5%;
+    right: 1%;
+    width: 470px;
+    z-index: 1000;
+}
+
+// Each notification item
+.popup-component {
+    border: 1px solid #00000026;
+    border-radius: 9px;
+    padding: 20px 18px 16px;
+    background: #FFFFFFCC;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-out;
+
+    backdrop-filter: blur(38px);
+
+    // Header section with title and close button
+    .popup-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+
+        .popup-title__heading {
+            font-size: 16px;
+            font-weight: 500;
+            font: var(--fm-1);
+        }
+
+        .popup-title__close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #222;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: #000;
+            }
+        }
+    }
+
+    // Content styling inside a notification
+    .popup-content {
+        margin-bottom: 21px;
+
+        .popup-content__text {
+            font-weight: 400;
+            letter-spacing: -3%;
+            margin: 0;
+            font-size: 14px;
+            color: #00000099;
+
+            .popup-content__text-link {
+                font-weight: 400;
+                font-size: 13px;
+                line-height: 140%;
+                letter-spacing: -3%;
+                text-decoration: underline;
+                text-decoration-style: solid;
+                text-decoration-thickness: 0%;
+                text-decoration-skip-ink: auto;
+            }
+        }
+    }
+
+    // Actions (buttons) styling inside a notification
+    .popup-action {
+        display: flex;
+        flex-direction: row;
+        column-gap: 1rem;
+
+        .popup-action__button {
+            border-radius: 12px;
+            border-width: 1px;
+            padding: 10px 22px;
+
+
+            font-weight: 400;
+            
+
+            border: 1px solid #0A0A0A1A;
+        }
+    }
+}
+
+// Animation for notifications appearing
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 540px) {
+    .popup-container {
+        width: 98%;
+    }
+}

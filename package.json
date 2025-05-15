@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@solar-icons/react": "^1.0.1",
+    "dompurify": "^3.2.5",
+    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "next": "15.2.4",
     "react": "^19.0.0",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^19",
