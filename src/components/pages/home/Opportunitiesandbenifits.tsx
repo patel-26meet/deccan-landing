@@ -99,6 +99,7 @@ const OpportunitiesAndBenifits = () => {
   return (
     <>
       <div
+        id="opportunities-section"
         ref={sectionRef}
         className={`opportunities-and-benefits-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'} ${scrollDirection === 'down' ? 'from-simulator' : 'from-statistics'}`}
       >

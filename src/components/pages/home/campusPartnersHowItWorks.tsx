@@ -121,11 +121,19 @@ const HowItWorks = ({initialActiveCard = 0}: ICampusPartnersHowItWorksProps = {}
 
   // Calculates the position of the indicator based on activeCardIndex
   const getIndicatorPosition = () => {
-    if (activeCardIndex === 0) return '0rem';
-    if (activeCardIndex === 1) return '5.625rem'; // First card height + margin
-    if (activeCardIndex === 2) return '11.25rem'; // 2x (card height + margin)
-    if (activeCardIndex === 3) return '16.875rem'; // 3x (card height + margin)
-    return '0rem';
+    if(deviceType === 'mobile') {
+      if (activeCardIndex === 0) return '0rem';
+      if (activeCardIndex === 1) return '4.625rem'; // First card height + margin
+      if (activeCardIndex === 2) return '10.25rem'; // 2x (card height + margin)
+      if (activeCardIndex === 3) return '14.875rem'; // 3x (card height + margin)
+      return '0rem';
+    } else {
+      if (activeCardIndex === 0) return '0rem';
+      if (activeCardIndex === 1) return '5.625rem'; 
+      if (activeCardIndex === 2) return '11.25rem'; 
+      if (activeCardIndex === 3) return '16.875rem'; 
+      return '0rem';
+    }
   };
 
   // Function to handle card click

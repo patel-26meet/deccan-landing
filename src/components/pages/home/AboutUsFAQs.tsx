@@ -77,7 +77,7 @@ export default function AboutUsFAQs() {
       ref={sectionRef}
       className={`about-us-faqs-wrapper ${isVisible ? 'fade-in-visible' : 'fade-in-hidden'}`}
     >
-      <div className="about-us-wrapper">
+      <div id="about-us-section" className="about-us-wrapper">
         <div className="about-us-header-wrapper">
           <div className="about-us-header">About Us</div>
           <div className="about-us-text">
@@ -93,7 +93,7 @@ export default function AboutUsFAQs() {
         </div>
       </div>
 
-      <div className="faqs-wrapper">
+      <div id="faqs-section" className="faqs-wrapper">
         <div className="faqs-header">Frequently Asked Questions</div>
         <div className="faqs-cards-container">
           {faqData.map((faq, index) => (

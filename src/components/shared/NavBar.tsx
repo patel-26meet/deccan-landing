@@ -107,6 +107,19 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     }
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      // Close mobile menu if it's open
+      if (menuOpen) {
+        toggleMenu();
+      }
+      
+      // Scroll to the section
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // CSS classes for navbar state
   const navbarClass = `nav-bar-wrapper${initialFadeIn ? ' initial-fade-in' : ''} ${visible ? 'visible' : 'hidden'} ${
     isTransparent ? 'transparent' : 'solid'
@@ -124,11 +137,12 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
         />
       </div>
       <div className="nav-bar-middle">
-        <div>Opportunities</div>
-        <div>Testimonials</div>
-        <div>Blogs</div>
-        <div>About Us</div>
-        <div>FAQs</div>
+        <div onClick={() => scrollToSection('opportunities-section')}>Opportunities</div>
+        <div onClick={() => scrollToSection('stories-section')}>Testimonials</div>
+        {/*No blogs for now*/}
+        {/*<div>Blogs</div>*/}
+        <div onClick={() => scrollToSection('about-us-section')}>About Us</div>
+        <div onClick={() => scrollToSection('faqs-section')}>FAQs</div>
       </div>
       <div className="nav-bar-right">
         {isResponsive ? (
@@ -157,11 +171,11 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
         <div className="mobile-menu">
           <div className="mobile-menu-items">
             <div className="main-nav-items">
-              <div>Opportunities</div>
-              <div>Testimonials</div>
+              <div onClick={() => scrollToSection('opportunities-section')}>Opportunities</div>
+              <div onClick={() => scrollToSection('stories-section')}>Testimonials</div>
               <div>Blogs</div>
-              <div>About Us</div>
-              <div>FAQs</div>
+              <div onClick={() => scrollToSection('about-us-section')}>About Us</div>
+              <div onClick={() => scrollToSection('faqs-section')}>FAQs</div>
             </div>
             <div className="auth-nav-items">
               <Button text="Login" mode="navbar" className="mobile-nav-login-button" />
