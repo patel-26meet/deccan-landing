@@ -1,18 +1,13 @@
 'use client';
 
 import { ISimulatorProps } from '@/interfaces/components/simulator.type';
-import { FC, useState, useEffect, useRef } from 'react';
+import { ILottieAnimationData } from '@/interfaces/components/lottie.type';
+import { FC, useState, useEffect, useRef, useCallback } from 'react';
 import SimulatorText from './SimulatorText';
-import Lottie from 'react-lottie-player';
-import lottie1 from '../../../../../public/assets/simulator/rlhf-lottie-1.json';
-import lottie2 from '../../../../../public/assets/simulator/rlhf-lottie-2.json';
-import lottie3 from '../../../../../public/assets/simulator/rlhf-lottie-3.json';
-import lottie4 from '../../../../../public/assets/simulator/rlhf-lottie-3.json';
+import dynamic from 'next/dynamic';
 
-import lottie5 from '../../../../../public/assets/simulator/sft-lottie-1.json';
-import lottie6 from '../../../../../public/assets/simulator/sft-lottie-2.json';
-import lottie7 from '../../../../../public/assets/simulator/sft-lottie-3.json';
-import lottie8 from '../../../../../public/assets/simulator/sft-lottie-3.json';
+// Dynamically import Lottie to prevent SSR issues
+const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
 
 const Simulator: FC<ISimulatorProps> = ({ windowNames = ['SFT', 'RLHF'], simulatorTexts = [] }) => {
   // Initialize active window - default to "SFT" regardless of initialActiveWindow prop
@@ -25,9 +20,110 @@ const Simulator: FC<ISimulatorProps> = ({ windowNames = ['SFT', 'RLHF'], simulat
 
   // Counter to force animation reset
   const [resetAnimation, setResetAnimation] = useState<number>(0);
+  
+  // Animation state
+  const [currentAnimation, setCurrentAnimation] = useState<ILottieAnimationData | null>(null);
+  const [isLottieLoading, setIsLottieLoading] = useState<boolean>(false);
+
+  // Cache references for animations that persist between renders
+  const animationCache = useRef<Record<string, ILottieAnimationData>>({});
+  // Track which animations have already been requested to prevent duplicate requests
+  const requestedAnimations = useRef<Set<string>>(new Set());
 
   const simulatorRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  // Animation paths based on window and header
+  const getAnimationPath = useCallback((window: string, headerIndex: number) => {
+    if (window === 'RLHF') {
+      switch (headerIndex) {
+        case 0: return '/assets/simulator/rlhf-lottie-1.json';
+        case 1: return '/assets/simulator/rlhf-lottie-2.json';
+        case 2:
+        case 3: return '/assets/simulator/rlhf-lottie-3.json';
+      }
+    } else if (window === 'SFT') {
+      switch (headerIndex) {
+        case 0: return '/assets/simulator/sft-lottie-1.json';
+        case 1: return '/assets/simulator/sft-lottie-2.json';
+        case 2:
+        case 3: return '/assets/simulator/sft-lottie-3.json';
+        default: return '/assets/simulator/sft-lottie-1.json';
+      }
+    }
+    return '/assets/simulator/sft-lottie-1.json';
+  }, []);
+
+  // Load and cache animation
+  const loadAnimation = useCallback(async (window: string, headerIndex: number) => {
+    const animKey = `${window}-${headerIndex}`;
+
+    // Skip if already requested or cached
+    if (requestedAnimations.current.has(animKey)) {
+      return animationCache.current[animKey] || null;
+    }
+
+    try {
+      setIsLottieLoading(true);
+      // Mark as requested immediately to prevent parallel requests
+      requestedAnimations.current.add(animKey);
+      
+      // Fetch the animation data
+      const response = await fetch(getAnimationPath(window, headerIndex));
+      const animationData = await response.json() as ILottieAnimationData;
+      
+      // Cache the loaded animation
+      animationCache.current[animKey] = animationData;
+      return animationData;
+    } catch (error) {
+      console.error('Failed to load animation:', error);
+      return null;
+    } finally {
+      setIsLottieLoading(false);
+    }
+  }, [getAnimationPath]);
+
+  // Effect to update current animation when component becomes visible
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const headerIndex = simulatorTexts.findIndex(text => text.header === activeHeader);
+    const animKey = `${activeWindow}-${headerIndex}`;
+
+    // If animation is cached, use it immediately
+    if (animationCache.current[animKey]) {
+      setCurrentAnimation(animationCache.current[animKey]);
+      
+      // Preload animations for other headers
+      simulatorTexts.forEach((_, index) => {
+        if (index !== headerIndex) {
+          const nextKey = `${activeWindow}-${index}`;
+          if (!requestedAnimations.current.has(nextKey)) {
+            loadAnimation(activeWindow, index);
+          }
+        }
+      });
+      
+      return;
+    }
+
+    // Otherwise load it
+    loadAnimation(activeWindow, headerIndex).then(animation => {
+      if (animation) {
+        setCurrentAnimation(animation);
+        
+        // Preload animations for other headers
+        simulatorTexts.forEach((_, index) => {
+          if (index !== headerIndex) {
+            const nextKey = `${activeWindow}-${index}`;
+            if (!requestedAnimations.current.has(nextKey)) {
+              loadAnimation(activeWindow, index);
+            }
+          }
+        });
+      }
+    });
+  }, [isVisible, activeWindow, activeHeader, loadAnimation, simulatorTexts]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -94,44 +190,6 @@ const Simulator: FC<ISimulatorProps> = ({ windowNames = ['SFT', 'RLHF'], simulat
     setActiveHeader(header);
   };
 
-  // Get the appropriate Lottie animation based on active window and header
-  const getLottieAnimation = () => {
-    // Get header index
-    const headerIndex = simulatorTexts.findIndex(text => text.header === activeHeader);
-
-    // Select lottie based on window and header
-    if (activeWindow === 'RLHF') {
-      switch (headerIndex) {
-        case 0: // Coding and Software
-          return lottie1;
-        case 1: // Specialist
-          return lottie2;
-        case 2: // Linguistics
-          return lottie3;
-        case 3: // Generalist
-          return lottie4;
-        default:
-          return lottie1;
-      }
-    } else if (activeWindow === 'SFT') {
-      switch (headerIndex) {
-        case 0: // Coding and Software
-          return lottie5;
-        case 1: // Specialist
-          return lottie6;
-        case 2: // Linguistics
-          return lottie7;
-        case 3: // Generalist
-          return lottie8;
-        default:
-          return lottie5;
-      }
-    }
-
-    // Default case
-    return lottie1;
-  };
-
   return (
     <div className="simulator__frame-wrapper" ref={simulatorRef}>
       <div className="simulator__frame">
@@ -147,13 +205,19 @@ const Simulator: FC<ISimulatorProps> = ({ windowNames = ['SFT', 'RLHF'], simulat
           ))}
         </div>
         <div className="simulator__frame-lottie">
-          <Lottie
-            animationData={getLottieAnimation()}
-            loop
-            play
-            style={{ width: '100%', height: '100%' }}
-            key={`${activeWindow}-${activeHeader}-${resetAnimation}`}
-          />
+          {isLottieLoading && !currentAnimation ? (
+            <div className="simulator__lottie-loading">Loading...</div>
+          ) : currentAnimation ? (
+            <Lottie
+              animationData={currentAnimation}
+              loop
+              play
+              style={{ width: '100%', height: '100%' }}
+              key={`${activeWindow}-${activeHeader}-${resetAnimation}`}
+            />
+          ) : (
+            <div className="simulator__lottie-placeholder">Animation not found</div>
+          )}
         </div>
       </div>
       <div className="simulator__frame-content">

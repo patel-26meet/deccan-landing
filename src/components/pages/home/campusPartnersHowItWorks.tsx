@@ -8,6 +8,11 @@ import Image from 'next/image';
 import { howItWorksData } from '@/constants/pages/home/how-it-works';
 import useDeviceType from '@/lib/hooks/useDeviceType';
 import { useInView } from 'react-intersection-observer';
+import { 
+  ICampusPartnersHowItWorksProps, 
+  ICampusPartnerLottieCache 
+} from '@/interfaces/components/howItWorksLottie.type';
+import { ILottieAnimationData } from '@/interfaces/components/lottie.type';
 
 // Dynamically import Lottie to prevent SSR issues
 const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
@@ -15,51 +20,15 @@ const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
 // Generate array of campus partner icons (1-29)
 const CAMPUS_PARTNER_ICONS = Array.from({ length: 29 }, (_, i) => `I${i + 1}.svg`);
 
-// Type for Lottie animation data
-interface ILottieAnimationData {
-  v: string;
-  fr: number;
-  ip: number;
-  op: number;
-  w: number;
-  h: number;
-  nm: string;
-  ddd: number;
-  assets: Array<{
-    id: string;
-    w?: number;
-    h?: number;
-    u?: string;
-    p?: string;
-    e?: number;
-    layers?: unknown[];
-  }>;
-  layers: Array<{
-    ddd: number;
-    ind: number;
-    ty: number;
-    nm: string;
-    sr: number;
-    ks: Record<string, unknown>;
-    ao: number;
-    ip: number;
-    op: number;
-    st: number;
-    bm: number;
-    [key: string]: unknown;
-  }>;
-  [key: string]: unknown;
-}
-
-const HowItWorks = () => {
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
+const HowItWorks = ({initialActiveCard = 0}: ICampusPartnersHowItWorksProps = {}) => {
+  const [activeCardIndex, setActiveCardIndex] = useState(initialActiveCard);
   const [animationKey, setAnimationKey] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState<ILottieAnimationData | null>(null);
   const [isLoadingAnimation, setIsLoadingAnimation] = useState(false);
   const deviceType = useDeviceType();
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   // Cache persists between component mounts
-  const animationCache = useRef<Record<number, ILottieAnimationData>>({});
+  const animationCache = useRef<ICampusPartnerLottieCache>({});
   // Track which animations have already been requested to prevent duplicate requests
   const requestedAnimations = useRef<Set<number>>(new Set());
   

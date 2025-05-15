@@ -2,50 +2,13 @@
 
 import Button from '@/components/shared/Button';
 import { IAnimationState } from '@/interfaces/components/hero.type';
+import { ILottieFile } from '@/interfaces/components/lottie.type';
+import { IHeroLottieFiles } from '@/interfaces/components/heroLottie.type';
 import useScrollPosition from '@/lib/hooks/useScrollPosition';
 import useDeviceType from '@/lib/hooks/useDeviceType';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import HeroIconsLayout from './HeroIconsLayout';
-
-// Define a type for Lottie animation JSON
-interface LottieAsset {
-  id?: string;
-  w?: number;
-  h?: number;
-  u?: string;
-  p?: string;
-  e?: number;
-  [key: string]: unknown;
-}
-
-interface LottieLayer {
-  ind?: number;
-  ty?: number;
-  nm?: string;
-  [key: string]: unknown;
-}
-
-interface LottieMarker {
-  tm?: number;
-  cm?: string;
-  dr?: number;
-  [key: string]: unknown;
-}
-
-type LottieFile = {
-  v: string;
-  fr: number;
-  ip: number;
-  op: number;
-  w: number;
-  h: number;
-  nm: string;
-  assets: LottieAsset[];
-  layers: LottieLayer[];
-  markers: LottieMarker[];
-  [key: string]: unknown;
-};
 
 const HeroStart = () => {
   const { scrollY, scrollDirection: globalScrollDirection } = useScrollPosition();
@@ -68,11 +31,7 @@ const HeroStart = () => {
   });
 
   // State for dynamically loaded Lottie animations
-  const [lottieFiles, setLottieFiles] = useState<{
-    desktop: { [key: number]: LottieFile };
-    mobile: { [key: number]: LottieFile };
-    tablet: { [key: number]: LottieFile };
-  }>({
+  const [lottieFiles, setLottieFiles] = useState<IHeroLottieFiles>({
     desktop: {},
     mobile: {},
     tablet: {},
@@ -103,9 +62,9 @@ const HeroStart = () => {
             ...prev, 
             desktop: { 
               ...prev.desktop, // Keep existing items in the desktop object
-              1: lottie1.default as LottieFile, 
-              2: lottie2.default as LottieFile, 
-              3: lottie3.default as LottieFile 
+              1: lottie1.default as ILottieFile, 
+              2: lottie2.default as ILottieFile, 
+              3: lottie3.default as ILottieFile 
             }
           }));
         } else if (deviceType === 'mobile') {
@@ -120,9 +79,9 @@ const HeroStart = () => {
             ...prev, 
             mobile: { 
               ...prev.mobile, // Keep existing items in the mobile object
-              1: lottiem1.default as LottieFile, 
-              2: lottiem2.default as LottieFile, 
-              3: lottiem3.default as LottieFile 
+              1: lottiem1.default as ILottieFile, 
+              2: lottiem2.default as ILottieFile, 
+              3: lottiem3.default as ILottieFile 
             }
           }));
         } else if (deviceType === 'tablet') {
@@ -137,9 +96,9 @@ const HeroStart = () => {
             ...prev, 
             tablet: { 
               ...prev.tablet, // Keep existing items in the tablet object
-              1: lottiet1.default as LottieFile, 
-              2: lottiet2.default as LottieFile, 
-              3: lottiet3.default as LottieFile 
+              1: lottiet1.default as ILottieFile, 
+              2: lottiet2.default as ILottieFile, 
+              3: lottiet3.default as ILottieFile 
             }
           }));
         }
