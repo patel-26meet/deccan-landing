@@ -14,7 +14,7 @@
     height: 100%;
     background-color: $black;
     z-index: 1;
-    transition: opacity 1.2s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
     pointer-events: none;
     opacity: 0; // By default, the black overlay is invisible
   }
@@ -52,7 +52,7 @@
     .opportunities-wrapper,
     .benefits-wrapper {
       opacity: 1;
-      transition: opacity 0.8s ease-in-out;
+      transition: opacity 0.5s ease-in-out;
       transition-delay: 0.3s; // Start after background begins to fade (if any)
     }
   }
