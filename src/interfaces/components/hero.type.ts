@@ -20,10 +20,9 @@ export interface IIconData {
 }
 
 export interface IAnimationState {
-  showFirstAnim: boolean;
+  firstAnimCompleted: boolean;
   showSecondAnim: boolean;
   showThirdAnim: boolean;
-  firstAnimCompleted: boolean;
   secondAnimSpeed: number;
   thirdAnimProgress: number;
   lottieThirdProgress: number; // Separate progress for Lottie animation
