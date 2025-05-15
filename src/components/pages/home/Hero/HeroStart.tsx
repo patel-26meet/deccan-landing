@@ -214,6 +214,8 @@ const HeroStart = () => {
   // Track animation 2 loop with useRef
   const anim2IntervalRef = useRef<NodeJS.Timeout | null>(null);
   const isAnim2TransitioningRef = useRef<boolean>(false);
+  // Add a flag to track if we're at an endpoint
+  const isAtAnimationEndpointRef = useRef<boolean>(false);
 
   // Handle animation 2 loop
   useEffect(() => {
@@ -228,23 +230,59 @@ const HeroStart = () => {
         clearInterval(anim2IntervalRef.current);
       }
 
-      // Set up new interval for animation loop
-      anim2IntervalRef.current = setInterval(() => {
+      // Force immediate direction change if we're at an endpoint
+      if (isAtAnimationEndpointRef.current) {
         setAnimState(prev => {
-          // Handle direction change at endpoints
-          if (prev.animationDirection === 'forward' && prev.secondAnimProgress >= 0.99) {
-            // Change to reverse when reaching the end
+          // If we're at end (1.0), prepare to go reverse
+          if (prev.secondAnimProgress >= 0.99) {
             return {
               ...prev,
               animationDirection: 'reverse',
               secondAnimSpeed: -1,
             };
+          } 
+          // If we're at beginning (0.0), prepare to go forward
+          else if (prev.secondAnimProgress <= 0.01) {
+            return {
+              ...prev,
+              animationDirection: 'forward',
+              secondAnimSpeed: 1,
+            };
+          }
+          return prev;
+        });
+        
+        // Reset the flag
+        isAtAnimationEndpointRef.current = false;
+      }
+
+      // Set up new interval for animation loop with a more robust approach
+      anim2IntervalRef.current = setInterval(() => {
+        setAnimState(prev => {
+          // Handle direction change at endpoints
+          if (prev.animationDirection === 'forward' && prev.secondAnimProgress >= 0.99) {
+            // Mark that we've reached an endpoint
+            isAtAnimationEndpointRef.current = true;
+            
+            // Change to reverse when reaching the end
+            return {
+              ...prev,
+              animationDirection: 'reverse',
+              secondAnimSpeed: -1,
+              // Force a small adjustment to ensure we continue moving
+              secondAnimProgress: 0.99
+            };
           } else if (prev.animationDirection === 'reverse' && prev.secondAnimProgress <= 0.01) {
+            // Mark that we've reached an endpoint
+            isAtAnimationEndpointRef.current = true;
+            
             // Change to forward when reaching the beginning
             return {
               ...prev,
               animationDirection: 'forward',
               secondAnimSpeed: 1,
+              // Force a small adjustment to ensure we continue moving
+              secondAnimProgress: 0.01
             };
           }
 
@@ -263,6 +301,7 @@ const HeroStart = () => {
       return () => {
         if (anim2IntervalRef.current) {
           clearInterval(anim2IntervalRef.current);
+          anim2IntervalRef.current = null;
         }
       };
     } else if (!animState.showSecondAnim && anim2IntervalRef.current) {
