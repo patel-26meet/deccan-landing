@@ -248,7 +248,6 @@ const HeroStart = () => {
   // ======== ANIMATION HANDLERS ========
   // Handle first animation completion
   const handleFirstAnimComplete = () => {
-    console.log('First animation completed');
     // Set initial text transition to fully visible
     setTextTransitionProgress(0);
 
@@ -424,8 +423,6 @@ const HeroStart = () => {
 
   // Log state changes for debugging
   useEffect(() => {
-    console.log('Animation state updated test:', animState);
-
     // Check if text is fully highlighted (all words are white)
     if (
       !animState.textFullyHighlighted &&
@@ -449,8 +446,6 @@ const HeroStart = () => {
 
       // Only reset if animation was completed before
       if (animState.animationCompleted && animState.firstAnimCompleted) {
-        console.log('Returning to hero section - resetting to animation 3 in reverse');
-
         // Place user at animation 3 with fully highlighted text and visible icons layout
         setAnimState(prev => ({
           ...prev,
@@ -475,9 +470,6 @@ const HeroStart = () => {
 
         // Ensure scroll is disabled to control the animation
         document.body.classList.add('scroll-disabled');
-
-        // Show a message to indicate user should scroll (optional)
-        console.log('Scroll to control the reverse animation');
       }
     }
   }, [scrollY, animState.animationCompleted, animState.firstAnimCompleted, overlayTextWords.length]);
@@ -661,8 +653,6 @@ const HeroStart = () => {
   const handleSecondAnimScroll = (deltaY: number) => {
     // Mark that user has scrolled during animation 2
     if (!animState.hasScrolledDuringAnim2) {
-      console.log('User started scrolling during animation 2');
-
       // Clear the auto-loop interval
       if (anim2IntervalRef.current) {
         clearInterval(anim2IntervalRef.current);
@@ -709,7 +699,6 @@ const HeroStart = () => {
         // Check if animation has completed
         if (finalProgress >= 0.99 || textProgress >= 0.99) {
           // Transition to animation 3 when complete
-          console.log('Animation 2 completed via scroll, transitioning to animation 3');
           isAnim2TransitioningRef.current = true;
 
           // Add scroll-disabled class to body
@@ -881,8 +870,6 @@ const HeroStart = () => {
 
           // Transition to animation 3 after text fade out
           setTimeout(() => {
-            console.log('Transitioning to animation 3 after text fade');
-
             // Ensure we're at the top of the page for animation 3
             window.scrollTo({
               top: 0,
@@ -1039,8 +1026,6 @@ const HeroStart = () => {
 
               // Transition to animation 3 after text fade out
               setTimeout(() => {
-                console.log('Transitioning to animation 3 after text fade (touch)');
-
                 // Ensure we're at the top of the page for animation 3
                 window.scrollTo({
                   top: 0,

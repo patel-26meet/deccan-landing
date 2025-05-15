@@ -2,7 +2,7 @@
   position: relative;
   background: $grey url('/assets/opportunities-benefits-transparent-bg.svg');
   background-size: cover;
-  padding-top: 20rem;
+  padding-top: 4rem;
 
   // Create a pseudo-element for the black overlay - ONLY used when coming FROM simulator (black) TO opportunities/benefits (gray)
   &::before {
