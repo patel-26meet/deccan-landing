@@ -1181,6 +1181,7 @@ const HeroStart = () => {
             <Button text="Apply Now" mode="hybrid" onClick={() => {}} />
           </div>
         </div>
+        
       )}
     </div>
   );

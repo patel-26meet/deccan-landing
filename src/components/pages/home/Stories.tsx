@@ -49,7 +49,7 @@ const Stories = () => {
               name={storiesData.testimonials[0].name}
               role={storiesData.testimonials[0].role}
               organization={storiesData.testimonials[0].organization}
-              profileImage={storiesData.testimonials[0].profileImage}
+              profileImage={storiesData.images.dp3}
             />
             <StoriesCard
               testimonial={storiesData.testimonials[2].testimonial}
@@ -57,7 +57,7 @@ const Stories = () => {
               name={storiesData.testimonials[2].name}
               role={storiesData.testimonials[2].role}
               organization={storiesData.testimonials[2].organization}
-              profileImage={storiesData.testimonials[2].profileImage}
+              profileImage={storiesData.images.dp1}
             />
             <div className="stories__mobile-image">
               <img className="stories__mobile-image-img" src={storiesData.images.image2} alt="Soul AI community member" loading="lazy" />
@@ -111,7 +111,7 @@ const Stories = () => {
                     name={storiesData.testimonials[0].name}
                     role={storiesData.testimonials[0].role}
                     organization={storiesData.testimonials[0].organization}
-                    profileImage={storiesData.testimonials[0].profileImage}
+                    profileImage={storiesData.images.dp3}
                   />
                   <StoriesCard
                     testimonial={storiesData.testimonials[1].testimonial}
@@ -134,7 +134,7 @@ const Stories = () => {
                   name={storiesData.testimonials[2].name}
                   role={storiesData.testimonials[2].role}
                   organization={storiesData.testimonials[2].organization}
-                  profileImage={storiesData.testimonials[2].profileImage}
+                  profileImage={storiesData.images.dp1}
                 />
                 <img
                   className="stories__grid-image stories__grid-image--hover"
@@ -159,7 +159,7 @@ const Stories = () => {
                   additionalText={storiesData.testimonials[3].additionalText}
                   name={storiesData.testimonials[3].name}
                   organization={storiesData.testimonials[3].organization}
-                  profileImage={storiesData.testimonials[3].profileImage}
+                  profileImage={storiesData.images.dp2}
                 />
               </div>
               <div className="stories__grid-right-bottom">

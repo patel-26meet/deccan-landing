@@ -120,6 +120,14 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
     }
   };
 
+  const navigateToLogin = () => {
+    window.open('/login', '_blank');
+  };
+
+  const navigateToSignup = () => {
+    window.open('/login', '_blank');
+  };
+
   // CSS classes for navbar state
   const navbarClass = `nav-bar-wrapper${initialFadeIn ? ' initial-fade-in' : ''} ${visible ? 'visible' : 'hidden'} ${
     isTransparent ? 'transparent' : 'solid'
@@ -161,8 +169,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
           </div>
         ) : (
           <>
-            <div>Log In</div>
-            <Button text="Sign Up" mode="navbar" className="nav-signup-button" />
+            <div onClick={navigateToLogin}>Log In</div>
+            <Button text="Sign Up" mode="navbar" className="nav-signup-button" onClick={navigateToSignup} />
           </>
         )}
       </div>
@@ -178,8 +186,8 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
               <div onClick={() => scrollToSection('faqs-section')}>FAQs</div>
             </div>
             <div className="auth-nav-items">
-              <Button text="Login" mode="navbar" className="mobile-nav-login-button" />
-              <Button text="Sign Up" mode="navbar" className="mobile-nav-signup-button" />
+              <Button text="Login" mode="navbar" className="mobile-nav-login-button" onClick={navigateToLogin} />
+              <Button text="Sign Up" mode="navbar" className="mobile-nav-signup-button" onClick={navigateToSignup} />
             </div>
           </div>
         </div>

@@ -25,7 +25,7 @@ export const PopupDataConstant: Record<string, TPopupContent> = {
     title: "Cookie Settings ",
     content: "We use cookies to enhance your experience, analyze site traffic and deliver personalized content. Read our <a class='popup-content__text-link' href='https://soulhq.ai/cookie-policy' target='_blank'>Cookie Policy</a>.",
     actions: [
-      { label: "Okay", onClick: () => handleCookieConsent(true) },
+      { label: "Accept All", onClick: () => handleCookieConsent(true) },
     ],
     onClose: () => handleCookieConsent(true),
   },

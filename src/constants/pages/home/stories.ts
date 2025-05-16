@@ -25,7 +25,6 @@ export const storiesData = {
       name: 'Azizullah C',
       role: 'Student',
       organization: 'IIT Roorkee',
-      profileImage: 'https://placehold.co/53x53',
     },
     {
       testimonial:
@@ -45,7 +44,6 @@ export const storiesData = {
       name: 'Faris K',
       role: 'Student',
       organization: 'NIT Calicut',
-      profileImage: 'https://placehold.co/53x53',
     },
     {
       testimonial: 'It has been an amazing journey so far. My role at Soul AI has helped',
@@ -54,7 +52,6 @@ export const storiesData = {
         ' I would like to thank the Soul AI team for having given me this opportunity.',
       name: 'Khairun N',
       organization: 'Tripura University',
-      profileImage: 'https://placehold.co/53x53',
     },
   ],
 
@@ -66,5 +63,8 @@ export const storiesData = {
     linkedinMsg: '/assets/stories/linkedin-msg.svg',
     image2: '/assets/stories/image-2.svg',
     linkedinBotRight: '/assets/stories/linkedin-bot-right.svg',
+    dp1: '/assets/stories/dp-1.svg',
+    dp2: '/assets/stories/dp-2.svg',
+    dp3: '/assets/stories/dp-3.svg',
   },
 };
