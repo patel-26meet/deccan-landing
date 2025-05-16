@@ -119,7 +119,7 @@ const Stories = () => {
                     additionalText={storiesData.testimonials[1].additionalText}
                     name={storiesData.testimonials[1].name}
                     organization={storiesData.testimonials[1].organization}
-                    profileImage={storiesData.testimonials[1].profileImage}
+                    profileImage={storiesData.images.dp2}
                   />
                 </div>
               </div>
