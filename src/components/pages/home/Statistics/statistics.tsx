@@ -22,15 +22,16 @@ const Statistics: FC = () => {
                       duration={5}
                       className="statistics__item__countup"
                       formattingFn={value => {
+                        const prefix = item.prefix || '';
                         if (value < 1000) {
-                          return `${value}K+`;
+                          return `${prefix}${value}K+`;
                         } else {
                           if (value === Number(item.val)) {
-                            return `${Math.floor(value / 1000)}M+`;
+                            return `${prefix}${Math.floor(value / 1000)}M+`;
                           }
                           return item.noDecimals
-                            ? `${Math.floor(value / 1000)}M+`
-                            : `${(value / 1000).toFixed(1)}M+`;
+                            ? `${prefix}${Math.floor(value / 1000)}M+`
+                            : `${prefix}${(value / 1000).toFixed(1)}M+`;
                         }
                       }}
                       decimals={item.noDecimals ? 0 : 1}
@@ -42,6 +43,7 @@ const Statistics: FC = () => {
                       end={Number(item.val)}
                       duration={5}
                       className="statistics__item__countup"
+                      prefix={item.prefix}
                       suffix={item.suffix}
                     />
                   )}

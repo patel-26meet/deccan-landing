@@ -4,29 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import FaqCard from './Faqs/FaqCard';
 import Button from '@/components/shared/Button';
-
-const faqData = [
-  {
-    question: 'How do I get started?',
-    answer:
-      'You can get started by signing up on our platform, completing your profile, and exploring available opportunities that match your skills and interests.',
-  },
-  {
-    question: 'What kind of opportunities are available?',
-    answer:
-      'We offer a variety of opportunities including AI development, data annotation, content creation, and specialized roles that contribute to advancing AI technology.',
-  },
-  {
-    question: 'Do I need specific qualifications?',
-    answer:
-      'While some opportunities may require specific skills or experience, we have roles suitable for various expertise levels. Our platform helps match you with opportunities that fit your profile.',
-  },
-  {
-    question: 'How does payment work?',
-    answer:
-      'We offer flexible payment options based on the type of work and your contribution. Payments are processed securely through our platform according to the terms of each opportunity.',
-  },
-];
+import { aboutUsFaqsData } from '@/constants/pages/home/about-us-faqs';
 
 export default function AboutUsFAQs() {
   const [openFaqs, setOpenFaqs] = useState<number[]>([]);
@@ -96,7 +74,7 @@ export default function AboutUsFAQs() {
       <div id="faqs-section" className="faqs-wrapper">
         <div className="faqs-header">Frequently Asked Questions</div>
         <div className="faqs-cards-container">
-          {faqData.map((faq, index) => (
+          {aboutUsFaqsData.faqs.map((faq, index) => (
             <FaqCard
               key={index}
               question={faq.question}

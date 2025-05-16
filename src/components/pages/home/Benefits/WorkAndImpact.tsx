@@ -11,9 +11,7 @@ const WorkAndImpact = () => {
         </div>
 
         <div className="benefits__work-and-impact__text">
-          <div>Work from anywhere, contribute</div>
-          <div>to AI innovation, and make a real</div>
-          <div>difference.</div>
+          Work from anywhere, contribute to AI innovation, and make a real difference.
         </div>
       </div>
     </div>

@@ -131,9 +131,12 @@
 
       @include benefits-card-mobile-text;
 
+      &__header {
+        @include h5;
+      }
+
       &__image {
-        width: 100%;
-        height: 113px;
+        width: 120%;
       }
     }
 
@@ -147,19 +150,45 @@
       align-self: stretch;
 
       @include benefits-card-mobile-text;
+
+      &__header {
+        @include h5;
+      }
+
+
     }
 
     &__work-and-impact {
+      display: flex;
+      width: 137px;
       height: 183px;
-      width: 39.71%;
-      max-width: 39.71%;
-      @include benefits-card-mobile-base;
-      @include flex-column;
-      align-self: stretch;
+      padding: 16.38px 12.285px;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
 
-      @include benefits-card-mobile-text;
+      &__content{
+        @include flex-column;
+        height: 151.513px;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+        align-self: stretch;
+      }
+
+
+      &__header {
+        @include h5;
+      }
+
+      &__image {
+        width: 27%;
+      }
+
+      &__text{
+        font-size: 0.75rem !important;
+        text-align: center;
+      }
     }
 
     &__payments {
@@ -179,6 +208,10 @@
       }
 
       @include benefits-card-mobile-text;
+
+      &__header {
+        @include h5;
+      }
     }
 
     &__opportunities {
@@ -190,7 +223,13 @@
       gap: 0.75rem;
       align-self: stretch;
 
+      padding: 16.38px 12.285px;
       @include benefits-card-mobile-text;
+      
+      &__title {
+        font-size: 1rem !important;
+      }
+
     }
 
     &__community {
@@ -205,9 +244,13 @@
 
       @include benefits-card-mobile-text;
 
+      &__header {
+        @include h5;
+      }
+
       &__image {
-        height: 70%;
-        transform: translateY(25%);
+        height: 68%;
+        transform: translateY(30%);
       }
     }
   }

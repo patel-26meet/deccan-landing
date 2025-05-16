@@ -1,8 +1,11 @@
-export const statsData = [
+import { IStatsItem } from '@/interfaces/components/Statistics';
+
+export const statsData: IStatsItem[] = [
   {
     val: '3000',
     description: 'Paid out to experts',
     isMillions: true,
+    prefix: '$',
   },
   {
     val: '1000',
