@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import useDeviceType from '@/lib/hooks/useDeviceType';
 
 interface IFaqCardProps {
   question: string;
@@ -12,7 +13,7 @@ interface IFaqCardProps {
 
 const FaqCard: React.FC<IFaqCardProps> = ({ question, answer, isOpen, index, toggleFaq }) => {
   const contentRef = useRef<HTMLDivElement>(null);
-
+  const deviceType = useDeviceType();
   useEffect(() => {
     if (contentRef.current) {
       if (isOpen) {
@@ -24,6 +25,9 @@ const FaqCard: React.FC<IFaqCardProps> = ({ question, answer, isOpen, index, tog
         void contentRef.current.offsetHeight;
         // Then animate to the full height
         contentRef.current.style.height = `60px`;
+        if(deviceType === 'mobile'){
+          contentRef.current.style.height = `120px`;
+        }
         contentRef.current.style.opacity = '1';
       } else {
         contentRef.current.style.height = '0px';

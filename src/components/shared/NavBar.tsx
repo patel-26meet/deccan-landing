@@ -158,7 +158,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
             <img
               src={
                 menuOpen
-                  ? '/assets/close-menu.svg'
+                  ? '/assets/popup-close.svg'
                   : isTransparent
                     ? '/assets/menu.svg'
                     : '/assets/menu-black.svg'
@@ -181,13 +181,14 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
             <div className="main-nav-items">
               <div onClick={() => scrollToSection('opportunities-section')}>Opportunities</div>
               <div onClick={() => scrollToSection('stories-section')}>Testimonials</div>
-              <div>Blogs</div>
+              {/*No blogs for now*/}
+              {/*<div>Blogs</div>*/}
               <div onClick={() => scrollToSection('about-us-section')}>About Us</div>
               <div onClick={() => scrollToSection('faqs-section')}>FAQs</div>
             </div>
             <div className="auth-nav-items">
-              <Button text="Login" mode="navbar" className="mobile-nav-login-button" onClick={navigateToLogin} />
-              <Button text="Sign Up" mode="navbar" className="mobile-nav-signup-button" onClick={navigateToSignup} />
+              <div>Login</div>
+              <Button text="Apply Now" mode="navbar" className="mobile-nav-signup-button" onClick={navigateToSignup} />
             </div>
           </div>
         </div>

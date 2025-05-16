@@ -226,8 +226,6 @@ body.menu-open {
       left: 0;
       width: 100%;
       height: 100vh;
-      border-radius: 0px 0px 10px 10px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
       background: rgba(255, 255, 255, 0.02);
       backdrop-filter: blur(26px);
       z-index: 10;
@@ -261,7 +259,6 @@ body.menu-open {
             color: $black;
             @include h4;
             text-align: left;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition:
               background-color 0.2s ease,
