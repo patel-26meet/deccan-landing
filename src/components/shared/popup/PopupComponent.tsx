@@ -28,7 +28,7 @@ const PopupComponent: React.FC<IPopupComponentProps> = ({ popupType, onRemove })
           }}
           aria-label="Close popup"
         >
-          ×
+          <img src="/assets/popup-close.svg" alt="Close" />
         </button>
       </div>
       <div className="popup-content">
