@@ -1,15 +1,7 @@
-import Layout from '@/components/shared/Layout';
-
-export default function RootLayout({
+export default function LoginLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <Layout>{children}</Layout>
-      </body>
-    </html>
-  );
+  return children;
 }
