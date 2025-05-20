@@ -22,11 +22,13 @@ const LoginHandler: React.FC<ILoginHandlerProps> = ({ children }) => {
 
     const handleLoginSuccess = (event: Event) => {
       const customEvent = event as CustomEvent<AuthEventDetail>;
+      console.log("customEvent", customEvent);
       const { refreshJwt, sessionJwt } = customEvent.detail;
+      console.log("customEvent.detail", customEvent.detail);
 
       const cookieOptions = {
         path: "/",
-        domain: process.env.NEXT_PUBLIC_DOMAIN,
+        domain: ".soulhq.ai",
         secure: true,
       };
       console.log(

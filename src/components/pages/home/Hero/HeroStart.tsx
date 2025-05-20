@@ -152,6 +152,34 @@ const HeroStart = () => {
         body.scroll-disabled {
           overflow: hidden;
         }
+
+        .login-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          width: 100%;
+          max-width: 800px;
+          transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+          will-change: opacity, transform, filter;
+          z-index: 10;
+        }
+
+        .login-text.fade-in {
+          animation: fadeInText 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInText {
+          0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.98);
+          }
+          100% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
       `;
       document.head.appendChild(styleTag);
 
@@ -248,11 +276,10 @@ const HeroStart = () => {
   // ======== ANIMATION HANDLERS ========
   // Handle first animation completion
   const handleFirstAnimComplete = () => {
-    // First update the animation state with a minimal delay
+    // Add a small delay before showing text to avoid potential flashing
+    // This ensures DOM is ready for animations
     setTimeout(() => {
-      document.body.classList.remove('scroll-disabled');
-      
-      // Set animation state in a single update
+      setTextTransitionProgress(0);
       setAnimState(prev => ({
         ...prev,
         firstAnimCompleted: true,
@@ -263,12 +290,12 @@ const HeroStart = () => {
         secondAnimProgress: 0,
         hasScrolledDuringAnim2: false,
       }));
-      
-      // Set initial text transition to fully visible
-      setTextTransitionProgress(0);
-    }, 50);
+    }, 50); // Small delay to ensure DOM is ready
 
     console.log('handleFirstAnimComplete');
+
+    // Remove scroll lock after first animation completes
+    document.body.classList.remove('scroll-disabled');
   };
 
   // Calculate text transition styles based on progress
