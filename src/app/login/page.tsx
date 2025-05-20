@@ -1,8 +1,14 @@
 'use client';
 
-import { Descope } from "@descope/nextjs-sdk";
+import dynamic from 'next/dynamic';
 import LoginHandler from '@/components/auth/LoginHandler';
 import CookiesWrapper from '@/components/auth/CookiesWrapper';
+
+// Dynamically import the Descope component with ssr: false
+const DescopeAuth = dynamic(
+  () => import('@descope/nextjs-sdk').then((mod) => mod.Descope),
+  { ssr: false }
+);
 
 export default function Login() {
   return (
@@ -24,7 +30,7 @@ export default function Login() {
                     </div>
                 </div>
                 <div className="login-page__content-button">
-                    <Descope
+                    <DescopeAuth
                         flowId="soul-sign-up-in-v2"
                         theme="light"
                         onSuccess={() => {

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Button from './Button';
+import { useRouter } from 'next/navigation';
 
 // Define breakpoint constants
 const BREAKPOINT_LG = 1024;
@@ -20,6 +21,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
   const lastScrollY = useRef(0);
   const lastScrollDirection = useRef<'up' | 'down' | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -121,11 +123,11 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
   };
 
   const navigateToLogin = () => {
-    window.open('/login', '_blank');
+    router.push('/login');
   };
 
   const navigateToSignup = () => {
-    window.open('/login', '_blank');
+    router.push('/login');
   };
 
   // CSS classes for navbar state

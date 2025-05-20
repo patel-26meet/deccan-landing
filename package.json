@@ -14,7 +14,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@descope/nextjs-sdk": "^0.13.11",
+    "@descope/nextjs-sdk": "^0.13.13",
     "@solar-icons/react": "^1.0.1",
     "dompurify": "^3.2.5",
     "js-cookie": "^3.0.5",

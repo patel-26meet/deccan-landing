@@ -248,22 +248,27 @@ const HeroStart = () => {
   // ======== ANIMATION HANDLERS ========
   // Handle first animation completion
   const handleFirstAnimComplete = () => {
-    // Set initial text transition to fully visible
-    setTextTransitionProgress(0);
+    // First update the animation state with a minimal delay
+    setTimeout(() => {
+      document.body.classList.remove('scroll-disabled');
+      
+      // Set animation state in a single update
+      setAnimState(prev => ({
+        ...prev,
+        firstAnimCompleted: true,
+        showSecondAnim: true,
+        showText: true,
+        animationDirection: 'forward',
+        secondAnimSpeed: 1,
+        secondAnimProgress: 0,
+        hasScrolledDuringAnim2: false,
+      }));
+      
+      // Set initial text transition to fully visible
+      setTextTransitionProgress(0);
+    }, 50);
 
-    setAnimState(prev => ({
-      ...prev,
-      firstAnimCompleted: true,
-      showSecondAnim: true,
-      showText: true,
-      animationDirection: 'forward',
-      secondAnimSpeed: 1,
-      secondAnimProgress: 0,
-      hasScrolledDuringAnim2: false,
-    }));
-
-    // Remove scroll lock after first animation completes
-    document.body.classList.remove('scroll-disabled');
+    console.log('handleFirstAnimComplete');
   };
 
   // Calculate text transition styles based on progress
@@ -1181,7 +1186,6 @@ const HeroStart = () => {
             <Button text="Apply Now" mode="hybrid" onClick={() => {}} />
           </div>
         </div>
-        
       )}
     </div>
   );
