@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  basePath: '/deccan-landing',
+  assetPrefix: '/deccan-landing/',
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
