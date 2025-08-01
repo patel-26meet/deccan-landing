@@ -8,15 +8,15 @@ const OpportunitiesCard: FC<IOpportunitiesCard> = ({ header, description, rate, 
   const getImagePath = () => {
     switch (category) {
       case 'Coding and Software':
-        return '/assets/opportunities/card/coding.svg';
+        return './assets/opportunities/card/coding.svg';
       case 'AI/ML':
-        return '/assets/opportunities/card/ml.svg';
+        return './assets/opportunities/card/ml.svg';
       case 'Specialist':
-        return '/assets/opportunities/card/specialist.svg';
+        return './assets/opportunities/card/specialist.svg';
       case 'Linguistics':
-        return '/assets/opportunities/card/linguistic.svg';
+        return './assets/opportunities/card/linguistic.svg';
       default:
-        return '/assets/opportunities/card/coding.svg'; // Default fallback
+        return './assets/opportunities/card/coding.svg'; // Default fallback
     }
   };
 

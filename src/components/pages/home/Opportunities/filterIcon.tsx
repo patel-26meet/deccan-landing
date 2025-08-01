@@ -11,13 +11,13 @@ const FilterIcon: FC<IFilterIconType> = ({ isSelected, text }) => {
       case 'All':
         return null; // No icon for "All"
       case 'Coding and Software':
-        return `/assets/opportunities/filter/coding${suffix}.svg`;
+        return `./assets/opportunities/filter/coding${suffix}.svg`;
       case 'AI/ML':
-        return `/assets/opportunities/filter/ml${suffix}.svg`;
+        return `./assets/opportunities/filter/ml${suffix}.svg`;
       case 'Linguistics':
-        return `/assets/opportunities/filter/linguistics${suffix}.svg`;
+        return `./assets/opportunities/filter/linguistics${suffix}.svg`;
       case 'Specialist':
-        return `/assets/opportunities/filter/specialist${suffix}.svg`;
+        return `./assets/opportunities/filter/specialist${suffix}.svg`;
       default:
         return null;
     }

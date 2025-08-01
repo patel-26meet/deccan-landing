@@ -4,7 +4,7 @@ const Community = () => {
   return (
     <div className="benefits__community">
       <img
-        src="/assets/benefits/community.svg"
+        src="./assets/benefits/community.svg"
         alt="community"
         className="benefits__community__image"
         loading="lazy"

@@ -10,7 +10,7 @@ const LearningAndDev = () => {
       </div>
       <img
         className="benefits__learning-and-dev__image"
-        src="/assets/benefits/learningAndDev.svg"
+        src="./assets/benefits/learningAndDev.svg"
         alt="learning-and-dev"
         loading="lazy"
       />

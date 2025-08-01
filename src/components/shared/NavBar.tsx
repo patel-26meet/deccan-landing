@@ -140,7 +140,7 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
       <div className="nav-bar-left">
         <img
           src={
-            isTransparent ? '/assets/logos/deccan-logo.svg' : '/assets/logos/deccan-logo-black.svg'
+            isTransparent ? './assets/logos/deccan-logo.svg' : './assets/logos/deccan-logo-black.svg'
           }
           alt="logo"
           loading="eager"
@@ -160,10 +160,10 @@ const NavBar = ({ initiallyTransparent = true }: INavBarProps) => {
             <img
               src={
                 menuOpen
-                  ? '/assets/popup-close.svg'
-                  : isTransparent
-                    ? '/assets/menu.svg'
-                    : '/assets/menu-black.svg'
+                              ? './assets/popup-close.svg'
+            : isTransparent
+            ? './assets/menu.svg'
+            : './assets/menu-black.svg'
               }
               alt="Menu"
               loading="eager"

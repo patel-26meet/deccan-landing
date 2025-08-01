@@ -41,7 +41,7 @@ function LoginContent() {
   return (
     <div className="login-page">
         <div className="login-page__header">
-            <img src="/assets/logos/deccan-logo-black.svg" alt="Deccan logo" className="login-page__logo" />
+            <img src="./assets/logos/deccan-logo-black.svg" alt="Deccan logo" className="login-page__logo" />
         </div>
 
         <div className="login-page__content">

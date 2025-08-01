@@ -238,7 +238,7 @@ const HeroStart = () => {
             >
               {futureOfAiText}{' '}
             </span>
-            {isHighlighted && <img src="/assets/stars.svg" className="star-icon" loading="eager" />}
+            {isHighlighted && <img src="./assets/stars.svg" className="star-icon" loading="eager" />}
           </div>
         );
         i += 2; // Skip the next two words

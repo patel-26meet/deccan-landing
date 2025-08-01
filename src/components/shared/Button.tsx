@@ -61,12 +61,12 @@ const Button: React.FC<ButtonProps> = ({
   // Determine which arrow images to use based on mode
   const defaultArrow =
     mode === 'hybrid'
-      ? '/assets/button/arrow-right-1-white.svg'
-      : '/assets/button/arrow-right-1.svg';
+              ? './assets/button/arrow-right-1-white.svg'
+        : './assets/button/arrow-right-1.svg';
   const hoverArrow =
     mode === 'hybrid'
-      ? '/assets/button/arrow-right-2-white.svg'
-      : '/assets/button/arrow-right-2.svg';
+              ? './assets/button/arrow-right-2-white.svg'
+        : './assets/button/arrow-right-2.svg';
 
   // Additional class for the white arrow to ensure consistent sizing
   const defaultArrowClass = `button-icon icon-default ${

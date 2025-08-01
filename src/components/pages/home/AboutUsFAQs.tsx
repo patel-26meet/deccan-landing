@@ -64,7 +64,7 @@ export default function AboutUsFAQs() {
           </div>
         </div>
         <div className="about-us-image-wrapper">
-          <Image src="/assets/deccan-people.svg" alt="About Us" width={960} height={509} priority />
+          <Image src="./assets/deccan-people.svg" alt="About Us" width={960} height={509} priority />
         </div>
         <div className="about-us-btn-wrapper">
           <Button text="Read More" mode="dark" state="default" className="read-more-btn" />
