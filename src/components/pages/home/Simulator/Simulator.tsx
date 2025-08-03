@@ -37,21 +37,21 @@ const Simulator: FC<ISimulatorProps> = ({ windowNames = ['SFT', 'RLHF'], simulat
   const getAnimationPath = useCallback((window: string, headerIndex: number) => {
     if (window === 'RLHF') {
       switch (headerIndex) {
-        case 0: return '/assets/simulator/rlhf-lottie-1.json';
-        case 1: return '/assets/simulator/rlhf-lottie-2.json';
+        case 0: return './assets/simulator/rlhf-lottie-1.json';
+        case 1: return './assets/simulator/rlhf-lottie-2.json';
         case 2:
-        case 3: return '/assets/simulator/rlhf-lottie-3.json';
+        case 3: return './assets/simulator/rlhf-lottie-3.json';
       }
     } else if (window === 'SFT') {
       switch (headerIndex) {
-        case 0: return '/assets/simulator/sft-lottie-1.json';
-        case 1: return '/assets/simulator/sft-lottie-2.json';
+        case 0: return './assets/simulator/sft-lottie-1.json';
+        case 1: return './assets/simulator/sft-lottie-2.json';
         case 2:
-        case 3: return '/assets/simulator/sft-lottie-3.json';
-        default: return '/assets/simulator/sft-lottie-1.json';
+        case 3: return './assets/simulator/sft-lottie-3.json';
+        default: return './assets/simulator/sft-lottie-1.json';
       }
     }
-    return '/assets/simulator/sft-lottie-1.json';
+    return './assets/simulator/sft-lottie-1.json';
   }, []);
 
   // Load and cache animation

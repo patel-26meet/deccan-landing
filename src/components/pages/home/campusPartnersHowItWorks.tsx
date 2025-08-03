@@ -41,10 +41,10 @@ const HowItWorks = ({initialActiveCard = 0}: ICampusPartnersHowItWorksProps = {}
 
   // Dynamic import paths for Lottie animations
   const animationPaths = useMemo(() => [
-    '/assets/how-it-works/selection-process-1-v2.json',
-    '/assets/how-it-works/selection-process-2-v2.json',
-    '/assets/how-it-works/selection-process-3-v2.json',
-    '/assets/how-it-works/selection-process-4-v2.json'
+    './assets/how-it-works/selection-process-1-v2.json',
+    './assets/how-it-works/selection-process-2-v2.json',
+    './assets/how-it-works/selection-process-3-v2.json',
+    './assets/how-it-works/selection-process-4-v2.json'
   ], []);
 
   // Memoize animation loading function to prevent recreation on each render
@@ -176,7 +176,7 @@ const HowItWorks = ({initialActiveCard = 0}: ICampusPartnersHowItWorksProps = {}
               {topRowIcons.map((icon, index) => (
                 <div key={`icon-${index}`} className="marquee-item">
                   <Image
-                    src={`/assets/campus-partners/${icon}`}
+                    src={`./assets/campus-partners/${icon}`}
                     alt={`Campus Partner ${(index % 15) + 1}`}
                     width={100}
                     height={60}
@@ -192,7 +192,7 @@ const HowItWorks = ({initialActiveCard = 0}: ICampusPartnersHowItWorksProps = {}
               {bottomRowIcons.map((icon, index) => (
                 <div key={`icon-reverse-${index}`} className="marquee-item">
                   <Image
-                    src={`/assets/campus-partners/${icon}`}
+                    src={`./assets/campus-partners/${icon}`}
                     alt={`Campus Partner ${(index % 14) + 16}`}
                     width={100}
                     height={60}
