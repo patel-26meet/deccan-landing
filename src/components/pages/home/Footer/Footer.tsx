@@ -73,7 +73,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="footer-made-with">Made with 🫶 by SOUL AI</div>
+                <div className="footer-made-with">Made with 🫶 by Meet and Kartika</div>
               </div>
             </div>
 
